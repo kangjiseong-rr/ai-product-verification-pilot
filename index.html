@@ -179,6 +179,13 @@
       font-size: 13px;
     }
 
+    .row-number {
+      text-align: center;
+      vertical-align: middle;
+      color: var(--title);
+      font-weight: 900;
+    }
+
     th {
       background: #eef2f7;
       color: #1e3a8a;
@@ -211,6 +218,33 @@
     .btn-ghost { width: 100%; border-style: dashed; color: var(--blue); background: transparent; margin-top: 12px; }
     .btn-danger { background: rgba(255,123,114,.12); color: var(--red); border-color: rgba(255,123,114,.35); min-height: 34px; padding: 0 10px; }
 
+    .address-search {
+      display: grid;
+      grid-template-columns: 160px max-content;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .address-search .btn {
+      min-width: 64px;
+      min-height: 42px;
+      padding: 0 14px;
+      white-space: nowrap;
+    }
+
+    .form-subsection {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .form-subsection-title {
+      margin: 0 0 14px;
+      color: var(--title);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
     .checks {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -242,7 +276,7 @@
 
     .module-top {
       display: grid;
-      grid-template-columns: 1.1fr .8fr .8fr auto;
+      grid-template-columns: .42fr 1.1fr .9fr;
       gap: 12px;
       align-items: end;
       margin-bottom: 14px;
@@ -410,6 +444,9 @@
       .grid-2, .grid-3, .grid-4, .checks, .case-tabs, .io-grid, .module-top {
         grid-template-columns: 1fr;
       }
+      .address-search {
+        grid-template-columns: 1fr;
+      }
       header, .card { padding: 20px; }
       table { table-layout: auto; }
     }
@@ -468,19 +505,36 @@
 
       <div class="grid-3">
         <div class="field"><label class="req">기업명</label><input type="text" placeholder="예: 주식회사 ○○○" /></div>
-        <div class="field"><label>사업자등록번호</label><input type="text" placeholder="000-00-00000" /></div>
+        <div class="field"><label>사업자등록번호</label><input id="businessRegistrationNumber" type="text" inputmode="numeric" maxlength="12" placeholder="000-00-00000" oninput="formatBusinessRegistrationNumber(this)" /></div>
         <div class="field"><label>대표자명</label><input type="text" /></div>
       </div>
 
       <div class="field" style="margin-top:16px;">
-        <label>기업 주소</label>
-        <input type="text" placeholder="본사 또는 사업장 주소" />
+        <label>주소</label>
+        <div class="address-search">
+          <input id="companyPostcode" type="text" placeholder="우편번호" readonly />
+          <button type="button" class="btn" onclick="openCompanyAddressSearch()">검색</button>
+        </div>
       </div>
 
-      <div class="grid-3" style="margin-top:16px;">
-        <div class="field"><label>담당자명</label><input type="text" /></div>
-        <div class="field"><label>연락처</label><input type="text" /></div>
-        <div class="field"><label>이메일</label><input type="email" /></div>
+      <div class="grid-2" style="margin-top:10px;">
+        <div class="field">
+          <label>기본 주소</label>
+          <input id="companyAddress" type="text" placeholder="주소 검색 결과가 입력됩니다" readonly />
+        </div>
+        <div class="field">
+          <label>상세 주소</label>
+          <input id="companyDetailAddress" type="text" placeholder="건물명, 층, 호수 등" />
+        </div>
+      </div>
+
+      <div class="form-subsection">
+        <p class="form-subsection-title">담당자 정보</p>
+        <div class="grid-3">
+          <div class="field"><label>담당자명</label><input type="text" /></div>
+          <div class="field"><label>연락처</label><input type="text" /></div>
+          <div class="field"><label>이메일</label><input type="email" /></div>
+        </div>
       </div>
     </section>
 
@@ -494,7 +548,7 @@
       </div>
 
       <div class="grid-2">
-        <div class="field"><label class="req">AI 제품 중분류</label><select><option value="">선택</option><option>인공지능 소프트웨어</option><option>인공지능 서비스</option><option>인공지능 기기</option><option>기타</option></select></div>
+        <div class="field"><label class="req">AI 제품 분류</label><select><option value="">선택</option><option>인공지능 소프트웨어</option><option>인공지능 서비스</option><option>인공지능 기기</option><option>기타</option></select></div>
       </div>
     </section>
 
@@ -510,23 +564,23 @@
       <table id="moduleSummaryTable">
         <thead>
           <tr>
-            <th style="width:20%;">AI 기능명</th>
-            <th style="width:18%;">AI 역할</th>
-            <th style="width:16%;">사용자 입력</th>
-            <th style="width:16%;">프로그램 출력</th>
+            <th style="width:6%;">번호</th>
+            <th style="width:19%;">AI 기능명</th>
+            <th style="width:21%;">AI 역할</th>
+            <th style="width:17%;">사용자 입력</th>
+            <th style="width:17%;">프로그램 출력</th>
             <th style="width:14%;">매뉴얼 위치</th>
-            <th style="width:10%;">AI 핵심기능 여부</th>
             <th style="width:6%;">삭제</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><input type="text" placeholder="예: 이상 탐지" /></td>
+            <td class="row-number">1</td>
+            <td><input type="text" class="module-name-input" placeholder="예: 이상 탐지" oninput="syncTechModulesWithSummary()" /></td>
             <td><textarea placeholder="분류/예측/생성/추천 등"></textarea></td>
             <td><textarea placeholder="입력 데이터 유형"></textarea></td>
             <td><textarea placeholder="출력 결과 유형"></textarea></td>
             <td><input type="text" placeholder="p.24 또는 메뉴명" /></td>
-            <td><select><option>예</option><option>아니오</option><option>보조기능</option></select></td>
             <td style="text-align:center;"><button type="button" class="btn btn-danger" onclick="removeRow(this)">삭제</button></td>
           </tr>
         </tbody>
@@ -548,18 +602,16 @@
       <div id="techModuleList">
         <div class="module-card" data-module>
           <div class="module-top">
-            <div class="field"><label class="req">기능명</label><input type="text" placeholder="예: 지진 예지 분석" /></div>
-            <div class="field"><label class="req">AI 구현 방식</label><select onchange="changeCase(this)"><option value="A">A. 자체 학습 모델</option><option value="B">B. Fine-tuning 모델</option><option value="C">C. 생성형 AI API 연계</option><option value="E">E. 온디바이스 AI</option></select></div>
-            <div class="field"><label>중요도</label><select><option>핵심기능</option><option>주요기능</option><option>보조기능</option></select></div>
-            <button type="button" class="btn btn-danger" onclick="removeModule(this)">모듈 삭제</button>
+            <div class="field"><label class="req">기능 번호</label><input type="text" class="tech-feature-number" value="1" readonly /></div>
+            <div class="field"><label class="req">04번 기능명</label><input type="text" class="tech-feature-name" placeholder="04번 AI 기능명과 자동 연동" readonly /></div>
+            <div class="field"><label class="req">AI 구현 방식</label><select onchange="changeCase(this)"><option value="A">A. 자체 학습 모델</option><option value="B">B. Fine-tuning 모델</option><option value="C">C. 생성형 AI API 연계</option><option value="E">E. 온디바이스 AI</option><option value="M">M. 혼합형 AI 구성</option></select></div>
           </div>
 
           <div class="case-panel active" data-case="A">
             <p class="sub-title">A. 자체 학습 모델</p>
-            <div class="grid-3">
+            <div class="grid-2">
               <div class="field"><label>학습 데이터 출처·규모</label><textarea placeholder="자체수집/공공/구매 데이터, 건수, 기간, 정제 기준"></textarea></div>
               <div class="field"><label>학습/추론 함수명</label><input type="text" placeholder="fit()/predict()" /></div>
-              <div class="field"><label>저장소 URL</label><input type="text" placeholder="예: https://github.com/corporate/anomaly-net" /></div>
             </div>
           </div>
 
@@ -611,15 +663,14 @@
           </div>
 -->
 
-          <div class="grid-3" style="margin-top:14px;">
+          <div class="grid-2" style="margin-top:14px;">
             <div class="field"><label>증빙자료 첨부</label><input type="file" multiple /></div>
             <div class="field"><label>아키텍처/데이터 흐름도</label><input type="file" accept="image/*,.pdf" /></div>
-            <div class="field"><label>재현 가능 여부</label><select><option>가능</option><option>부분 가능</option><option>제한적 가능</option><option>불가</option></select></div>
           </div>
         </div>
       </div>
 
-      <button type="button" class="btn btn-ghost" onclick="addTechModule()">+ 기능별 기술 구현 명세 추가</button>
+      <p class="hint">04번 AI 기능 목록에 행을 추가하면 기능별 구현 명세가 자동으로 추가됩니다.</p>
     </section>
 
     <section class="card">
@@ -791,29 +842,135 @@
     </div>
   </div>
 
+  <script src="https://t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script>
+    function openCompanyAddressSearch() {
+      if (!window.kakao || !kakao.Postcode) {
+        alert('주소 검색 서비스를 불러오지 못했습니다. 네트워크 연결을 확인한 뒤 다시 시도하세요.');
+        return;
+      }
+
+      new kakao.Postcode({
+        oncomplete: function(data) {
+          const selectedAddress = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+          const extraAddressParts = [];
+
+          if (data.userSelectedType === 'R') {
+            if (data.bname && /[동로가]$/.test(data.bname)) extraAddressParts.push(data.bname);
+            if (data.buildingName && data.apartment === 'Y') extraAddressParts.push(data.buildingName);
+          }
+
+          const extraAddress = extraAddressParts.length ? ' (' + extraAddressParts.join(', ') + ')' : '';
+          document.getElementById('companyPostcode').value = data.zonecode;
+          document.getElementById('companyAddress').value = selectedAddress + extraAddress;
+          document.getElementById('companyDetailAddress').focus();
+        }
+      }).open();
+    }
+
+    function formatBusinessRegistrationNumber(input) {
+      const digits = input.value.replace(/\D/g, '').slice(0, 10);
+      const parts = [];
+
+      if (digits.length > 0) parts.push(digits.slice(0, 3));
+      if (digits.length > 3) parts.push(digits.slice(3, 5));
+      if (digits.length > 5) parts.push(digits.slice(5, 10));
+
+      input.value = parts.join('-');
+    }
+
     function removeRow(btn) {
       const tbody = btn.closest('tbody');
       if (tbody.rows.length <= 1) {
         alert('최소 1개 행은 유지해야 합니다.');
         return;
       }
+      const table = btn.closest('table');
       btn.closest('tr').remove();
+      if (table && table.id === 'moduleSummaryTable') syncTechModulesWithSummary();
     }
 
     function addModuleSummaryRow() {
       const tbody = document.querySelector('#moduleSummaryTable tbody');
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><input type="text" placeholder="예: 이상 탐지" /></td>
+        <td class="row-number"></td>
+        <td><input type="text" class="module-name-input" placeholder="예: 이상 탐지" oninput="syncTechModulesWithSummary()" /></td>
         <td><textarea placeholder="분류/예측/생성/추천 등"></textarea></td>
         <td><textarea placeholder="입력 데이터 유형"></textarea></td>
         <td><textarea placeholder="출력 결과 유형"></textarea></td>
         <td><input type="text" placeholder="p.24 또는 메뉴명" /></td>
-        <td><select><option>예</option><option>아니오</option><option>보조기능</option></select></td>
         <td style="text-align:center;"><button type="button" class="btn btn-danger" onclick="removeRow(this)">삭제</button></td>
       `;
       tbody.appendChild(tr);
+      syncTechModulesWithSummary();
+    }
+
+    let moduleFeatureIdSequence = 1;
+
+    function ensureModuleSummaryIds() {
+      document.querySelectorAll('#moduleSummaryTable tbody tr').forEach(row => {
+        if (!row.dataset.featureId) {
+          row.dataset.featureId = 'feature-' + moduleFeatureIdSequence;
+          moduleFeatureIdSequence++;
+        }
+      });
+    }
+
+    function resetTechModuleCard(card) {
+      card.querySelectorAll('input, textarea').forEach(el => {
+        if (el.classList.contains('tech-feature-number')) return;
+        if (el.classList.contains('tech-feature-name')) return;
+        if (el.type === 'file') el.value = '';
+        else el.value = '';
+      });
+      card.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+      card.querySelectorAll('.case-panel').forEach(panel => panel.classList.remove('active'));
+      card.querySelector('.case-panel[data-case="A"]').classList.add('active');
+    }
+
+    function syncTechModulesWithSummary() {
+      ensureModuleSummaryIds();
+
+      const rows = Array.from(document.querySelectorAll('#moduleSummaryTable tbody tr'));
+      const list = document.querySelector('#techModuleList');
+      const existingCards = Array.from(list.querySelectorAll('[data-module]'));
+      const template = existingCards[0];
+
+      if (!template) return;
+
+      const cardsByFeatureId = new Map(existingCards.map(card => [card.dataset.featureId, card]));
+      const activeFeatureIds = new Set(rows.map(row => row.dataset.featureId));
+
+      rows.forEach((row, index) => {
+        const featureId = row.dataset.featureId;
+        const featureNumber = String(index + 1);
+        const featureName = row.querySelector('.module-name-input')?.value.trim() || '';
+        let card = cardsByFeatureId.get(featureId);
+
+        const rowNumber = row.querySelector('.row-number');
+        if (rowNumber) rowNumber.textContent = featureNumber;
+
+        if (!card) {
+          card = template.cloneNode(true);
+          resetTechModuleCard(card);
+          list.appendChild(card);
+        }
+
+        card.dataset.featureId = featureId;
+        const featureNumberField = card.querySelector('.tech-feature-number');
+        if (featureNumberField) featureNumberField.value = featureNumber;
+
+        const featureNameField = card.querySelector('.tech-feature-name');
+        if (featureNameField) {
+          featureNameField.value = featureName;
+          featureNameField.placeholder = featureName ? '' : '04번 ' + (index + 1) + '번째 기능명을 입력하세요';
+        }
+      });
+
+      Array.from(list.querySelectorAll('[data-module]')).forEach(card => {
+        if (!activeFeatureIds.has(card.dataset.featureId)) card.remove();
+      });
     }
 
     function changeCase(select) {
@@ -822,32 +979,6 @@
       card.querySelectorAll('.case-panel').forEach(panel => {
         panel.classList.toggle('active', panel.dataset.case === selected);
       });
-    }
-
-    function removeModule(btn) {
-      const list = document.querySelector('#techModuleList');
-      if (list.querySelectorAll('[data-module]').length <= 1) {
-        alert('최소 1개 기능 명세는 유지해야 합니다.');
-        return;
-      }
-      btn.closest('[data-module]').remove();
-    }
-
-    function addTechModule() {
-      const list = document.querySelector('#techModuleList');
-      const first = list.querySelector('[data-module]');
-      const clone = first.cloneNode(true);
-
-      clone.querySelectorAll('input, textarea').forEach(el => {
-        if (el.type === 'file') el.value = '';
-        else el.value = '';
-      });
-      clone.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
-      clone.querySelectorAll('.case-panel').forEach(panel => panel.classList.remove('active'));
-      clone.querySelector('.case-panel[data-case="A"]').classList.add('active');
-
-      list.appendChild(clone);
-      clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function getFieldLabel(field) {
@@ -935,6 +1066,8 @@
         alert('필수 항목 기준으로는 누락이 없습니다. 증빙자료와 TTA 검토 항목은 별도로 확인하세요.');
       }
     }
+
+    document.addEventListener('DOMContentLoaded', syncTechModulesWithSummary);
   </script>
 </body>
 </html>

@@ -7,6 +7,8 @@ Thumbs.db
 # Local temporary files
 *.tmp
 *.bak
+work/
+outputs/
 
 # Dependency/build folders if this becomes a bundled app later
 node_modules/
