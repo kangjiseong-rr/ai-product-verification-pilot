@@ -117,6 +117,12 @@
     .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
     .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .io-pair-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+    .io-pair {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
 
     .field label {
       display: block;
@@ -142,6 +148,16 @@
       border-radius: 9px;
       outline: none;
       font: inherit;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #8a96a8;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    textarea::placeholder {
+      white-space: pre-line;
     }
 
     textarea { min-height: 92px; resize: vertical; }
@@ -429,7 +445,7 @@
     }
 
     @media (max-width: 960px) {
-      .grid-2, .grid-3, .grid-4, .checks, .case-tabs, .io-grid, .module-top {
+      .grid-2, .grid-3, .grid-4, .checks, .case-tabs, .io-grid, .io-pair-grid, .module-top {
         grid-template-columns: 1fr;
       }
       .address-search {
@@ -605,6 +621,15 @@
             <div class="field"><label class="req">AI 구현 방식</label><select onchange="changeCase(this)"><option value="A">A. 자체 학습 모델</option><option value="B">B. Fine-tuning 모델</option><option value="C">C. 외부 AI API 연계</option><option value="D">D. 온디바이스 AI</option><option value="E">E. 혼합형 AI 구성</option></select></div>
           </div>
 
+          <div class="grid-2 common-tech-fields" style="margin:16px 0;">
+            <div class="field"><label>AI 연산 자원</label><input type="text" placeholder="예: NVIDIA A100, RTX 4090, T4, CPU only, NPU, 외부 API 제공" /></div>
+            <div class="field"><label>AI 실행 환경 세부정보</label><textarea placeholder="예:
+- OS: Ubuntu 22.04
+- CUDA/드라이버: CUDA 12.1, NVIDIA Driver 535
+- 컨테이너/런타임: Docker, TensorRT, PyTorch 2.6.0
+- API 버전 또는 배포 환경 정보"></textarea></div>
+          </div>
+
           <div class="case-panel active" data-case="A">
             <p class="sub-title">A. 자체 학습 모델</p>
             <div class="grid-2">
@@ -616,15 +641,21 @@
 - 개발언어: Python 3.12
 - 라이브러리: PyTorch 2.6.0, TorchVision
 - 알고리즘: CNN 기반 멀티 레이블 객체 탐지 알고리즘"></textarea></div>
-              <div class="field"><label>입/출력 데이터</label><textarea placeholder="[입력 예시]
-- 환자 DICOM 영상 파일 및 실시간 생체 신호 데이터
-
-[출력 예시]
-- 병변 위치: Bounding Box 좌표
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+- 환자 DICOM 영상 파일
+- 실시간 생체 신호 데이터 (체중: 72kg, 하트레이트: 115bpm)"></textarea></div>
+                <div class="field"><label>입력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+- 병변 위치: Bounding Box [x: 142, y: 532, w: 85, h: 120]
 - 질환 진단: Pulmonary Edema (확률: 94.2%)
 - 기기 제어 신호 JSON 값"></textarea></div>
-              <div class="field"><label>입력 데이터</label><input type="file" multiple /></div>
-              <div class="field"><label>출력 데이터</label><input type="file" multiple /></div>
+                <div class="field"><label>출력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
             </div>
           </div>
 
@@ -637,13 +668,19 @@
 - 해당 병원의 폐렴 확진 환자 데이터 12,000건 활용
 - 전문의 3인의 교차 검증 라벨링 데이터셋
 - Learning Rate=1e-4, Batch Size=32, Epochs=50"></textarea></div>
-              <div class="field"><label>입/출력 데이터</label><textarea placeholder="[입력 예시]
-- 환자 흉부 X-ray 영상 파일 (DICOM 형식)
-
-[출력 예시]
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+- 환자 흉부 X-ray 영상 파일 (DICOM 형식)"></textarea></div>
+                <div class="field"><label>입력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+- 의심 병변 분류 결과 및 위험도 등급
 - 폐렴 중증도: 3단계(Severe) / 분석 확신도: 89.7%"></textarea></div>
-              <div class="field"><label>입력 데이터</label><input type="file" multiple /></div>
-              <div class="field"><label>출력 데이터</label><input type="file" multiple /></div>
+                <div class="field"><label>출력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
             </div>
           </div>
 
@@ -651,11 +688,20 @@
             <p class="sub-title">C. 외부 AI API 연계</p>
             <div class="grid-3">
               <div class="field"><label>외부 API·모델</label><input type="text" placeholder="예: OpenAI gpt-4o-mini, Claude 3.5 Sonnet, Gemini 1.5 Pro" /></div>
-              <div class="field"><label>입/출력 데이터</label><textarea placeholder="[입력 예시] 소비자가 작성한 가방 제품의 불만족 리뷰 원본 텍스트
-
-[출력 예시] AI가 생성한 쇼핑몰 관리자용 요약 및 고객 답변 초안"></textarea></div>
-              <div class="field"><label>입력 데이터</label><input type="file" multiple /></div>
-              <div class="field"><label>출력 데이터</label><input type="file" multiple /></div>
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+- 소비자가 작성한 가방 제품의 불만족 리뷰 원본 텍스트
+- API 요청에 포함되는 프롬프트 또는 JSON payload"></textarea></div>
+                <div class="field"><label>입력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+- 쇼핑몰 관리자용 리뷰 요약
+- 고객 답변 초안 또는 분류 결과"></textarea></div>
+                <div class="field"><label>출력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
             </div>
           </div>
 
@@ -666,11 +712,20 @@
 - 하드웨어: NVIDIA Jetson Orin Nano (8GB)
 - OS: Linux for Tegra r36.3 / Ubuntu 22.04 LTS"></textarea></div>
               <div class="field"><label>추론 런타임</label><input type="text" placeholder="예: TensorRT, OpenVINO, TFLite" /></div>
-              <div class="field"><label>입/출력 데이터</label><textarea placeholder="[입력] 실시간 생체 신호 데이터 또는 라이다 센서 측정값
-
-[출력/동작] 하드웨어 모터 제어 신호, 밸브 차단, 긴급 정지 명령 등"></textarea></div>
-              <div class="field"><label>입력 데이터</label><input type="file" multiple /></div>
-              <div class="field"><label>출력 데이터</label><input type="file" multiple /></div>
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+- 실시간 환자 생체 신호 데이터
+- 라이다 센서의 장애물 거리 측정값"></textarea></div>
+                <div class="field"><label>입력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+- 하드웨어 모터 제어 신호
+- 밸브 차단, 긴급 정지 명령, 경고등 점등 등"></textarea></div>
+                <div class="field"><label>출력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
             </div>
           </div>
 
@@ -683,13 +738,20 @@
               <div class="field"><label>모델별 역할 및 입출력 흐름</label><textarea placeholder="1. 비전 모델(ViT): [인풋] 흉부 CT 영상 -> 특징 벡터 데이터
 
 2. 언어 모델(Llama): [인풋] 특징 벡터 -> 최종 국문 판독 소견서 텍스트 생성"></textarea></div>
-              <div class="field"><label>입/출력 데이터</label><textarea placeholder="[최초 입력] 환자의 흉부 CT 디지털 영상 파일
-
-[중간 데이터] 결절 메타데이터 JSON
-
-[최종 출력] 의료진 화면에 표출되는 의학적 판독 소견서 자동 생성 문구"></textarea></div>
-              <div class="field"><label>입력 데이터</label><input type="file" multiple /></div>
-              <div class="field"><label>출력 데이터</label><input type="file" multiple /></div>
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+- 최초 입력: 환자의 흉부 CT 디지털 영상 파일
+- 중간 데이터: 비전 모델이 추출한 결절 메타데이터 JSON"></textarea></div>
+                <div class="field"><label>입력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+- 최종 출력: 의료진 화면에 표출되는 의학적 판독 소견서
+- 자동 생성 문구 또는 구조화된 결과 JSON"></textarea></div>
+                <div class="field"><label>출력 데이터 첨부</label><input type="file" multiple /></div>
+              </div>
             </div>
           </div>
 <!--
@@ -766,6 +828,7 @@
 
     <div class="foot-actions">
       <button type="button" class="btn btn-primary" onclick="submitApplication()">제출 및 명세서 보기</button>
+      <button type="button" class="btn" onclick="fillSampleData()">샘플 데이터 채우기</button>
       <button type="button" class="btn" onclick="downloadJson()">JSON 내보내기</button>
       <button type="button" class="btn" onclick="validateDraft()">작성 내용 점검</button>
     </div>
@@ -923,6 +986,172 @@
       });
     }
 
+    function setFieldValue(section, labelText, value) {
+      const field = Array.from(section.querySelectorAll('.field')).find(item => {
+        const label = item.querySelector('label');
+        return label && label.textContent.replace('*', '').trim() === labelText;
+      });
+      const input = field?.querySelector('input, select, textarea');
+      if (!input || input.type === 'file') return;
+
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function setTableRowValues(row, values) {
+      const cells = row.children;
+      if (!cells.length) return;
+      cells[1]?.querySelector('input') && (cells[1].querySelector('input').value = values.name || '');
+      cells[2]?.querySelector('textarea') && (cells[2].querySelector('textarea').value = values.role || '');
+      cells[3]?.querySelector('textarea') && (cells[3].querySelector('textarea').value = values.input || '');
+      cells[4]?.querySelector('textarea') && (cells[4].querySelector('textarea').value = values.output || '');
+      cells[5]?.querySelector('textarea, input') && (cells[5].querySelector('textarea, input').value = values.manual || '');
+      row.querySelector('.module-name-input')?.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function setPanelField(card, labelText, value) {
+      const activePanel = card.querySelector('.case-panel.active');
+      const fields = [
+        ...Array.from(card.querySelectorAll('.common-tech-fields .field')),
+        ...Array.from(activePanel?.querySelectorAll('.field') || [])
+      ];
+      const field = fields.find(item => {
+        const label = item.querySelector('label');
+        return label && label.textContent.replace('*', '').trim() === labelText;
+      });
+      const input = field?.querySelector('input, textarea, select');
+      if (!input || input.type === 'file') return;
+      input.value = value;
+    }
+
+    function ensureModuleRowCount(count) {
+      const tbody = document.querySelector('#moduleSummaryTable tbody');
+      while (tbody.rows.length < count) addModuleSummaryRow();
+      while (tbody.rows.length > count) tbody.rows[tbody.rows.length - 1].remove();
+      syncTechModulesWithSummary();
+    }
+
+    function fillSampleData() {
+      const sections = Array.from(document.querySelectorAll('section.card'));
+      const productSection = sections[0];
+      const companySection = sections[1];
+      const categorySection = sections[2];
+      const certSection = sections[5];
+
+      setFieldValue(productSection, '제품 또는 서비스명', 'Mediview AI 판독 보조 서비스');
+      setFieldValue(productSection, '제품 버전', 'v1.8.2-pilot');
+      setFieldValue(productSection, '제품 또는 서비스 제공 형태', 'SaaS(클라우드 서비스형)');
+      setFieldValue(productSection, '제품 개요', '흉부 영상과 환자 생체 신호를 분석하여 이상 소견 후보를 표시하고, 의료진 검토용 요약 보고서를 생성하는 AI 기반 판독 보조 서비스입니다. 병원 PACS와 연동하여 검사 단위로 분석 결과를 제공합니다.');
+      setFieldValue(productSection, 'AI 적용 목적', '의료진이 대량의 영상 검사를 우선순위화하고 의심 병변을 빠르게 검토할 수 있도록 보조합니다.');
+      setFieldValue(productSection, 'AI 적용 범위 요약', 'AI는 영상 내 이상 후보 탐지, 위험도 산정, 판독 초안 요약을 수행합니다. 최종 진단과 처방 결정은 의료진이 수행합니다.');
+
+      setFieldValue(companySection, '기업명', '주식회사 메디테크랩');
+      setFieldValue(companySection, '사업자등록번호', '1234567890');
+      const businessNo = document.getElementById('businessRegistrationNumber');
+      if (businessNo) formatBusinessRegistrationNumber(businessNo);
+      setFieldValue(companySection, '대표자명', '김대표');
+      document.getElementById('companyPostcode').value = '06236';
+      document.getElementById('companyAddress').value = '서울특별시 강남구 테헤란로 152';
+      document.getElementById('companyDetailAddress').value = '15층 AI검증팀';
+      setFieldValue(companySection, '담당자명', '이담당');
+      setFieldValue(companySection, '연락처', '02-1234-5678');
+      setFieldValue(companySection, '이메일', 'pilot@meditechlab.example');
+
+      setFieldValue(categorySection, 'AI 제품 분류', '인공지능 서비스');
+
+      ensureModuleRowCount(5);
+      const featureRows = Array.from(document.querySelectorAll('#moduleSummaryTable tbody tr'));
+      [
+        {
+          name: '흉부 영상 이상 탐지',
+          role: '흉부 X-ray 이미지에서 폐렴, 부종 등 이상 소견 후보 영역을 탐지하고 위험도를 산출',
+          input: 'DICOM 영상 파일, 검사 ID, 촬영 장비 메타데이터',
+          output: '병변 후보 Bounding Box, 위험도 점수, 소견 분류 라벨',
+          manual: '사용자 매뉴얼 p.24, 영상 분석 > AI 이상 탐지 화면'
+        },
+        {
+          name: '폐렴 위험도 분류',
+          role: '병원 도메인 데이터로 추가 튜닝한 모델을 사용해 폐렴 의심 정도와 중증도 등급을 분류',
+          input: '흉부 X-ray 영상, 환자 나이대, 촬영 조건 메타데이터',
+          output: '폐렴 의심 등급, 중증도 단계, 분석 확신도',
+          manual: '사용자 매뉴얼 p.28, 영상 분석 > 위험도 분류'
+        },
+        {
+          name: '판독 소견 요약 생성',
+          role: '탐지 결과와 임상 메모를 바탕으로 의료진 검토용 국문 판독 초안 생성',
+          input: '탐지 결과 JSON, 임상 메모 텍스트, 병원 템플릿',
+          output: '판독 초안 텍스트, 주요 근거 요약, 수정 필요 표시',
+          manual: '사용자 매뉴얼 p.31, 보고서 > AI 요약 탭'
+        },
+        {
+          name: '엣지 장비 실시간 알림',
+          role: '병동 모니터링 장비에서 생체 신호 이상 패턴을 감지하고 알림 이벤트 생성',
+          input: '심박수, 산소포화도, 호흡수 센서 스트림',
+          output: '위험 알림 이벤트, 알림 등급, 장비 제어 신호',
+          manual: '장비 화면 > 실시간 모니터링 > AI 알림'
+        },
+        {
+          name: '멀티모달 판독 리포트 생성',
+          role: '영상 특징, 위험도 분류 결과, 임상 메모를 결합해 의료진 검토용 통합 리포트 생성',
+          input: '영상 특징 벡터, 위험도 분류 결과 JSON, 임상 메모 텍스트',
+          output: '통합 판독 리포트, 핵심 근거 요약, 후속 검사 권고 문구',
+          manual: '사용자 매뉴얼 p.38, 보고서 > 통합 AI 리포트'
+        }
+      ].forEach((sample, index) => setTableRowValues(featureRows[index], sample));
+
+      syncTechModulesWithSummary();
+      const cards = Array.from(document.querySelectorAll('#techModuleList [data-module]'));
+      const methods = ['A', 'B', 'C', 'D', 'E'];
+      cards.forEach((card, index) => {
+        const methodSelect = card.querySelector('.module-top select');
+        methodSelect.value = methods[index] || 'A';
+        changeCase(methodSelect);
+      });
+
+      setPanelField(cards[0], 'AI 연산 자원', 'NVIDIA A100 40GB 1대, CPU 16 vCPU');
+      setPanelField(cards[0], 'AI 실행 환경 세부정보', 'Ubuntu 22.04, CUDA 12.1, NVIDIA Driver 535, Docker, PyTorch 2.6.0');
+      setPanelField(cards[0], '학습 데이터 사양', '- 데이터 출처: 제휴 병원 비식별 흉부 X-ray 데이터\n- 데이터 유형: DICOM 이미지\n- 데이터 규모: 약 200,000건');
+      setPanelField(cards[0], '개발환경·라이브러리·알고리즘', '- 개발언어: Python 3.12\n- 라이브러리: PyTorch 2.6.0, TorchVision\n- 알고리즘: CNN 기반 객체 탐지 모델');
+      setPanelField(cards[0], '입력 데이터 설명', '환자 DICOM 영상 파일과 검사 메타데이터를 입력으로 사용합니다.');
+      setPanelField(cards[0], '출력 데이터 설명', '병변 후보 좌표, 위험도 점수, 소견 분류 라벨을 JSON으로 출력합니다.');
+
+      setPanelField(cards[1], 'AI 연산 자원', 'NVIDIA T4 16GB 1대');
+      setPanelField(cards[1], 'AI 실행 환경 세부정보', 'Ubuntu 22.04, CUDA 11.8, Python 3.10, PyTorch 2.1.0, LoRA 튜닝 환경');
+      setPanelField(cards[1], 'Base Model 명칭·버전', 'ResNet-50 v2');
+      setPanelField(cards[1], '튜닝 방법', '전이학습 + LoRA');
+      setPanelField(cards[1], '튜닝 데이터셋', '- 데이터 목적: 폐렴 위험도 분류 성능 보정\n- 데이터 규모: 제휴 병원 비식별 X-ray 12,000건\n- 라벨링: 전문의 3인 교차 검증\n- 학습 파라미터: Learning Rate=1e-4, Batch Size=32, Epochs=50');
+      setPanelField(cards[1], '입력 데이터 설명', '흉부 X-ray 영상 파일과 촬영 조건 메타데이터를 입력으로 사용합니다.');
+      setPanelField(cards[1], '출력 데이터 설명', '폐렴 의심 등급, 중증도 단계, 분석 확신도를 출력합니다.');
+
+      setPanelField(cards[2], 'AI 연산 자원', '외부 API 제공 GPU 자원');
+      setPanelField(cards[2], 'AI 실행 환경 세부정보', 'OpenAI API, 모델 gpt-4o-mini, 사내 서버 Node.js API 어댑터 경유');
+      setPanelField(cards[2], '외부 API·모델', 'OpenAI gpt-4o-mini');
+      setPanelField(cards[2], '입력 데이터 설명', '탐지 결과 JSON과 의료진이 작성한 임상 메모를 프롬프트에 포함합니다.');
+      setPanelField(cards[2], '출력 데이터 설명', '의료진 검토용 판독 초안, 주요 근거 요약, 수정 필요 문구를 생성합니다.');
+
+      setPanelField(cards[3], 'AI 연산 자원', 'NVIDIA Jetson Orin Nano 8GB');
+      setPanelField(cards[3], 'AI 실행 환경 세부정보', 'Linux for Tegra r36.3, TensorRT, Python 3.10, 온디바이스 추론');
+      setPanelField(cards[3], '타겟 하드웨어·OS', '- 하드웨어: NVIDIA Jetson Orin Nano (8GB)\n- OS: Linux for Tegra r36.3 / Ubuntu 22.04 LTS');
+      setPanelField(cards[3], '추론 런타임', 'TensorRT');
+      setPanelField(cards[3], '입력 데이터 설명', '병동 모니터링 장비의 심박수, 산소포화도, 호흡수 센서 스트림을 입력합니다.');
+      setPanelField(cards[3], '출력 데이터 설명', '위험 알림 이벤트와 알림 등급, 장비 제어 신호를 생성합니다.');
+
+      setPanelField(cards[4], 'AI 연산 자원', 'NVIDIA A100 40GB 1대 + 외부 API 제공 자원');
+      setPanelField(cards[4], 'AI 실행 환경 세부정보', 'Ubuntu 22.04, CUDA 12.1, PyTorch 2.6.0, 사내 VLM 파이프라인, OpenAI API 연계');
+      setPanelField(cards[4], '혼합 구성 설명', '- 적용 모델명: ViT-L/14 (비전) + Llama-3-8B-Instruct (LLM) + gpt-4o-mini\n- 구조 설명: 영상 특징 추출, 위험도 분류, 자연어 리포트 생성이 결합된 멀티모달 파이프라인');
+      setPanelField(cards[4], '모델별 역할 및 입출력 흐름', '1. 비전 모델: 흉부 영상에서 특징 벡터 추출\n2. 분류 모델: 특징 벡터와 메타데이터를 이용해 위험도 산정\n3. 언어 모델/API: 위험도와 임상 메모를 결합해 최종 리포트 생성');
+      setPanelField(cards[4], '입력 데이터 설명', '영상 특징 벡터, 위험도 분류 결과 JSON, 임상 메모 텍스트를 입력으로 사용합니다.');
+      setPanelField(cards[4], '출력 데이터 설명', '통합 판독 리포트, 핵심 근거 요약, 후속 검사 권고 문구를 출력합니다.');
+
+      certSection.querySelectorAll('.check-card input[type="checkbox"]').forEach((checkbox, index) => {
+        checkbox.checked = index === 0;
+      });
+      setFieldValue(certSection, '비고', 'GS인증 예비 심사 자료 보유, 본 파일럿에서는 첨부파일 업로드 생략');
+
+      alert('시연용 샘플 데이터를 입력했습니다. 첨부파일은 보안상 자동 지정되지 않습니다.');
+    }
+
     function getFieldLabel(field) {
       const fieldBox = field.closest('.field');
       if (fieldBox) {
@@ -1000,7 +1229,9 @@
     function collectTechDetailRows() {
       return Array.from(document.querySelectorAll('#techModuleList [data-module]')).map(card => {
         const activePanel = card.querySelector('.case-panel.active');
-        const details = Array.from(activePanel?.querySelectorAll('.field') || []).map(field => {
+        const commonFields = Array.from(card.querySelectorAll('.common-tech-fields .field'));
+        const panelFields = Array.from(activePanel?.querySelectorAll('.field') || []);
+        const details = [...commonFields, ...panelFields].map(field => {
           const label = field.querySelector('label')?.textContent.trim() || '';
           const value = field.querySelector('input, select, textarea')?.value || '';
           return label ? `${label}: ${value || '미작성'}` : value;
