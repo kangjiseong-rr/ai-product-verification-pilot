@@ -339,18 +339,6 @@
       font-size: 12px;
     }
 
-    .review-zone {
-      border: 1px solid rgba(240,136,62,.45);
-      background: rgba(240,136,62,.07);
-      border-radius: 14px;
-      padding: 18px;
-    }
-
-    .review-zone .section-title::before { content: "TTA 내부 검토 | "; color: var(--orange); }
-
-    .review-table td { vertical-align: middle; }
-    .review-table textarea { min-height: 58px; }
-    .review-table select { min-height: 36px; padding: 8px; }
     .yn {
       display: inline-flex;
       align-items: center;
@@ -454,7 +442,7 @@
     @media print {
       body { background: #fff; color: #111; }
       .wrap { max-width: none; padding: 0; }
-      header, .card, .module-card, .review-zone { box-shadow: none; background: #fff; color: #111; break-inside: avoid; }
+      header, .card, .module-card { box-shadow: none; background: #fff; color: #111; break-inside: avoid; }
       input, select, textarea { background: #fff; color: #111; border-color: #999; }
       .btn, .btn-danger, .btn-ghost, .foot-actions { display: none; }
     }
@@ -721,124 +709,10 @@
       </div>
     </div>
 
-    <section class="card review-zone">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">07. 최종 확인 체크리스트</h2>
-          <p class="section-desc">신청기업 제출 후 TTA 검토자가 입력하는 영역입니다. 기업에게는 노출되지 않습니다.</p>
-        </div>
-        <span class="tag">내부 검토</span>
-      </div>
-
-      <table class="review-table">
-        <thead>
-          <tr>
-            <th style="width:14%;">구분</th>
-            <th style="width:7%;">번호</th>
-            <th style="width:18%;">점검 항목</th>
-            <th style="width:33%;">확인 내용</th>
-            <th style="width:10%;">결과<br>(Y/N)</th>
-            <th style="width:10%;">확인 방법</th>
-            <th style="width:18%;">비고 / 검토 의견</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td rowspan="3" style="text-align:center; vertical-align:middle; font-weight:900;">인공지능 모델 확인</td>
-            <td style="text-align:center;">1.1</td>
-            <td style="text-align:center; font-weight:800;">인공지능 적용</td>
-            <td>머신러닝, 딥러닝 , LLM 등 인공지능 모델이 적용되어 있는가?</td>
-            <td>
-              <label class="yn"><input type="radio" name="r11" value="Y"> Y</label>
-              <label class="yn"><input type="radio" name="r11" value="N"> N</label>
-            </td>
-            <td><select><option>서류</option><option>현장</option><option>서류/현장</option></select></td>
-            <td><textarea placeholder="검토 의견"></textarea></td>
-          </tr>
-          <tr>
-            <td style="text-align:center;">1.2</td>
-            <td style="text-align:center; font-weight:800;">학습/추론 특성 존재</td>
-            <td>모델에 학습 또는 추론 등 인공지능 특성이 존재하는가?</td>
-            <td>
-              <label class="yn"><input type="radio" name="r12" value="Y"> Y</label>
-              <label class="yn"><input type="radio" name="r12" value="N"> N</label>
-            </td>
-            <td><select><option>서류/현장</option><option>서류</option><option>현장</option></select></td>
-            <td><textarea placeholder="검토 의견"></textarea></td>
-          </tr>
-          <tr>
-            <td style="text-align:center;">1.3</td>
-            <td style="text-align:center; font-weight:800;">추론 결과 확인</td>
-            <td>입력 데이터가 모델을 거쳐 유의미한 결과(예측, 생성 등)를 내는가?</td>
-            <td>
-              <label class="yn"><input type="radio" name="r13" value="Y"> Y</label>
-              <label class="yn"><input type="radio" name="r13" value="N"> N</label>
-            </td>
-            <td><select><option>서류/현장</option><option>서류</option><option>현장</option></select></td>
-            <td><textarea placeholder="검토 의견"></textarea></td>
-          </tr>
-
-          <tr>
-            <td rowspan="3" style="text-align:center; vertical-align:middle; font-weight:900;">인공지능 기능 확인</td>
-            <td style="text-align:center;">2.1</td>
-            <td style="text-align:center; font-weight:800;">구조</td>
-            <td>아키텍처 설계도 상에 인공지능 모델의 위치가 명확하며 , 제품 내부 로직과 필수불가결하게 결합되어 동작하는 구조인가</td>
-            <td>
-              <label class="yn"><input type="radio" name="r21" value="Y"> Y</label>
-              <label class="yn"><input type="radio" name="r21" value="N"> N</label>
-            </td>
-            <td><select><option>서류</option><option>현장</option><option>서류/현장</option></select></td>
-            <td><textarea placeholder="검토 의견"></textarea></td>
-          </tr>
-          <tr>
-            <td style="text-align:center;">2.2</td>
-            <td style="text-align:center; font-weight:800;">생산성 향상</td>
-            <td>인공지능 모델이 해당 제품의 성능 향상이나 편의성에 기여하는가</td>
-            <td>
-              <label class="yn"><input type="radio" name="r22" value="Y"> Y</label>
-              <label class="yn"><input type="radio" name="r22" value="N"> N</label>
-            </td>
-            <td><select><option>서류/현장</option><option>서류</option><option>현장</option></select></td>
-            <td><textarea placeholder="검토 의견"></textarea></td>
-          </tr>
-          <tr>
-            <td style="text-align:center;">2.3</td>
-            <td style="text-align:center; font-weight:800;">핵심 AI 기능 확인</td>
-            <td>인공지능 모델이 적용된 핵심 기능이 정상적으로 동작하는가</td>
-            <td>
-              <label class="yn"><input type="radio" name="r23" value="Y"> Y</label>
-              <label class="yn"><input type="radio" name="r23" value="N"> N</label>
-            </td>
-            <td><select><option>현장</option><option>서류</option><option>서류/현장</option></select></td>
-            <td><textarea placeholder="검토 의견"></textarea></td>
-          </tr>
-
-          <tr>
-            <td style="text-align:center; vertical-align:middle; font-weight:900;">외부 모델 연동 확인 </td>
-            <td style="text-align:center;">3.1</td>
-            <td style="text-align:center; font-weight:800;">API 연동</td>
-            <td>외부 모델(OpenAI 등) 연동 시 호출 로그나 API Key가 존재하는가?</td>
-            <td>
-              <label class="yn"><input type="radio" name="r31" value="Y"> Y</label>
-              <label class="yn"><input type="radio" name="r31" value="N"> N</label>
-            </td>
-            <td><select><option>서류/현장</option><option>서류</option><option>현장</option></select></td>
-            <td><textarea placeholder="검토 의견"></textarea></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="grid-3" style="margin-top:16px;">
-        <div class="field"><label>최종 판정</label><select><option>검토 전</option><option>기술 확인 가능</option><option>보완 후 재검토</option><option>확인 곤란</option></select></div>
-        <div class="field"><label>검토자</label><input type="text" /></div>
-        <div class="field"><label>검토일</label><input type="date" /></div>
-      </div>
-    </section>
-
     <div class="foot-actions">
-      <button type="button" class="btn" onclick="window.print()">인쇄 / PDF 저장</button>
+      <button type="button" class="btn btn-primary" onclick="submitApplication()">제출 및 명세서 보기</button>
       <button type="button" class="btn" onclick="downloadJson()">JSON 내보내기</button>
-      <button type="button" class="btn btn-primary" onclick="validateDraft()">작성 내용 점검</button>
+      <button type="button" class="btn" onclick="validateDraft()">작성 내용 점검</button>
     </div>
   </div>
 
@@ -1018,20 +892,143 @@
       return { title, values, files };
     }
 
-    function collectApplicationData() {
-      const sections = Array.from(document.querySelectorAll('section.card'))
-        .filter(section => !section.classList.contains('review-zone'))
-        .map(collectSectionData);
+    function getFieldValue(section, labelText) {
+      const field = Array.from(section.querySelectorAll('.field')).find(item => {
+        const label = item.querySelector('label');
+        return label && label.textContent.replace('*', '').trim() === labelText;
+      });
+      const input = field?.querySelector('input, select, textarea');
+      return input ? input.value : '';
+    }
 
-      const review = Array.from(document.querySelectorAll('section.review-zone')).map(collectSectionData);
+    function getSelectedChecks(section) {
+      return Array.from(section.querySelectorAll('.check-card'))
+        .filter(card => card.querySelector('input[type="checkbox"]')?.checked)
+        .map(card => card.textContent.trim())
+        .join(', ');
+    }
+
+    function getFileSummary(container) {
+      const files = Array.from(container.querySelectorAll('input[type="file"]')).flatMap(input =>
+        Array.from(input.files || []).map(file => file.name)
+      );
+      return files.length ? files.join(', ') : '';
+    }
+
+    function collectFeatureRows() {
+      return Array.from(document.querySelectorAll('#moduleSummaryTable tbody tr')).map((row, index) => {
+        const cells = row.children;
+        return {
+          no: row.querySelector('.row-number')?.textContent.trim() || String(index + 1),
+          name: cells[1]?.querySelector('input')?.value || '',
+          role: cells[2]?.querySelector('textarea')?.value || '',
+          input: cells[3]?.querySelector('textarea')?.value || '',
+          output: cells[4]?.querySelector('textarea')?.value || '',
+          manual: cells[5]?.querySelector('input')?.value || ''
+        };
+      });
+    }
+
+    function collectTechDetailRows() {
+      return Array.from(document.querySelectorAll('#techModuleList [data-module]')).map(card => {
+        const activePanel = card.querySelector('.case-panel.active');
+        const details = Array.from(activePanel?.querySelectorAll('.field') || []).map(field => {
+          const label = field.querySelector('label')?.textContent.trim() || '';
+          const value = field.querySelector('input, select, textarea')?.value || '';
+          return label ? `${label}: ${value || '미작성'}` : value;
+        });
+
+        return {
+          no: card.querySelector('.tech-feature-number')?.value || '',
+          name: card.querySelector('.tech-feature-name')?.value || '',
+          method: card.querySelector('.module-top select')?.selectedOptions[0]?.textContent || '',
+          details: details.join('\n'),
+          files: getFileSummary(card)
+        };
+      });
+    }
+
+    function collectApplicationData() {
+      syncTechModulesWithSummary();
+
+      const sections = Array.from(document.querySelectorAll('section.card'));
+      const productSection = sections[0];
+      const companySection = sections[1];
+      const categorySection = sections[2];
+      const certSection = sections[5];
+
+      const productRows = [
+        { no: '1.1', item: '제품 또는 서비스명', value: getFieldValue(productSection, '제품 또는 서비스명') },
+        { no: '1.2', item: '제품 버전', value: getFieldValue(productSection, '제품 버전') },
+        { no: '1.3', item: '제품 제공 형태', value: getFieldValue(productSection, '제품 제공 형태') },
+        { no: '1.4', item: '제품 개요', value: getFieldValue(productSection, '제품 개요') },
+        { no: '1.5', item: 'AI 적용 목적', value: getFieldValue(productSection, 'AI 적용 목적') },
+        { no: '1.6', item: 'AI 적용 범위 요약', value: getFieldValue(productSection, 'AI 적용 범위 요약') }
+      ];
+
+      const companyRows = [
+        { no: '2.1', item: '기업명', value: getFieldValue(companySection, '기업명') },
+        { no: '2.2', item: '사업자등록번호', value: getFieldValue(companySection, '사업자등록번호') },
+        { no: '2.3', item: '대표자명', value: getFieldValue(companySection, '대표자명') },
+        { no: '2.4', item: '주소', value: [document.getElementById('companyPostcode')?.value, document.getElementById('companyAddress')?.value, document.getElementById('companyDetailAddress')?.value].filter(Boolean).join(' ') },
+        { no: '2.5', item: '담당자명', value: getFieldValue(companySection, '담당자명') },
+        { no: '2.6', item: '연락처', value: getFieldValue(companySection, '연락처') },
+        { no: '2.7', item: '이메일', value: getFieldValue(companySection, '이메일') }
+      ];
+
+      const categoryRows = [
+        { no: '3.1', item: 'AI 제품 분류', value: getFieldValue(categorySection, 'AI 제품 분류') }
+      ];
+
+      const certRows = [
+        { no: '6.1', item: '보유 인증', value: getSelectedChecks(certSection) },
+        { no: '6.2', item: '인증서/시험성적서 첨부', value: getFileSummary(certSection) },
+        { no: '6.3', item: '비고', value: getFieldValue(certSection, '비고') }
+      ];
 
       return {
         schemaVersion: 'ai-product-technical-verification.v1',
         submittedAt: new Date().toISOString(),
         status: 'draft',
-        applicantData: sections,
-        ttaReviewData: review
+        application: {
+          productRows,
+          companyRows,
+          categoryRows,
+          features: collectFeatureRows(),
+          techDetails: collectTechDetailRows(),
+          certRows
+        },
+        applicantData: sections.map(collectSectionData)
       };
+    }
+
+    const SUBMIT_MODE = localStorage.getItem('aiFormSubmitMode') || 'static';
+    const API_BASE_URL = localStorage.getItem('aiFormApiBaseUrl') || 'http://127.0.0.1:8010';
+
+    async function submitApplication() {
+      const data = collectApplicationData();
+
+      if (SUBMIT_MODE === 'api') {
+        try {
+          const response = await fetch(API_BASE_URL + '/api/applications', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          if (!response.ok) throw new Error('API 제출 실패');
+
+          const result = await response.json();
+          window.location.href = 'review.html?id=' + encodeURIComponent(result.id) + '&source=api';
+          return;
+        } catch (error) {
+          alert('API 제출에 실패했습니다. 시연 서버 실행 상태와 API 주소를 확인하세요.');
+          return;
+        }
+      }
+
+      sessionStorage.setItem('aiApplicationDraft', JSON.stringify(data));
+      window.location.href = 'review.html';
     }
 
     function downloadJson() {

@@ -14,3 +14,10 @@ outputs/
 node_modules/
 dist/
 build/
+
+# Pilot backend local runtime
+pilot-backend/.venv/
+pilot-backend/data/
+pilot-backend/uploads/
+__pycache__/
+*.pyc
