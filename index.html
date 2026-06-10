@@ -132,6 +132,12 @@
       font-weight: 800;
     }
 
+    .label-note {
+      color: #8a96a8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     .req::after {
       content: " *";
       color: var(--red);
@@ -162,6 +168,13 @@
 
     textarea { min-height: 92px; resize: vertical; }
     input:focus, select:focus, textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(88,166,255,.12); }
+
+    input:disabled, textarea:disabled, select:disabled {
+      color: #64748b;
+      background: #f1f5f9;
+      border-color: #d7dee8;
+      cursor: not-allowed;
+    }
 
     .hint {
       margin: 6px 0 0;
@@ -637,8 +650,8 @@
       <div id="techModuleList">
         <div class="module-card" data-module>
           <div class="module-top">
-            <div class="field"><label class="req">기능 번호</label><input type="text" class="tech-feature-number" value="1" readonly /></div>
-            <div class="field"><label class="req">04번 기능명</label><input type="text" class="tech-feature-name" placeholder="04번 AI 기능명과 자동 연동" readonly /></div>
+            <div class="field"><label class="req">기능 번호 <span class="label-note">(04. 기능 목록 작성 시 자동으로 채워집니다.)</span></label><input type="text" class="tech-feature-number" value="1" disabled /></div>
+            <div class="field"><label class="req">기능명 <span class="label-note">(04. 기능 목록 작성 시 자동으로 채워집니다.)</span></label><input type="text" class="tech-feature-name" placeholder="04. 기능 목록 작성 시 자동으로 채워집니다." disabled /></div>
             <div class="field"><label class="req">AI 구현 방식</label><select onchange="changeCase(this)"><option value="A">A. 자체 학습 모델</option><option value="B">B. Fine-tuning 모델</option><option value="C">C. 외부 AI API 연계</option><option value="D">D. 온디바이스 AI</option><option value="E">E. 혼합형 AI 구성</option></select></div>
           </div>
 
@@ -1347,10 +1360,10 @@
         { no: '1.3', item: '제품 또는 서비스 제공 형태', value: getFieldValue(productSection, '제품 또는 서비스 제공 형태') },
         ...(productDeliveryOther ? [{ no: '1.3.1', item: '기타 제공 형태', value: productDeliveryOther }] : []),
         { no: '1.4', item: '제품 개요', value: getFieldValue(productSection, '제품 개요') },
-        { no: '1.4.1', item: '제품 환경 정보', value: getFieldValue(productSection, '제품 환경 정보') },
-        { no: '1.4.2', item: '제품 구조도', value: productArchitecture ? `${productArchitecture.name} (${Math.round(productArchitecture.size / 1024)}KB)` : '' },
-        { no: '1.5', item: 'AI 적용 목적', value: getFieldValue(productSection, 'AI 적용 목적') },
-        { no: '1.6', item: 'AI 적용 범위 요약', value: getFieldValue(productSection, 'AI 적용 범위 요약') }
+        { no: '1.5', item: '제품 환경 정보', value: getFieldValue(productSection, '제품 환경 정보') },
+        { no: '1.6', item: '제품 구조도', value: productArchitecture ? `${productArchitecture.name} (${Math.round(productArchitecture.size / 1024)}KB)` : '' },
+        { no: '1.7', item: 'AI 적용 목적', value: getFieldValue(productSection, 'AI 적용 목적') },
+        { no: '1.8', item: 'AI 적용 범위 요약', value: getFieldValue(productSection, 'AI 적용 범위 요약') }
       ];
 
       const companyRows = [

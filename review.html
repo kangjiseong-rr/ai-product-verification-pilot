@@ -540,7 +540,7 @@
       `;
     }
 
-    function renderProductInfoTable(rows) {
+    function renderProductInfoTable(rows, architecture) {
       const rowByNo = new Map((rows || []).map(row => [String(row.no), row]));
       const normalRows = ['1.1', '1.2', '1.3', '1.3.1']
         .map(no => rowByNo.get(no))
@@ -582,12 +582,13 @@
             <tbody>
               ${normalRows}
               ${wideRow('1.4')}
-              ${wideRow('1.4.1')}
-              ${wideRow('1.4.2')}
               ${wideRow('1.5')}
               ${wideRow('1.6')}
+              ${wideRow('1.7')}
+              ${wideRow('1.8')}
             </tbody>
           </table>
+          ${architecture ? renderProductArchitecture(architecture) : ''}
           <table>
             <tbody>
               <tr>
@@ -601,27 +602,7 @@
     }
 
     function renderProductInfoSection(app) {
-      return renderProductInfoTable(app.productRows) +
-        (app.productArchitecture ? `
-          <section class="card">
-            <h2 class="section-title">01-1. 제품 구조도 확인</h2>
-            ${renderProductArchitecture(app.productArchitecture)}
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:20%;">확인</th>
-                  <th>검토 의견</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="check-cell"><input type="checkbox" /></td>
-                  <td><textarea placeholder="검토 의견"></textarea></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        ` : '');
+      return renderProductInfoTable(app.productRows, app.productArchitecture);
     }
 
     function renderFeatureTable(features) {
