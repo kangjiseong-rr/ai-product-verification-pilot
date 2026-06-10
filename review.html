@@ -487,8 +487,69 @@
       `;
     }
 
+    function renderProductInfoTable(rows) {
+      const rowByNo = new Map((rows || []).map(row => [String(row.no), row]));
+      const normalRows = ['1.1', '1.2', '1.3', '1.3.1']
+        .map(no => rowByNo.get(no))
+        .filter(Boolean)
+        .map(row => `
+          <tr>
+            <td style="text-align:center; font-weight:800;">${escapeHtml(row.no)}</td>
+            <td>${escapeHtml(row.item)}</td>
+            <td>${displayValue(row.value)}</td>
+            <td class="check-cell"><input type="checkbox" /></td>
+            <td><textarea placeholder="검토 의견"></textarea></td>
+          </tr>
+        `).join('');
+
+      function wideRow(no) {
+        const row = rowByNo.get(no);
+        if (!row) return '';
+        return `
+          <tr>
+            <td style="text-align:center; font-weight:800;">${escapeHtml(row.no)}</td>
+            <td>${escapeHtml(row.item)}</td>
+            <td colspan="3">${displayValue(row.value)}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td style="text-align:center; font-weight:800;">확인 / 검토 의견</td>
+            <td colspan="3">
+              <label class="yn"><input type="checkbox"> 확인</label>
+              <textarea placeholder="검토 의견" style="margin-top:8px;"></textarea>
+            </td>
+          </tr>
+        `;
+      }
+
+      return `
+        <section class="card">
+          <h2 class="section-title">01. 제품 정보 확인</h2>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:10%;">번호</th>
+                <th style="width:22%;">확인 항목</th>
+                <th>제출 내용</th>
+                <th style="width:9%;">확인</th>
+                <th style="width:24%;">검토 의견</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${normalRows}
+              ${wideRow('1.4')}
+              ${wideRow('1.4.1')}
+              ${wideRow('1.4.2')}
+              ${wideRow('1.5')}
+              ${wideRow('1.6')}
+            </tbody>
+          </table>
+        </section>
+      `;
+    }
+
     function renderProductInfoSection(app) {
-      return renderFieldTable('01. 제품 정보 확인', app.productRows) +
+      return renderProductInfoTable(app.productRows) +
         (app.productArchitecture ? `
           <section class="card">
             <h2 class="section-title">01-1. 제품 구조도 확인</h2>
@@ -572,7 +633,7 @@
     function renderInternalReviewChecklist() {
       return `
         <section class="card review-zone">
-          <h2 class="section-title">07. TTA 내부 검토 체크리스트</h2>
+          <h2 class="section-title">07. 최종 확인 체크리스트</h2>
           <table>
             <thead>
               <tr>
@@ -596,7 +657,7 @@
             </tbody>
           </table>
           <div class="meta" style="margin-top:16px;">
-            <div class="meta-item"><strong>최종 판정</strong><select><option>검토 전</option><option>기술 확인 가능</option><option>보완 후 재검토</option><option>확인 곤란</option></select></div>
+            <div class="meta-item"><strong>최종 판정</strong><select><option>AI 제품 서비스 확인 완료</option><option>보완 후 재검토 필요</option><option>AI 제품 서비스 확인 불가</option></select></div>
             <div class="meta-item"><strong>검토자</strong><input type="text" /></div>
             <div class="meta-item"><strong>검토일</strong><input type="date" /></div>
           </div>
