@@ -12,6 +12,7 @@ AI 제품서비스 확인 신청 폼 구현 프로젝트입니다.
 - `index.html` is the current single-file application entry point.
 - Keep major form changes in Git commits so each version can be reviewed or restored.
 - Form behavior and field rules are documented in [docs/form-spec.md](docs/form-spec.md).
+- Pilot API behavior and local JSON storage rules are documented in [docs/api-spec.md](docs/api-spec.md).
 - `review.html` renders submitted JSON as a review specification with TTA checklist fields.
 - `pilot-backend/` contains a local-only pilot API adapter for demo submissions.
 
