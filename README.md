@@ -13,7 +13,7 @@ AI 제품서비스 확인 신청 폼 구현 프로젝트입니다.
 - Keep major form changes in Git commits so each version can be reviewed or restored.
 - Form behavior and field rules are documented in [docs/form-spec.md](docs/form-spec.md).
 - Pilot API behavior and local JSON storage rules are documented in [docs/api-spec.md](docs/api-spec.md).
-- Enterprise-facing writing guidance is documented in [docs/company-guide.md](docs/company-guide.md), with a PDF-ready HTML version at [docs/company-guide.html](docs/company-guide.html) and a distributable PDF at [docs/AI제품서비스확인_기업작성가이드_v0.3.pdf](docs/AI제품서비스확인_기업작성가이드_v0.3.pdf).
+- Enterprise-facing writing guidance is documented in [docs/company-guide.md](docs/company-guide.md), with a PDF-ready HTML version at [docs/company-guide.html](docs/company-guide.html) and a distributable PDF at [docs/AI제품서비스확인_기업작성가이드_v0.4.pdf](docs/AI제품서비스확인_기업작성가이드_v0.4.pdf).
 - `review.html` renders submitted JSON as a review specification with TTA checklist fields.
 - `pilot-backend/` contains a local-only pilot API adapter for demo submissions.
 

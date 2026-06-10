@@ -570,13 +570,15 @@
       <div class="section-head">
         <div>
           <h2 class="section-title">03. AI 제품 분류</h2>
-          <p class="section-desc">AI 제품 중분류를 기재합니다. 기존 인증 현황은 별도 항목에서 작성합니다.</p>
+          <p class="section-desc">AI 제품 분류 및 조달청 목록정보시스템(https://goods.g2b.go.kr)에 등록된 물품목록번호를 기재합니다.</p>
         </div>
         <span class="tag">분류</span>
       </div>
 
-      <div class="grid-2">
+      <div class="grid-3">
         <div class="field"><label class="req">AI 제품 분류</label><select onchange="toggleOtherField(this, 'aiProductCategoryOther')"><option value="">선택</option><option>인공지능 소프트웨어</option><option>인공지능 서비스</option><option>인공지능 기기</option><option>혼합형/기타</option></select></div>
+        <div class="field"><label>세부품명번호</label><input type="text" inputmode="numeric" maxlength="8" placeholder="00000000" oninput="limitEightDigitNumber(this)" /></div>
+        <div class="field"><label>물품식별번호</label><input type="text" inputmode="numeric" maxlength="8" placeholder="00000000" oninput="limitEightDigitNumber(this)" /></div>
       </div>
 
       <div class="field" id="aiProductCategoryOther" style="display:none; margin-top:16px;">
@@ -880,6 +882,10 @@
       input.value = parts.join('-');
     }
 
+    function limitEightDigitNumber(input) {
+      input.value = input.value.replace(/\D/g, '').slice(0, 8);
+    }
+
     function toggleOtherField(select, targetId) {
       const target = document.getElementById(targetId);
       if (!target) return;
@@ -1133,6 +1139,8 @@
       setFieldValue(companySection, '이메일', 'pilot@meditechlab.example');
 
       setFieldValue(categorySection, 'AI 제품 분류', '인공지능 서비스');
+      setFieldValue(categorySection, '세부품명번호', '00000000');
+      setFieldValue(categorySection, '물품식별번호', '00000000');
 
       ensureModuleRowCount(5);
       const featureRows = Array.from(document.querySelectorAll('#moduleSummaryTable tbody tr'));
@@ -1357,7 +1365,9 @@
 
       const categoryRows = [
         { no: '3.1', item: 'AI 제품 분류', value: getFieldValue(categorySection, 'AI 제품 분류') },
-        ...(aiProductCategoryOther ? [{ no: '3.1.1', item: '혼합형/기타 분류 설명', value: aiProductCategoryOther }] : [])
+        ...(aiProductCategoryOther ? [{ no: '3.1.1', item: '혼합형/기타 분류 설명', value: aiProductCategoryOther }] : []),
+        { no: '3.2', item: '세부품명번호', value: getFieldValue(categorySection, '세부품명번호') },
+        { no: '3.3', item: '물품식별번호', value: getFieldValue(categorySection, '물품식별번호') }
       ];
 
       const certRows = [
