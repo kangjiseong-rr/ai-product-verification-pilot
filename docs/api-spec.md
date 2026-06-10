@@ -1,10 +1,10 @@
-# AI 제품 서비스 확인 파일럿 API 명세
+# AI 제품·서비스 확인 파일럿 API 명세
 
 ## 1. 문서 개요
 
 | 항목 | 내용 |
 | --- | --- |
-| 문서명 | AI 제품 서비스 확인 파일럿 API 명세 |
+| 문서명 | AI 제품·서비스 확인 파일럿 API 명세 |
 | 대상 | `pilot-backend/server.js` |
 | 용도 | 파일럿 시연용 신청서 제출, 조회 API의 동작 기준 정의 |
 | 적용 범위 | 로컬 시연 서버, 정적 HTML 화면, 로컬 JSON 파일 저장 |
@@ -184,7 +184,7 @@ localStorage.setItem('aiFormApiBaseUrl', 'http://127.0.0.1:8010');
     "application_id": "3f8f7a6a-2f7c-4e43-ae94-5a8d5d8c56fd",
     "created_at": "2026-06-10T08:30:00.000Z",
     "status": "final-review",
-    "final_decision": "AI 제품 서비스 확인 완료"
+    "final_decision": "AI 제품·서비스 확인 완료"
   }
 ]
 ```
@@ -209,7 +209,7 @@ localStorage.setItem('aiFormApiBaseUrl', 'http://127.0.0.1:8010');
 | `status` | string | 작성 상태 |
 | `application` | object | 명세서 출력용 구조화 데이터 |
 | `application.productRows` | array | 제품 정보 확인 표 데이터 |
-| `application.productArchitecture` | object/null | 제품 구조도 이미지 데이터 |
+| `application.productArchitecture` | object | 제품 구조도 이미지 데이터. 필수 제출 항목 |
 | `application.companyRows` | array | 신청기업 정보 확인 표 데이터 |
 | `application.categoryRows` | array | AI 제품 분류 확인 표 데이터 |
 | `application.features` | array | 04번 AI 기능 목록 데이터 |

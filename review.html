@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI 제품 서비스 확인 명세서</title>
+  <title>AI 제품·서비스 확인 명세서</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -401,7 +401,7 @@
 <body>
   <div class="wrap">
     <header>
-      <h1>AI 제품 서비스 확인 명세서</h1>
+      <h1>AI 제품·서비스 확인 명세서</h1>
       <p class="lead">신청서 제출 데이터를 검토용 표로 변환한 화면입니다. 확인란과 검토 의견은 검토자가 작성합니다.</p>
       <div class="meta" id="submissionMeta"></div>
     </header>
@@ -413,7 +413,7 @@
 
     <main id="reviewContent"></main>
     <section id="finalSpecOutput" class="card final-output" aria-live="polite">
-      <h2 class="section-title">최종 AI 제품 서비스 확인 명세서</h2>
+      <h2 class="section-title">최종 AI 제품·서비스 확인 명세서</h2>
       <p class="lead">검토자가 작성한 확인란, 판정, 검토 의견을 반영한 최종 출력본입니다.</p>
       <div class="final-actions">
         <button type="button" class="btn" onclick="downloadFinalReviewJson()">최종 결과 JSON 저장</button>
@@ -627,8 +627,8 @@
                 <th style="width:7%;">번호</th>
                 <th style="width:16%;">AI 기능명</th>
                 <th>AI 역할</th>
-                <th>사용자 입력</th>
-                <th>프로그램 출력</th>
+                <th>입력 데이터 유형</th>
+                <th>출력 데이터 유형</th>
                 <th style="width:13%;">매뉴얼 위치</th>
                 <th style="width:7%;">확인</th>
               </tr>
@@ -704,7 +704,7 @@
             </tbody>
           </table>
           <div class="meta" style="margin-top:16px;">
-            <div class="meta-item"><strong>최종 판정</strong><select><option>AI 제품 서비스 확인 완료</option><option>보완 후 재검토 필요</option><option>AI 제품 서비스 확인 불가</option></select></div>
+            <div class="meta-item"><strong>최종 판정</strong><select><option>AI 제품·서비스 확인 완료</option><option>보완 후 재검토 필요</option><option>AI 제품·서비스 확인 불가</option></select></div>
             <div class="meta-item"><strong>검토자</strong><input type="text" /></div>
             <div class="meta-item"><strong>검토일</strong><input type="date" /></div>
           </div>

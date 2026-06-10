@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI 제품 서비스 확인 신청서 v20</title>
+  <title>AI 제품·서비스 확인 신청서 v20</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -245,7 +245,24 @@
     .btn-primary { background: var(--blue); border-color: var(--blue); color: #fff; }
     .btn-primary:hover { color: #fff; filter: brightness(1.08); }
     .btn-ghost { width: 100%; border-style: dashed; color: var(--blue); background: transparent; margin-top: 12px; }
-    .btn-danger { background: rgba(255,123,114,.12); color: var(--red); border-color: rgba(255,123,114,.35); min-height: 34px; padding: 0 10px; }
+    .btn-danger {
+      background: rgba(255,123,114,.12);
+      color: var(--red);
+      border-color: rgba(255,123,114,.35);
+      min-height: 30px;
+      padding: 0 6px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    #moduleSummaryTable .btn-danger {
+      min-height: 26px;
+      padding: 0 4px;
+      border-radius: 7px;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+    }
 
     .address-search {
       display: grid;
@@ -480,9 +497,9 @@
 <body>
   <div class="wrap">
     <header>
-      <div class="eyebrow">AI PRODUCT SERVICE VERIFICATION</div>
-      <h1>AI 제품 서비스 확인 신청서</h1>
-      <p class="lead">「인공지능 발전과 신뢰 기반 조성 등에 관한 기본법」제16조제3항에 따라 같은 법 시행령 제15조제4항제1호에 따라 인공지능 또는 인공지능기술이 활용된 인공지능제품 및 서비스를 확인하고자 작성하는 AI 기술 확인 신청 양식입니다.</p>
+      <div class="eyebrow">AI PRODUCT & SERVICE VERIFICATION</div>
+      <h1>AI 제품·서비스 확인 신청서</h1>
+      <p class="lead">「인공지능 발전과 신뢰 기반 조성 등에 관한 기본법」제16조제3항에 따라 같은 법 시행령 제15조제4항제1호에 따라<br>인공지능 또는 인공지능기술이 활용된 인공지능제품 및 서비스를 확인하고자 작성하는 AI 기술 확인 신청 양식입니다.</p>
     </header>
 
     <section class="card">
@@ -501,7 +518,7 @@
       </div>
 
       <div class="field" id="productDeliveryOther" style="display:none; margin-top:16px;">
-        <label>기타 제공 형태</label>
+        <label class="req">기타 제공 형태</label>
         <input type="text" placeholder="기타 제공 형태를 작성" />
       </div>
 
@@ -518,9 +535,9 @@
 - 런타임: Docker, Python 3.12, PyTorch 2.6.0, CUDA 12.1
 - 외부 연계: PACS, 병원 EMR, OpenAI API"></textarea></div>
         <div class="field">
-          <label>제품 구조도</label>
+          <label class="req">제품 구조도</label>
           <input id="productArchitectureFile" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" onchange="validateProductArchitectureFile(this)" />
-          <p class="hint">제품 아키텍처 또는 구성도 JPG/PNG 1개만 첨부 가능. 최대 5MB, 권장 가로 1200~2000px.</p>
+          <p class="hint">제품 아키텍처 또는 구성도 JPG/PNG 1개만 첨부 가능. 최대 5MB, 권장 가로 1200~2000px. AI 모델 위치 식별이 가능한 제품 구조도를 제출합니다.</p>
         </div>
       </div>
 
@@ -546,12 +563,12 @@
 
       <div class="grid-3">
         <div class="field"><label class="req">기업명</label><input type="text" placeholder="예: 주식회사 ○○○" /></div>
-        <div class="field"><label>사업자등록번호</label><input id="businessRegistrationNumber" type="text" inputmode="numeric" maxlength="12" placeholder="000-00-00000" oninput="formatBusinessRegistrationNumber(this)" /></div>
-        <div class="field"><label>대표자명</label><input type="text" /></div>
+        <div class="field"><label class="req">사업자등록번호</label><input id="businessRegistrationNumber" type="text" inputmode="numeric" maxlength="12" placeholder="000-00-00000" oninput="formatBusinessRegistrationNumber(this)" /></div>
+        <div class="field"><label class="req">대표자명</label><input type="text" /></div>
       </div>
 
       <div class="field" style="margin-top:16px;">
-        <label>주소</label>
+        <label class="req">주소</label>
         <div class="address-search">
           <input id="companyPostcode" type="text" placeholder="우편번호" readonly />
           <button type="button" class="btn" onclick="openCompanyAddressSearch()">검색</button>
@@ -560,11 +577,11 @@
 
       <div class="grid-2" style="margin-top:10px;">
         <div class="field">
-          <label>기본 주소</label>
+          <label class="req">기본 주소</label>
           <input id="companyAddress" type="text" placeholder="주소 검색 결과가 입력됩니다" readonly />
         </div>
         <div class="field">
-          <label>상세 주소</label>
+          <label class="req">상세 주소</label>
           <input id="companyDetailAddress" type="text" placeholder="건물명, 층, 호수 등" />
         </div>
       </div>
@@ -572,9 +589,9 @@
       <div class="form-subsection">
         <p class="form-subsection-title">담당자 정보</p>
         <div class="grid-3">
-          <div class="field"><label>담당자명</label><input type="text" /></div>
-          <div class="field"><label>연락처</label><input type="text" /></div>
-          <div class="field"><label>이메일</label><input type="email" /></div>
+          <div class="field"><label class="req">담당자명</label><input type="text" /></div>
+          <div class="field"><label class="req">연락처</label><input type="text" /></div>
+          <div class="field"><label class="req">이메일</label><input type="email" /></div>
         </div>
       </div>
     </section>
@@ -590,12 +607,12 @@
 
       <div class="grid-3">
         <div class="field"><label class="req">AI 제품 분류</label><select onchange="toggleOtherField(this, 'aiProductCategoryOther')"><option value="">선택</option><option>인공지능 소프트웨어</option><option>인공지능 서비스</option><option>인공지능 기기</option><option>혼합형/기타</option></select></div>
-        <div class="field"><label>세부품명번호</label><input type="text" inputmode="numeric" maxlength="8" placeholder="00000000" oninput="limitEightDigitNumber(this)" /></div>
-        <div class="field"><label>물품식별번호</label><input type="text" inputmode="numeric" maxlength="8" placeholder="00000000" oninput="limitEightDigitNumber(this)" /></div>
+        <div class="field"><label class="req">세부품명번호</label><input type="text" inputmode="numeric" maxlength="8" placeholder="00000000" oninput="limitEightDigitNumber(this)" /></div>
+        <div class="field"><label class="req">물품식별번호</label><input type="text" inputmode="numeric" maxlength="8" placeholder="00000000" oninput="limitEightDigitNumber(this)" /></div>
       </div>
 
       <div class="field" id="aiProductCategoryOther" style="display:none; margin-top:16px;">
-        <label>혼합형/기타 분류 설명</label>
+        <label class="req">혼합형/기타 분류 설명</label>
         <input type="text" placeholder="혼합형 또는 기타 분류 내용을 작성" />
       </div>
     </section>
@@ -613,10 +630,10 @@
         <thead>
           <tr>
             <th style="width:6%;">번호</th>
-            <th style="width:19%;">AI 기능명</th>
-            <th style="width:21%;">AI 역할</th>
-            <th style="width:17%;">사용자 입력</th>
-            <th style="width:17%;">프로그램 출력</th>
+            <th style="width:19%;">AI 기능명 *</th>
+            <th style="width:21%;">AI 역할 *</th>
+            <th style="width:17%;">입력 데이터 유형 *</th>
+            <th style="width:17%;">출력 데이터 유형 *</th>
             <th style="width:14%;">매뉴얼 위치</th>
             <th style="width:6%;">삭제</th>
           </tr>
@@ -656,7 +673,7 @@
           </div>
 
           <div class="grid-2 common-tech-fields" style="margin:16px 0;">
-            <div class="field"><label>AI 연산 자원</label><input type="text" placeholder="예: NVIDIA A100, RTX 4090, T4, CPU only, NPU, 외부 API 제공" /></div>
+            <div class="field"><label class="req">AI 연산 자원</label><input type="text" placeholder="예: NVIDIA A100, RTX 4090, T4, CPU only, NPU, 외부 API 제공" /></div>
             <div class="field"><label>AI 실행 환경 세부정보</label><textarea placeholder="예:
 - OS: Ubuntu 22.04
 - CUDA/드라이버: CUDA 12.1, NVIDIA Driver 535
@@ -667,23 +684,23 @@
           <div class="case-panel active" data-case="A">
             <p class="sub-title">A. 자체 학습 모델</p>
             <div class="grid-2">
-              <div class="field"><label>학습 데이터 사양</label><textarea placeholder="예:
+              <div class="field"><label class="req">학습 데이터 사양</label><textarea placeholder="예:
 - 데이터 출처: 자체수집, 공공, 구매 데이터 등
 - 데이터 유형: 비정형 이미지 데이터
 - 데이터 규모: 약 200,000건 (약 180GB)"></textarea></div>
-              <div class="field"><label>개발환경·라이브러리·알고리즘</label><textarea placeholder="예:
+              <div class="field"><label class="req">개발환경·라이브러리·알고리즘</label><textarea placeholder="예:
 - 개발언어: Python 3.12
 - 라이브러리: PyTorch 2.6.0, TorchVision
 - 알고리즘: CNN 기반 멀티 레이블 객체 탐지 알고리즘"></textarea></div>
             </div>
             <div class="io-pair-grid">
               <div class="io-pair">
-                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
 - 환자 DICOM 영상 파일
 - 실시간 생체 신호 데이터 (체중: 72kg, 하트레이트: 115bpm)"></textarea></div>
               </div>
               <div class="io-pair">
-                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
 - 병변 위치: Bounding Box [x: 142, y: 532, w: 85, h: 120]
 - 질환 진단: Pulmonary Edema (확률: 94.2%)
 - 기기 제어 신호 JSON 값"></textarea></div>
@@ -694,20 +711,20 @@
           <div class="case-panel" data-case="B">
             <p class="sub-title">B. Fine-tuning 모델</p>
             <div class="grid-3">
-              <div class="field"><label>Base Model 명칭·버전</label><input type="text" placeholder="예: Llama-3-8B, ResNet-50 v2, BERT-base 등" /></div>
-              <div class="field"><label>튜닝 방법</label><input type="text" placeholder="예: 전이학습, LoRA, QLoRA, Full Fine-tuning" /></div>
-              <div class="field"><label>튜닝 데이터셋</label><textarea placeholder="예:
+              <div class="field"><label class="req">Base Model 명칭·버전</label><input type="text" placeholder="예: Llama-3-8B, ResNet-50 v2, BERT-base 등" /></div>
+              <div class="field"><label class="req">튜닝 방법</label><input type="text" placeholder="예: 전이학습, LoRA, QLoRA, Full Fine-tuning" /></div>
+              <div class="field"><label class="req">튜닝 데이터셋</label><textarea placeholder="예:
 - 해당 병원의 폐렴 확진 환자 데이터 12,000건 활용
 - 전문의 3인의 교차 검증 라벨링 데이터셋
 - Learning Rate=1e-4, Batch Size=32, Epochs=50"></textarea></div>
             </div>
             <div class="io-pair-grid">
               <div class="io-pair">
-                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
 - 환자 흉부 X-ray 영상 파일 (DICOM 형식)"></textarea></div>
               </div>
               <div class="io-pair">
-                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
 - 의심 병변 분류 결과 및 위험도 등급
 - 폐렴 중증도: 3단계(Severe) / 분석 확신도: 89.7%"></textarea></div>
               </div>
@@ -717,16 +734,16 @@
           <div class="case-panel" data-case="C">
             <p class="sub-title">C. 외부 AI API 연계</p>
             <div class="grid-3">
-              <div class="field"><label>외부 API·모델</label><input type="text" placeholder="예: OpenAI gpt-4o-mini, Claude 3.5 Sonnet, Gemini 1.5 Pro" /></div>
+              <div class="field"><label class="req">외부 API·모델</label><input type="text" placeholder="예: OpenAI gpt-4o-mini, Claude 3.5 Sonnet, Gemini 1.5 Pro" /></div>
             </div>
             <div class="io-pair-grid">
               <div class="io-pair">
-                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
 - 소비자가 작성한 가방 제품의 불만족 리뷰 원본 텍스트
 - API 요청에 포함되는 프롬프트 또는 JSON payload"></textarea></div>
               </div>
               <div class="io-pair">
-                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
 - 쇼핑몰 관리자용 리뷰 요약
 - 고객 답변 초안 또는 분류 결과"></textarea></div>
               </div>
@@ -736,19 +753,19 @@
           <div class="case-panel" data-case="D">
             <p class="sub-title">D. 온디바이스 AI</p>
             <div class="grid-3">
-              <div class="field"><label>타겟 하드웨어·OS</label><textarea placeholder="예:
+              <div class="field"><label class="req">타겟 하드웨어·OS</label><textarea placeholder="예:
 - 하드웨어: NVIDIA Jetson Orin Nano (8GB)
 - OS: Linux for Tegra r36.3 / Ubuntu 22.04 LTS"></textarea></div>
-              <div class="field"><label>추론 런타임</label><input type="text" placeholder="예: TensorRT, OpenVINO, TFLite" /></div>
+              <div class="field"><label class="req">추론 런타임</label><input type="text" placeholder="예: TensorRT, OpenVINO, TFLite" /></div>
             </div>
             <div class="io-pair-grid">
               <div class="io-pair">
-                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
 - 실시간 환자 생체 신호 데이터
 - 라이다 센서의 장애물 거리 측정값"></textarea></div>
               </div>
               <div class="io-pair">
-                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
 - 하드웨어 모터 제어 신호
 - 밸브 차단, 긴급 정지 명령, 경고등 점등 등"></textarea></div>
               </div>
@@ -758,21 +775,21 @@
           <div class="case-panel" data-case="E">
             <p class="sub-title">E. 혼합형 AI 구성</p>
             <div class="grid-2">
-              <div class="field"><label>혼합 구성 설명</label><textarea placeholder="예:
+              <div class="field"><label class="req">혼합 구성 설명</label><textarea placeholder="예:
 - 적용 모델명: ViT-L/14 (비전) + Llama-3-8B-Instruct (LLM)
 - 구조 설명: 비전 모델과 언어 모델이 결합된 멀티모달 VLM 파이프라인"></textarea></div>
-              <div class="field"><label>모델별 역할 및 입출력 흐름</label><textarea placeholder="1. 비전 모델(ViT): [인풋] 흉부 CT 영상 -> 특징 벡터 데이터
+              <div class="field"><label class="req">모델별 역할 및 입출력 흐름</label><textarea placeholder="1. 비전 모델(ViT): [인풋] 흉부 CT 영상 -> 특징 벡터 데이터
 
 2. 언어 모델(Llama): [인풋] 특징 벡터 -> 최종 국문 판독 소견서 텍스트 생성"></textarea></div>
             </div>
             <div class="io-pair-grid">
               <div class="io-pair">
-                <div class="field"><label>입력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
 - 최초 입력: 환자의 흉부 CT 디지털 영상 파일
 - 중간 데이터: 비전 모델이 추출한 결절 메타데이터 JSON"></textarea></div>
               </div>
               <div class="io-pair">
-                <div class="field"><label>출력 데이터 설명</label><textarea placeholder="예:
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
 - 최종 출력: 의료진 화면에 표출되는 의학적 판독 소견서
 - 자동 생성 문구 또는 구조화된 결과 JSON"></textarea></div>
               </div>
@@ -794,7 +811,7 @@
 
           <div class="grid-2" style="margin-top:14px;">
             <div class="field"><label>기타 참고자료 첨부</label><input type="file" multiple /></div>
-            <div class="field"><label>아키텍처/데이터 흐름도</label><input type="file" accept="image/*,.pdf" /></div>
+            <div class="field"><label>아키텍처/데이터 흐름도 (선택사항)</label><input type="file" accept="image/*,.pdf" /></div>
           </div>
         </div>
       </div>
@@ -1410,6 +1427,8 @@
     const API_BASE_URL = localStorage.getItem('aiFormApiBaseUrl') || 'http://127.0.0.1:8010';
 
     async function submitApplication() {
+      if (!validateRequiredFields(false)) return;
+
       const data = await collectApplicationData();
 
       if (SUBMIT_MODE === 'api') {
@@ -1454,22 +1473,53 @@
     }
 
     function validateDraft() {
+      validateRequiredFields(true);
+    }
+
+    function validateRequiredFields(showSuccess) {
       const required = document.querySelectorAll('.req');
       let missing = 0;
+
+      function isVisible(el) {
+        return !!(el && el.getClientRects().length);
+      }
+
+      function markField(field, invalid) {
+        if (!field) return;
+        field.style.borderColor = invalid ? 'var(--red)' : 'var(--line)';
+      }
+
       required.forEach(label => {
+        if (!isVisible(label)) return;
         const field = label.parentElement.querySelector('input, select, textarea');
-        if (field && !field.value.trim()) {
+        if (!field || field.disabled) return;
+        if (!field.value.trim()) {
           missing++;
-          field.style.borderColor = 'var(--red)';
-        } else if (field) {
-          field.style.borderColor = 'var(--line)';
+          markField(field, true);
+        } else {
+          markField(field, false);
         }
+      });
+
+      document.querySelectorAll('#moduleSummaryTable tbody tr').forEach(row => {
+        [1, 2, 3, 4].forEach(index => {
+          const field = row.children[index]?.querySelector('input, textarea');
+          if (!field) return;
+          if (!field.value.trim()) {
+            missing++;
+            markField(field, true);
+          } else {
+            markField(field, false);
+          }
+        });
       });
 
       if (missing > 0) {
         alert('필수 입력 항목 ' + missing + '개가 비어 있습니다. 빨간 테두리 항목을 확인하세요.');
+        return false;
       } else {
-        alert('필수 항목 기준으로는 누락이 없습니다. 증빙자료와 TTA 검토 항목은 별도로 확인하세요.');
+        if (showSuccess) alert('필수 항목 기준으로는 누락이 없습니다. 증빙자료와 TTA 검토 항목은 별도로 확인하세요.');
+        return true;
       }
     }
 
