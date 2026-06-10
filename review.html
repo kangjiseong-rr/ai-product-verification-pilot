@@ -377,10 +377,25 @@
 
     @media print {
       @page { size: A4; margin: 12mm; }
+      html, body { width: 210mm; min-width: 210mm; }
       body { background: #fff; color: #111; }
       .wrap { width: 186mm; max-width: none; min-width: 186mm; padding: 0; }
       .meta { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
       table { table-layout: fixed !important; }
+      #finalSpecOutput,
+      #finalSpecContent,
+      #finalSpecContent .final-review-content {
+        width: 186mm !important;
+        max-width: none !important;
+        min-width: 186mm !important;
+      }
+      #finalSpecContent table {
+        width: 100% !important;
+        table-layout: fixed !important;
+      }
+      #finalSpecContent .meta {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      }
       header, .card { box-shadow: none; background: #fff; color: #111; break-inside: avoid; }
       .final-output { padding: 0; border: 0; }
       .final-output > .section-title { margin-top: 0; }
