@@ -369,15 +369,18 @@
       text-align: center;
     }
 
-    @media (max-width: 960px) {
+    @media screen and (max-width: 960px) {
       .meta { grid-template-columns: 1fr; }
       table { table-layout: auto; }
       .actions { justify-content: stretch; flex-direction: column; }
     }
 
     @media print {
+      @page { size: A4; margin: 12mm; }
       body { background: #fff; color: #111; }
-      .wrap { max-width: none; padding: 0; }
+      .wrap { width: 186mm; max-width: none; min-width: 186mm; padding: 0; }
+      .meta { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+      table { table-layout: fixed !important; }
       header, .card { box-shadow: none; background: #fff; color: #111; break-inside: avoid; }
       .final-output { padding: 0; border: 0; }
       .final-output > .section-title { margin-top: 0; }
