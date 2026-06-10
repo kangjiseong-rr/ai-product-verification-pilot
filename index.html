@@ -144,6 +144,11 @@
       font-weight: 900;
     }
 
+    .required-mark {
+      color: var(--red);
+      font-weight: 900;
+    }
+
     input, select, textarea {
       width: 100%;
       min-height: 42px;
@@ -630,10 +635,10 @@
         <thead>
           <tr>
             <th style="width:6%;">번호</th>
-            <th style="width:19%;">AI 기능명 *</th>
-            <th style="width:21%;">AI 역할 *</th>
-            <th style="width:17%;">입력 데이터 유형 *</th>
-            <th style="width:17%;">출력 데이터 유형 *</th>
+            <th style="width:19%;">AI 기능명 <span class="required-mark">*</span></th>
+            <th style="width:21%;">AI 역할 <span class="required-mark">*</span></th>
+            <th style="width:17%;">입력 데이터 유형 <span class="required-mark">*</span></th>
+            <th style="width:17%;">출력 데이터 유형 <span class="required-mark">*</span></th>
             <th style="width:14%;">매뉴얼 위치</th>
             <th style="width:6%;">삭제</th>
           </tr>
