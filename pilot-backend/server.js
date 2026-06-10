@@ -7,9 +7,11 @@ const { URL } = require('url');
 const PORT = Number(process.env.PORT || 8010);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const DATA_DIR = path.join(__dirname, 'data', 'applications');
+const FINAL_RESULTS_DIR = path.join(__dirname, 'data', 'final-results');
 
 function ensureDataDir() {
   fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.mkdirSync(FINAL_RESULTS_DIR, { recursive: true });
 }
 
 function sendJson(res, statusCode, payload) {
@@ -65,6 +67,10 @@ function applicationPath(id) {
   return path.join(DATA_DIR, `${id}.json`);
 }
 
+function finalResultPath(id) {
+  return path.join(FINAL_RESULTS_DIR, `${id}.json`);
+}
+
 function saveApplication(payload) {
   ensureDataDir();
   const id = crypto.randomUUID();
@@ -105,6 +111,48 @@ function listApplications() {
 
 function getApplication(id) {
   const filePath = applicationPath(id);
+  if (!fs.existsSync(filePath)) return null;
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function saveFinalResult(payload) {
+  ensureDataDir();
+  const id = crypto.randomUUID();
+  const createdAt = new Date().toISOString();
+  const stored = {
+    ...payload,
+    id,
+    submittedAt: payload.submittedAt || createdAt,
+    status: payload.status || 'final-review',
+    pilotMeta: {
+      createdAt,
+      applicationId: payload.applicationId || null,
+    },
+  };
+
+  fs.writeFileSync(finalResultPath(id), JSON.stringify(stored, null, 2), 'utf8');
+  return stored;
+}
+
+function listFinalResults() {
+  ensureDataDir();
+  return fs.readdirSync(FINAL_RESULTS_DIR)
+    .filter(file => file.endsWith('.json'))
+    .map(file => {
+      const payload = JSON.parse(fs.readFileSync(path.join(FINAL_RESULTS_DIR, file), 'utf8'));
+      return {
+        id: payload.id,
+        application_id: payload.applicationId || payload.pilotMeta?.applicationId || '',
+        created_at: payload.pilotMeta?.createdAt || payload.submittedAt,
+        status: payload.status || 'final-review',
+        final_decision: payload.finalReview?.decision?.finalDecision || '',
+      };
+    })
+    .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+}
+
+function getFinalResult(id) {
+  const filePath = finalResultPath(id);
   if (!fs.existsSync(filePath)) return null;
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
@@ -155,6 +203,34 @@ async function handleApi(req, res, url) {
 
   if (req.method === 'GET' && url.pathname === '/api/applications') {
     sendJson(res, 200, listApplications());
+    return;
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/final-results') {
+    try {
+      const body = await readRequestBody(req);
+      const payload = JSON.parse(body || '{}');
+      const stored = saveFinalResult(payload);
+      sendJson(res, 201, { id: stored.id, status: 'created' });
+    } catch (error) {
+      sendJson(res, 400, { error: 'Invalid final result payload' });
+    }
+    return;
+  }
+
+  if (req.method === 'GET' && url.pathname === '/api/final-results') {
+    sendJson(res, 200, listFinalResults());
+    return;
+  }
+
+  const finalResultMatch = url.pathname.match(/^\/api\/final-results\/([^/]+)$/);
+  if (req.method === 'GET' && finalResultMatch) {
+    const payload = getFinalResult(finalResultMatch[1]);
+    if (!payload) {
+      sendJson(res, 404, { error: 'Final result not found' });
+      return;
+    }
+    sendJson(res, 200, payload);
     return;
   }
 

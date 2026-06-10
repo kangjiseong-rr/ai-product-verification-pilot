@@ -359,6 +359,16 @@
       font-weight: 600;
     }
 
+    .final-checkbox {
+      display: inline-block;
+      min-width: 24px;
+      color: var(--title);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+    }
+
     @media (max-width: 960px) {
       .meta { grid-template-columns: 1fr; }
       table { table-layout: auto; }
@@ -406,6 +416,8 @@
       <h2 class="section-title">최종 AI 제품 서비스 확인 명세서</h2>
       <p class="lead">검토자가 작성한 확인란, 판정, 검토 의견을 반영한 최종 출력본입니다.</p>
       <div class="final-actions">
+        <button type="button" class="btn" onclick="downloadFinalReviewJson()">최종 결과 JSON 저장</button>
+        <button type="button" class="btn" onclick="submitFinalReviewJson()">최종 결과 JSON 전송</button>
         <button type="button" class="btn btn-primary" onclick="printFinalSpecification()">최종 명세서 인쇄 / PDF 저장</button>
       </div>
       <div id="finalSpecContent"></div>
@@ -414,6 +426,7 @@
 
   <script>
     const API_BASE_URL = localStorage.getItem('aiFormApiBaseUrl') || 'http://127.0.0.1:8010';
+    let loadedApplicationData = null;
 
     function escapeHtml(value) {
       return String(value ?? '')
@@ -443,6 +456,11 @@
         <div class="meta-item"><strong>상태</strong>${displayValue(data.status || 'draft')}</div>
         <div class="meta-item"><strong>스키마</strong>${displayValue(data.schemaVersion)}</div>
       `;
+    }
+
+    function findSubmittedValue(rows, item) {
+      const row = (rows || []).find(entry => entry.item === item);
+      return row?.value || '';
     }
 
     function renderFieldTable(title, rows) {
@@ -498,10 +516,12 @@
             <tbody>
               ${body}
               <tr>
-                <td colspan="3">
-                  <label class="yn"><input type="checkbox"> 확인</label>
-                  <textarea placeholder="검토 의견" style="margin-top:8px;"></textarea>
-                </td>
+                <th colspan="2">확인</th>
+                <th>검토 의견</th>
+              </tr>
+              <tr>
+                <td colspan="2" class="check-cell"><input type="checkbox" /></td>
+                <td><textarea placeholder="검토 의견"></textarea></td>
               </tr>
             </tbody>
           </table>
@@ -532,11 +552,6 @@
             <td>${displayValue(row.value)}</td>
             <td class="check-cell"><input type="checkbox" /></td>
           </tr>
-          <tr>
-            <td></td>
-            <td style="text-align:center; font-weight:800;">검토 의견</td>
-            <td colspan="2"><textarea placeholder="검토 의견"></textarea></td>
-          </tr>
         `).join('');
 
       function wideRow(no) {
@@ -548,11 +563,6 @@
             <td>${escapeHtml(row.item)}</td>
             <td>${displayValue(row.value)}</td>
             <td class="check-cell"><input type="checkbox" /></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td style="text-align:center; font-weight:800;">검토 의견</td>
-            <td colspan="2"><textarea placeholder="검토 의견"></textarea></td>
           </tr>
         `;
       }
@@ -578,6 +588,14 @@
               ${wideRow('1.6')}
             </tbody>
           </table>
+          <table>
+            <tbody>
+              <tr>
+                <th style="width:20%;">검토 의견</th>
+                <td><textarea placeholder="검토 의견"></textarea></td>
+              </tr>
+            </tbody>
+          </table>
         </section>
       `;
     }
@@ -589,12 +607,16 @@
             <h2 class="section-title">01-1. 제품 구조도 확인</h2>
             ${renderProductArchitecture(app.productArchitecture)}
             <table>
+              <thead>
+                <tr>
+                  <th style="width:20%;">확인</th>
+                  <th>검토 의견</th>
+                </tr>
+              </thead>
               <tbody>
                 <tr>
-                  <td>
-                    <label class="yn"><input type="checkbox"> 확인</label>
-                    <textarea placeholder="검토 의견" style="margin-top:8px;"></textarea>
-                  </td>
+                  <td class="check-cell"><input type="checkbox" /></td>
+                  <td><textarea placeholder="검토 의견"></textarea></td>
                 </tr>
               </tbody>
             </table>
@@ -612,7 +634,6 @@
           <td>${displayValue(feature.output)}</td>
           <td>${displayValue(feature.manual)}</td>
           <td class="check-cell"><input type="checkbox" /></td>
-          <td><textarea placeholder="검토 의견"></textarea></td>
         </tr>
       `).join('');
 
@@ -629,7 +650,6 @@
                 <th>프로그램 출력</th>
                 <th style="width:13%;">매뉴얼 위치</th>
                 <th style="width:7%;">확인</th>
-                <th style="width:18%;">검토 의견</th>
               </tr>
             </thead>
             <tbody>${body}</tbody>
@@ -645,18 +665,16 @@
           <td>${displayValue(row.name)}</td>
           <td>${displayValue(row.method)}</td>
           <td>${displayValue(row.files)}</td>
+          <td class="check-cell"><input type="checkbox" /></td>
         </tr>
         <tr class="tech-evidence-row">
           <td class="tech-evidence-label">구현 근거</td>
-          <td class="tech-evidence-value" colspan="3">${displayValue(row.details)}</td>
+          <td class="tech-evidence-value" colspan="4">${displayValue(row.details)}</td>
         </tr>
         <tr>
           <td></td>
-          <td style="text-align:center; font-weight:900;">확인 / 검토 의견</td>
-          <td colspan="2">
-            <label class="yn"><input type="checkbox"> 확인</label>
-            <textarea placeholder="검토 의견" style="margin-top:8px;"></textarea>
-          </td>
+          <td style="text-align:center; font-weight:900;">검토 의견</td>
+          <td colspan="3"><textarea placeholder="검토 의견"></textarea></td>
         </tr>
       `).join('');
 
@@ -670,6 +688,7 @@
                 <th>기능명</th>
                 <th style="width:24%;">AI 구현 방식</th>
                 <th style="width:18%;">첨부자료</th>
+                <th style="width:7%;">확인</th>
               </tr>
             </thead>
             <tbody>${body}</tbody>
@@ -698,7 +717,7 @@
               ${renderChecklistRow('', '1.2', '적용된 인공지능처리 연산체계가 학습·추론 등 인공지능으로서의 특성을 가지고 있는가?')}
               ${renderChecklistRow('', '1.3', '제품·서비스에 입력된 데이터가 인공지능처리 연산체계를 거쳐 유의미한 결과(예측, 생성 등)를 출력하는가?')}
               ${renderChecklistRow('인공지능 기능 확인', '2.1', '제품·서비스의 구조도상 인공지능 또는 인공지능기술의 위치가 명확하며, 제품·서비스의 구동 체계와 필수불가결하게 결합되어 동작하는가?', true)}
-              ${renderChecklistRow('', '2.2', '인공지능처리 연산체계가 제품·서비스의 아래 사항 중 하나 이상에 기여하는가?<br>● 새로운 기능의 추가<br>● 제품 또는 서비스의 주요 기능의 성능 향상<br>● 이용자의 편의성 향상<br>● 이용자의 접근성 향상<br>● 전력 등 제품 또는 서비스의 자원 효율성 향상')}
+              ${renderChecklistRow('', '2.2', '인공지능처리 연산체계가 제품·서비스의 아래 사항 중 하나 이상에 기여하는가?<br>◦ 새로운 기능의 추가<br>◦ 제품 또는 서비스의 주요 기능의 성능 향상<br>◦ 이용자의 편의성 향상<br>◦ 이용자의 접근성 향상<br>◦ 전력 등 제품 또는 서비스의 자원 효율성 향상')}
               ${renderChecklistRow('', '2.3', '인공지능처리 연산체계가 적용된 주요 기능이 정상적으로 동작하는가?')}
               ${renderChecklistRow('외부 모델 연동 확인', '3.1', '외부 모델과 연동된 경우 호출 로그나 응용프로그램 프로그래밍 인터페이스 키(API Key)를 확인 가능한가?', true)}
             </tbody>
@@ -771,8 +790,8 @@
 
       root.querySelectorAll('input[type="checkbox"]').forEach(control => {
         const span = document.createElement('span');
-        span.className = control.checked ? 'final-value' : 'final-muted';
-        span.textContent = control.checked ? '확인' : '미확인';
+        span.className = 'final-checkbox';
+        span.textContent = control.checked ? '☑' : '☐';
         control.replaceWith(span);
       });
 
@@ -816,6 +835,149 @@
       setTimeout(() => window.print(), 50);
     }
 
+    function getSectionTitleForControl(control) {
+      return control.closest('section.card')?.querySelector('.section-title')?.textContent.trim() || '';
+    }
+
+    function getCellTextWithoutControls(cell) {
+      const clone = cell.cloneNode(true);
+      clone.querySelectorAll('input, select, textarea, button').forEach(control => control.remove());
+      return clone.textContent.replace(/\s+/g, ' ').trim();
+    }
+
+    function getRowContextForControl(control) {
+      const row = control.closest('tr');
+      if (!row) return { rowNo: '', rowText: '' };
+      const cells = Array.from(row.children).map(getCellTextWithoutControls);
+      return {
+        rowNo: cells[0] || '',
+        rowText: cells.filter(Boolean).join(' | '),
+      };
+    }
+
+    function getMetaItemLabel(control) {
+      return control.closest('.meta-item')?.querySelector('strong')?.textContent.trim() || '';
+    }
+
+    function collectFinalReviewData() {
+      const root = document.getElementById('reviewContent');
+      const app = loadedApplicationData?.application || {};
+      const applicationId = new URLSearchParams(window.location.search).get('id') || loadedApplicationData?.id || null;
+
+      const checks = Array.from(root.querySelectorAll('input[type="checkbox"]')).map(control => {
+        const context = getRowContextForControl(control);
+        return {
+          section: getSectionTitleForControl(control),
+          rowNo: context.rowNo,
+          rowText: context.rowText,
+          checked: control.checked,
+          marker: control.checked ? '☑' : '☐',
+        };
+      });
+
+      const radioNames = Array.from(new Set(Array.from(root.querySelectorAll('input[type="radio"]')).map(control => control.name)));
+      const radioResults = radioNames.map(name => {
+        const controls = Array.from(root.querySelectorAll(`input[type="radio"][name="${CSS.escape(name)}"]`));
+        const checked = controls.find(control => control.checked);
+        const context = getRowContextForControl(controls[0]);
+        return {
+          section: getSectionTitleForControl(controls[0]),
+          rowNo: context.rowNo,
+          rowText: context.rowText,
+          value: checked?.value || '',
+        };
+      });
+
+      const selectValues = Array.from(root.querySelectorAll('select')).map(control => {
+        const context = getRowContextForControl(control);
+        return {
+          section: getSectionTitleForControl(control),
+          label: getMetaItemLabel(control),
+          rowNo: context.rowNo,
+          rowText: context.rowText,
+          value: control.selectedOptions[0]?.textContent.trim() || '',
+        };
+      });
+
+      const textValues = Array.from(root.querySelectorAll('textarea, input[type="text"], input[type="date"]')).map(control => {
+        const context = getRowContextForControl(control);
+        return {
+          section: getSectionTitleForControl(control),
+          label: getMetaItemLabel(control),
+          rowNo: context.rowNo,
+          rowText: context.rowText,
+          type: control.type || control.tagName.toLowerCase(),
+          value: control.value.trim(),
+        };
+      });
+
+      const decision = {
+        finalDecision: selectValues.find(item => item.label === '최종 판정')?.value || '',
+        reviewer: textValues.find(item => item.label === '검토자')?.value || '',
+        reviewedAt: textValues.find(item => item.label === '검토일')?.value || '',
+      };
+
+      return {
+        schemaVersion: 'ai-product-final-review.v1',
+        applicationId,
+        submittedAt: new Date().toISOString(),
+        status: 'final-review',
+        applicationSummary: {
+          companyName: findSubmittedValue(app.companyRows, '기업명'),
+          productName: findSubmittedValue(app.productRows, '제품 또는 서비스명'),
+          productVersion: findSubmittedValue(app.productRows, '제품 버전'),
+        },
+        sourceApplication: loadedApplicationData,
+        finalReview: {
+          decision,
+          checks,
+          radioResults,
+          selectValues,
+          textValues,
+        },
+      };
+    }
+
+    function ensureFinalSpecificationGenerated() {
+      const output = document.getElementById('finalSpecOutput');
+      const finalContent = document.getElementById('finalSpecContent');
+      if (!output.classList.contains('active') || !finalContent.children.length) {
+        generateFinalSpecification();
+      }
+    }
+
+    function downloadFinalReviewJson() {
+      ensureFinalSpecificationGenerated();
+      const data = collectFinalReviewData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ai-product-final-review.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    async function submitFinalReviewJson() {
+      ensureFinalSpecificationGenerated();
+      const data = collectFinalReviewData();
+      try {
+        const response = await fetch(API_BASE_URL + '/api/final-results', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) throw new Error('API 제출 실패');
+        const result = await response.json();
+        alert('최종 결과 JSON을 전송했습니다. 접수 ID: ' + result.id);
+      } catch (error) {
+        alert('최종 결과 JSON 전송에 실패했습니다. 로컬 시연 서버 실행 상태를 확인하거나 JSON 저장 버튼을 사용하세요.');
+      }
+    }
+
     async function loadApplication() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
@@ -824,7 +986,8 @@
         try {
           const response = await fetch(API_BASE_URL + '/api/applications/' + encodeURIComponent(id));
           if (!response.ok) throw new Error('not found');
-          renderReview(await response.json());
+          loadedApplicationData = await response.json();
+          renderReview(loadedApplicationData);
           return;
         } catch (error) {
           document.getElementById('reviewContent').innerHTML = '<section class="card error">제출 데이터를 불러오지 못했습니다. 시연 서버 실행 상태와 API 주소를 확인하세요.</section>';
@@ -838,7 +1001,8 @@
         return;
       }
 
-      renderReview(JSON.parse(stored));
+      loadedApplicationData = JSON.parse(stored);
+      renderReview(loadedApplicationData);
     }
 
     loadApplication();

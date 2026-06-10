@@ -16,7 +16,7 @@
 | 서버 런타임 | Node.js 기본 모듈 기반 HTTP 서버 | 별도 npm 패키지 없음 |
 | 기본 주소 | `http://127.0.0.1:8010` | `PORT` 환경변수로 포트 변경 가능 |
 | 데이터 저장 | 로컬 JSON 파일 | DB 미구현 |
-| 저장 위치 | `pilot-backend/data/applications/*.json` | `.gitignore` 대상 |
+| 저장 위치 | `pilot-backend/data/applications/*.json`, `pilot-backend/data/final-results/*.json` | `.gitignore` 대상 |
 | 파일 저장소 | 별도 파일 저장소 없음 | 제품 구조도는 JSON 내부 data URL로 포함 |
 | 인증/권한 | 미구현 | 파일럿 시연용 |
 | 개인정보 보호 정책 | 미구현 | 운영 전환 시 별도 설계 필요 |
@@ -50,6 +50,9 @@ localStorage.setItem('aiFormApiBaseUrl', 'http://127.0.0.1:8010');
 | 4.2 | `POST` | `/api/applications` | 신청서 JSON 접수 | 접수 ID |
 | 4.3 | `GET` | `/api/applications` | 접수 목록 조회 | 접수 요약 배열 |
 | 4.4 | `GET` | `/api/applications/{id}` | 접수 상세 조회 | 신청서 전체 JSON |
+| 4.5 | `POST` | `/api/final-results` | 최종 검토 결과 JSON 접수 | 최종 결과 ID |
+| 4.6 | `GET` | `/api/final-results` | 최종 검토 결과 목록 조회 | 최종 결과 요약 배열 |
+| 4.7 | `GET` | `/api/final-results/{id}` | 최종 검토 결과 상세 조회 | 최종 결과 전체 JSON |
 
 ## 5. API 상세
 
@@ -142,6 +145,61 @@ localStorage.setItem('aiFormApiBaseUrl', 'http://127.0.0.1:8010');
 }
 ```
 
+### 5.5 최종 검토 결과 접수
+
+| 항목 | 내용 |
+| --- | --- |
+| Method | `POST` |
+| Path | `/api/final-results` |
+| Content-Type | `application/json` |
+| 요청 본문 | 최종 검토 결과 JSON |
+| 성공 응답 | `201 Created` |
+| 실패 응답 | `400 Invalid final result payload` |
+
+요청 본문은 `review.html`에서 생성하는 최종 검토 결과 JSON을 사용한다. 신청서 원본 데이터와 함께 검토자가 입력한 확인 체크박스, Y/N 판정, 확인 방법, 검토 의견, 최종 판정 정보를 포함한다.
+
+성공 응답 예시:
+
+```json
+{
+  "id": "bf4d30e4-9ec7-4f10-96ce-773ec6ddfb4a",
+  "status": "created"
+}
+```
+
+### 5.6 최종 검토 결과 목록 조회
+
+| 항목 | 내용 |
+| --- | --- |
+| Method | `GET` |
+| Path | `/api/final-results` |
+| 성공 응답 | `200 OK` |
+
+응답 예시:
+
+```json
+[
+  {
+    "id": "bf4d30e4-9ec7-4f10-96ce-773ec6ddfb4a",
+    "application_id": "3f8f7a6a-2f7c-4e43-ae94-5a8d5d8c56fd",
+    "created_at": "2026-06-10T08:30:00.000Z",
+    "status": "final-review",
+    "final_decision": "AI 제품 서비스 확인 완료"
+  }
+]
+```
+
+### 5.7 최종 검토 결과 상세 조회
+
+| 항목 | 내용 |
+| --- | --- |
+| Method | `GET` |
+| Path | `/api/final-results/{id}` |
+| 성공 응답 | `200 OK` |
+| 실패 응답 | `404 Final result not found` |
+
+성공 응답은 저장된 최종 검토 결과 JSON 전체를 반환한다.
+
 ## 6. 신청서 JSON 구조
 
 | 필드 | 타입 | 내용 |
@@ -168,20 +226,37 @@ localStorage.setItem('aiFormApiBaseUrl', 'http://127.0.0.1:8010');
 | `type` | string | MIME 타입 | `image/png` 또는 `image/jpeg` |
 | `dataUrl` | string | 이미지 data URL | 검토/최종 명세서 이미지 출력에 사용 |
 
+## 6-1. 최종 검토 결과 JSON 구조
+
+| 필드 | 타입 | 내용 |
+| --- | --- | --- |
+| `schemaVersion` | string | 최종 검토 결과 JSON 구조 버전 |
+| `applicationId` | string/null | API 모드로 접수된 신청서 ID |
+| `submittedAt` | string | 최종 검토 결과 JSON 생성 시각 |
+| `status` | string | 현재 `final-review` |
+| `applicationSummary` | object | 기업명, 제품명, 제품 버전 요약 |
+| `sourceApplication` | object | 원본 신청서 JSON |
+| `finalReview.decision` | object | 최종 판정, 검토자, 검토일 |
+| `finalReview.checks` | array | 확인 체크박스 결과와 체크박스 문자 |
+| `finalReview.radioResults` | array | Y/N 판정 결과 |
+| `finalReview.selectValues` | array | 확인 방법, 최종 판정 등 선택값 |
+| `finalReview.textValues` | array | 검토 의견, 검토자, 검토일 등 텍스트 입력값 |
+
 ## 7. 저장 방식
 
 | 항목 | 내용 |
 | --- | --- |
-| 저장 단위 | 접수 1건당 JSON 파일 1개 |
+| 저장 단위 | 신청서 접수 1건당 JSON 파일 1개, 최종 검토 결과 1건당 JSON 파일 1개 |
 | 파일명 | `{id}.json` |
 | ID 생성 | `crypto.randomUUID()` |
-| 저장 경로 | `pilot-backend/data/applications` |
+| 저장 경로 | `pilot-backend/data/applications`, `pilot-backend/data/final-results` |
 | 저장 데이터 | 요청 JSON + 서버 생성 `id`, `pilotMeta` |
 
 저장 예시:
 
 ```text
 pilot-backend/data/applications/3f8f7a6a-2f7c-4e43-ae94-5a8d5d8c56fd.json
+pilot-backend/data/final-results/bf4d30e4-9ec7-4f10-96ce-773ec6ddfb4a.json
 ```
 
 ## 8. 정적 모드와 API 모드
