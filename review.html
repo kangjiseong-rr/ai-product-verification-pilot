@@ -166,6 +166,30 @@
       line-height: 1.55;
     }
 
+    .architecture-box {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    .architecture-box-title {
+      margin: 0 0 10px;
+      color: var(--title);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .architecture-image {
+      display: block;
+      width: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
     .yn {
       display: inline-flex;
       align-items: center;
@@ -302,6 +326,11 @@
     }
 
     #finalSpecContent .tech-evidence-value {
+      background: #fff;
+    }
+
+    #finalSpecContent .architecture-box {
+      border-radius: 0;
       background: #fff;
     }
 
@@ -447,6 +476,27 @@
       `;
     }
 
+    function renderProductArchitecture(architecture) {
+      if (!architecture?.dataUrl) return '';
+
+      return `
+        <div class="architecture-box">
+          <p class="architecture-box-title">제품 구조도</p>
+          <img class="architecture-image" src="${escapeHtml(architecture.dataUrl)}" alt="${escapeHtml(architecture.name || '제품 구조도')}" />
+        </div>
+      `;
+    }
+
+    function renderProductInfoSection(app) {
+      return renderFieldTable('01. 제품 정보 확인', app.productRows) +
+        (app.productArchitecture ? `
+          <section class="card">
+            <h2 class="section-title">01-1. 제품 구조도 확인</h2>
+            ${renderProductArchitecture(app.productArchitecture)}
+          </section>
+        ` : '');
+    }
+
     function renderFeatureTable(features) {
       const body = (features || []).map(feature => `
         <tr>
@@ -576,7 +626,7 @@
       const app = data.application || {};
       renderMeta(data);
       document.getElementById('reviewContent').innerHTML = [
-        renderFieldTable('01. 제품 정보 확인', app.productRows),
+        renderProductInfoSection(app),
         renderFieldTable('02. 신청기업 정보 확인', app.companyRows),
         renderFieldTable('03. AI 제품 분류 확인', app.categoryRows),
         renderFeatureTable(app.features),

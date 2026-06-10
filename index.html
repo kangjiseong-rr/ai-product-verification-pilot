@@ -497,6 +497,20 @@
         <div class="field"><label class="req">AI 적용 목적</label><textarea placeholder="AI를 통해 해결하려는 업무 목적 또는 활용 목적을 작성"></textarea></div>
       </div>
 
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="field"><label>제품 환경 정보</label><textarea placeholder="예:
+- 운영 형태: SaaS
+- 서버/OS: AWS EC2 g5.xlarge, Ubuntu 22.04
+- 연산 자원: NVIDIA A10G GPU 1대, CPU 4 vCPU, Memory 16GB
+- 런타임: Docker, Python 3.12, PyTorch 2.6.0, CUDA 12.1
+- 외부 연계: PACS, 병원 EMR, OpenAI API"></textarea></div>
+        <div class="field">
+          <label>제품 구조도</label>
+          <input id="productArchitectureFile" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" onchange="validateProductArchitectureFile(this)" />
+          <p class="hint">제품 아키텍처 또는 구성도 JPG/PNG 1개만 첨부 가능. 최대 5MB, 권장 가로 1200~2000px.</p>
+        </div>
+      </div>
+
       <div class="field" style="margin-top:16px;">
         <label class="req">AI 적용 범위 요약</label>
         <textarea placeholder="AI가 실제로 수행하는 판단·예측·분류·생성·추천 기능과 비AI 기능을 구분하여 작성"></textarea>
@@ -884,6 +898,51 @@
       }
     }
 
+    const PRODUCT_ARCHITECTURE_MAX_SIZE = 5 * 1024 * 1024;
+    const PRODUCT_ARCHITECTURE_TYPES = ['image/jpeg', 'image/png'];
+
+    function validateProductArchitectureFile(input) {
+      const file = input.files?.[0];
+      if (!file) return true;
+
+      if (!PRODUCT_ARCHITECTURE_TYPES.includes(file.type)) {
+        alert('제품 구조도는 JPG 또는 PNG 파일만 첨부할 수 있습니다.');
+        input.value = '';
+        return false;
+      }
+
+      if (file.size > PRODUCT_ARCHITECTURE_MAX_SIZE) {
+        alert('제품 구조도 파일은 최대 5MB까지 첨부할 수 있습니다.');
+        input.value = '';
+        return false;
+      }
+
+      return true;
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function collectProductArchitecture() {
+      const input = document.getElementById('productArchitectureFile');
+      const file = input?.files?.[0];
+      if (!file) return null;
+      if (!validateProductArchitectureFile(input)) return null;
+
+      return {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        dataUrl: await readFileAsDataUrl(file)
+      };
+    }
+
     function removeRow(btn) {
       const tbody = btn.closest('tbody');
       if (tbody.rows.length <= 1) {
@@ -1032,7 +1091,25 @@
       syncTechModulesWithSummary();
     }
 
-    function fillSampleData() {
+    async function attachSampleArchitectureImage() {
+      const input = document.getElementById('productArchitectureFile');
+      if (!input) return;
+
+      const response = await fetch('assets/sample-product-architecture.png');
+      if (!response.ok) {
+        alert('샘플 제품 구조도 파일을 불러오지 못했습니다. 로컬 서버에서 다시 실행해 주세요.');
+        return;
+      }
+
+      const blob = await response.blob();
+      const file = new File([blob], 'sample-product-architecture.png', { type: 'image/png' });
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      input.files = dataTransfer.files;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    async function fillSampleData() {
       const sections = Array.from(document.querySelectorAll('section.card'));
       const productSection = sections[0];
       const companySection = sections[1];
@@ -1043,6 +1120,8 @@
       setFieldValue(productSection, '제품 버전', 'v1.8.2-pilot');
       setFieldValue(productSection, '제품 또는 서비스 제공 형태', 'SaaS(클라우드 서비스형)');
       setFieldValue(productSection, '제품 개요', '흉부 영상과 환자 생체 신호를 분석하여 이상 소견 후보를 표시하고, 의료진 검토용 요약 보고서를 생성하는 AI 기반 판독 보조 서비스입니다. 병원 PACS와 연동하여 검사 단위로 분석 결과를 제공합니다.');
+      setFieldValue(productSection, '제품 환경 정보', '- 운영 형태: SaaS\n- 서버/OS: AWS EC2 g5.xlarge, Ubuntu 22.04\n- 연산 자원: NVIDIA A10G GPU 1대, CPU 4 vCPU, Memory 16GB\n- 런타임: Docker, Python 3.12, PyTorch 2.6.0, CUDA 12.1\n- 외부 연계: PACS, 병원 EMR, OpenAI API');
+      await attachSampleArchitectureImage();
       setFieldValue(productSection, 'AI 적용 목적', '의료진이 대량의 영상 검사를 우선순위화하고 의심 병변을 빠르게 검토할 수 있도록 보조합니다.');
       setFieldValue(productSection, 'AI 적용 범위 요약', 'AI는 영상 내 이상 후보 탐지, 위험도 산정, 판독 초안 요약을 수행합니다. 최종 진단과 처방 결정은 의료진이 수행합니다.');
 
@@ -1149,7 +1228,7 @@
       });
       setFieldValue(certSection, '비고', 'GS인증 예비 심사 자료 보유, 본 파일럿에서는 첨부파일 업로드 생략');
 
-      alert('시연용 샘플 데이터를 입력했습니다. 첨부파일은 보안상 자동 지정되지 않습니다.');
+      alert('시연용 샘플 데이터를 입력했습니다. 제품 구조도 샘플 PNG도 자동 첨부되었습니다.');
     }
 
     function getFieldLabel(field) {
@@ -1247,7 +1326,7 @@
       });
     }
 
-    function collectApplicationData() {
+    async function collectApplicationData() {
       syncTechModulesWithSummary();
 
       const sections = Array.from(document.querySelectorAll('section.card'));
@@ -1257,6 +1336,7 @@
       const certSection = sections[5];
       const productDeliveryOther = getFieldValue(productSection, '기타 제공 형태');
       const aiProductCategoryOther = getFieldValue(categorySection, '혼합형/기타 분류 설명');
+      const productArchitecture = await collectProductArchitecture();
 
       const productRows = [
         { no: '1.1', item: '제품 또는 서비스명', value: getFieldValue(productSection, '제품 또는 서비스명') },
@@ -1264,6 +1344,8 @@
         { no: '1.3', item: '제품 또는 서비스 제공 형태', value: getFieldValue(productSection, '제품 또는 서비스 제공 형태') },
         ...(productDeliveryOther ? [{ no: '1.3.1', item: '기타 제공 형태', value: productDeliveryOther }] : []),
         { no: '1.4', item: '제품 개요', value: getFieldValue(productSection, '제품 개요') },
+        { no: '1.4.1', item: '제품 환경 정보', value: getFieldValue(productSection, '제품 환경 정보') },
+        { no: '1.4.2', item: '제품 구조도', value: productArchitecture ? `${productArchitecture.name} (${Math.round(productArchitecture.size / 1024)}KB)` : '' },
         { no: '1.5', item: 'AI 적용 목적', value: getFieldValue(productSection, 'AI 적용 목적') },
         { no: '1.6', item: 'AI 적용 범위 요약', value: getFieldValue(productSection, 'AI 적용 범위 요약') }
       ];
@@ -1295,6 +1377,7 @@
         status: 'draft',
         application: {
           productRows,
+          productArchitecture,
           companyRows,
           categoryRows,
           features: collectFeatureRows(),
@@ -1309,7 +1392,7 @@
     const API_BASE_URL = localStorage.getItem('aiFormApiBaseUrl') || 'http://127.0.0.1:8010';
 
     async function submitApplication() {
-      const data = collectApplicationData();
+      const data = await collectApplicationData();
 
       if (SUBMIT_MODE === 'api') {
         try {
@@ -1330,12 +1413,17 @@
         }
       }
 
-      sessionStorage.setItem('aiApplicationDraft', JSON.stringify(data));
+      try {
+        sessionStorage.setItem('aiApplicationDraft', JSON.stringify(data));
+      } catch (error) {
+        alert('브라우저 임시 저장 공간이 부족합니다. 제품 구조도 이미지 크기를 줄이거나 API 제출 모드로 시연하세요.');
+        return;
+      }
       window.location.href = 'review.html';
     }
 
-    function downloadJson() {
-      const data = collectApplicationData();
+    async function downloadJson() {
+      const data = await collectApplicationData();
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
