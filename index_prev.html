@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 제품·서비스 확인 신청서 v20</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --card-2: #f8fafc;
+      --line: #d8dee8;
+      --line-2: #c4ccd8;
+      --text: #243042;
+      --muted: #667085;
+      --title: #111827;
+      --blue: #2563eb;
+      --orange: #ea7a1f;
+      --green: #15803d;
+      --red: #dc2626;
+      --yellow: #b45309;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Inter", "Noto Sans KR", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    header {
+      padding: 34px 36px;
+      border: 1px solid var(--line);
+      border-top: 6px solid var(--blue);
+      background: linear-gradient(135deg, #ffffff 0%, #eef4ff 100%);
+      border-radius: 18px;
+      margin-bottom: 24px;
+      box-shadow: 0 14px 34px rgba(15,23,42,.08);
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-weight: 800;
+      letter-spacing: .06em;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 30px;
+      color: var(--title);
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      max-width: 900px;
+      font-size: 15px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 22px;
+      box-shadow: 0 10px 26px rgba(15,23,42,.06);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--title);
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .section-desc {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--line-2);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .io-pair-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+    .io-pair {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .label-note {
+      color: #8a96a8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .req::after {
+      content: " *";
+      color: var(--red);
+      font-weight: 900;
+    }
+
+    .required-mark {
+      color: var(--red);
+      font-weight: 900;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-height: 42px;
+      padding: 11px 12px;
+      color: var(--title);
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: none;
+      font: inherit;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #8a96a8;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    textarea::placeholder {
+      white-space: pre-line;
+    }
+
+    textarea { min-height: 92px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(88,166,255,.12); }
+
+    input:disabled, textarea:disabled, select:disabled {
+      color: #64748b;
+      background: #f1f5f9;
+      border-color: #d7dee8;
+      cursor: not-allowed;
+    }
+
+    .hint {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .notice {
+      padding: 14px 16px;
+      border: 1px solid rgba(88,166,255,.35);
+      border-radius: 12px;
+      background: rgba(88,166,255,.08);
+      color: #1d4ed8;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 11px;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    .row-number {
+      text-align: center;
+      vertical-align: middle;
+      color: var(--title);
+      font-weight: 900;
+    }
+
+    th {
+      background: #eef2f7;
+      color: #1e3a8a;
+      text-align: center;
+      font-weight: 900;
+    }
+
+    td input, td select, td textarea { font-size: 12px; }
+    td textarea { min-height: 78px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 9px;
+      border: 1px solid var(--line-2);
+      background: #eef2f7;
+      color: var(--text);
+      font-weight: 850;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover { border-color: var(--blue); color: var(--blue); }
+    .btn-primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .btn-primary:hover { color: #fff; filter: brightness(1.08); }
+    .btn-ghost { width: 100%; border-style: dashed; color: var(--blue); background: transparent; margin-top: 12px; }
+    .btn-danger {
+      background: rgba(255,123,114,.12);
+      color: var(--red);
+      border-color: rgba(255,123,114,.35);
+      min-height: 30px;
+      padding: 0 6px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    #moduleSummaryTable .btn-danger {
+      min-height: 26px;
+      padding: 0 4px;
+      border-radius: 7px;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .address-search {
+      display: grid;
+      grid-template-columns: 160px max-content;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .address-search .btn {
+      min-width: 64px;
+      min-height: 42px;
+      padding: 0 14px;
+      white-space: nowrap;
+    }
+
+    .form-subsection {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .form-subsection-title {
+      margin: 0 0 14px;
+      color: var(--title);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .checks {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .check-card {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      background: var(--card-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text);
+      font-weight: 750;
+      font-size: 13px;
+    }
+
+    .check-card input { width: auto; min-height: auto; }
+
+    .module-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card-2);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .module-top {
+      display: grid;
+      grid-template-columns: .42fr 1.1fr .9fr;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .case-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .case-tab {
+      display: block;
+      padding: 13px 10px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: #eef2f7;
+      cursor: pointer;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .case-tab input { display: none; }
+    .case-tab:has(input:checked) {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: rgba(88,166,255,.1);
+    }
+
+    .case-panel {
+      display: none;
+      border: 1px dashed rgba(88,166,255,.55);
+      border-radius: 13px;
+      padding: 16px;
+      background: #ffffff;
+      margin-bottom: 14px;
+    }
+
+    .case-panel.active { display: block; }
+
+    .sub-title {
+      color: var(--blue);
+      font-weight: 900;
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+
+    .io-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .io-grid textarea {
+      font-family: "Consolas", "Fira Code", monospace;
+      min-height: 120px;
+      font-size: 12px;
+    }
+
+    .yn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 8px;
+      font-weight: 800;
+      color: var(--title);
+      white-space: nowrap;
+    }
+    .yn input { width: auto; min-height: auto; }
+
+    .foot-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 26px;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .flow-box {
+      padding: 16px;
+      border: 1px solid rgba(88,166,255,.35);
+      border-radius: 14px;
+      background: rgba(88,166,255,.06);
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .flow-box-title {
+      color: var(--blue);
+      font-weight: 900;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .flow-box-desc {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0 0 10px;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 118px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card-2);
+    }
+
+    .flow-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(88,166,255,.14);
+      color: var(--blue);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .flow-title {
+      color: var(--title);
+      font-weight: 900;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .flow-desc {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .json-preview {
+      min-height: 180px;
+      font-family: "Consolas", "Fira Code", monospace;
+      font-size: 12px;
+      white-space: pre;
+    }
+
+    @media screen and (max-width: 960px) {
+      .grid-2, .grid-3, .grid-4, .checks, .case-tabs, .io-grid, .io-pair-grid, .module-top {
+        grid-template-columns: 1fr;
+      }
+      .address-search {
+        grid-template-columns: 1fr;
+      }
+      header, .card { padding: 20px; }
+      table { table-layout: auto; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      html, body { width: 210mm; min-width: 210mm; }
+      body { background: #fff; color: #111; }
+      .wrap { width: 186mm; max-width: none; min-width: 186mm; padding: 0; }
+      .grid-2, .io-pair-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .grid-3, .io-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+      .grid-4, .flow-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+      .checks, .case-tabs { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+      .module-top { grid-template-columns: .42fr 1.1fr .9fr !important; }
+      .address-search { grid-template-columns: 160px max-content !important; }
+      table { table-layout: fixed !important; }
+      header, .card, .module-card { box-shadow: none; background: #fff; color: #111; break-inside: avoid; }
+      input, select, textarea { background: #fff; color: #111; border-color: #999; }
+      .btn, .btn-danger, .btn-ghost, .foot-actions { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">AI PRODUCT & SERVICE VERIFICATION</div>
+      <h1>AI 제품·서비스 확인 신청서</h1>
+      <p class="lead">「인공지능 발전과 신뢰 기반 조성 등에 관한 기본법」제16조제3항에 따라 같은 법 시행령 제15조제4항제1호에 따라<br>인공지능 또는 인공지능기술이 활용된 인공지능제품 및 서비스를 확인하고자 작성하는 AI 기술 확인 신청 양식입니다.</p>
+    </header>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">01. 제품 정보</h2>
+          <p class="section-desc">기술 확인의 기준이 되는 제품명, 제공 형태, AI 적용 목적 및 범위를 먼저 식별합니다.</p>
+        </div>
+        <span class="tag">신청기업 작성</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="field"><label class="req">제품 또는 서비스명</label><input type="text" data-field="productName" placeholder="기술 확인 대상 제품명" /></div>
+        <div class="field"><label class="req">제품 버전</label><input type="text" data-field="productVersion" placeholder="예: v2.1.0" /></div>
+        <div class="field"><label class="req">제품 또는 서비스 제공 형태</label><select data-field="productDelivery" onchange="toggleOtherField(this, 'productDeliveryOther')"><option value="">선택</option><option>SaaS(클라우드 서비스형)</option><option>온프레미스(자체 구축형)</option><option>패키지/클라이언트 설치형</option><option>기기 탑재</option><option>기타(하이브리드형 등)</option></select></div>
+      </div>
+
+      <div class="field" id="productDeliveryOther" style="display:none; margin-top:16px;">
+        <label class="req">기타 제공 형태</label>
+        <input type="text" data-field="productDeliveryOther" placeholder="기타 제공 형태를 작성" />
+      </div>
+
+      <div class="field" style="margin-top:16px;">
+        <label class="req">제품 개요</label>
+        <textarea data-field="productOverview" placeholder="제품의 목적, 주요 사용자, 핵심 기능을 3~5문장으로 작성"></textarea>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="field"><label>제품 환경 정보</label><textarea data-field="productEnvironment" placeholder="예:
+- 운영 형태: SaaS
+- 서버/OS: AWS EC2 g5.xlarge, Ubuntu 22.04
+- 연산 자원: NVIDIA A10G GPU 1대, CPU 4 vCPU, Memory 16GB
+- 런타임: Docker, Python 3.12, PyTorch 2.6.0, CUDA 12.1
+- 외부 연계: PACS, 병원 EMR, OpenAI API"></textarea></div>
+        <div class="field">
+          <label class="req">제품 구조도</label>
+          <input id="productArchitectureFile" data-field="productArchitectureFile" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" onchange="validateProductArchitectureFile(this)" />
+          <p class="hint">제품 아키텍처 또는 구성도 JPG/PNG 1개만 첨부 가능. 최대 5MB, 권장 가로 1200~2000px. AI 모델 위치 식별이 가능한 제품 구조도를 제출합니다.</p>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:16px;">
+        <label class="req">AI 적용 목적</label>
+        <textarea data-field="aiPurpose" placeholder="AI를 통해 해결하려는 업무 목적 또는 활용 목적을 작성"></textarea>
+      </div>
+
+      <div class="field" style="margin-top:16px;">
+        <label class="req">AI 적용 범위 요약</label>
+        <textarea data-field="aiScope" placeholder="AI가 실제로 수행하는 판단·예측·분류·생성·추천 기능과 비AI 기능을 구분하여 작성"></textarea>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">02. 신청기업 정보</h2>
+          <p class="section-desc">기술 확인 신청 기업 및 담당자 정보를 작성합니다.</p>
+        </div>
+        <span class="tag">신청기업 작성</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="field"><label class="req">기업명</label><input type="text" data-field="companyName" placeholder="예: 주식회사 ○○○" /></div>
+        <div class="field"><label class="req">사업자등록번호</label><input id="businessRegistrationNumber" data-field="businessRegistrationNumber" type="text" inputmode="numeric" maxlength="12" placeholder="000-00-00000" oninput="formatBusinessRegistrationNumber(this)" /></div>
+        <div class="field"><label class="req">대표자명</label><input type="text" data-field="representativeName" /></div>
+      </div>
+
+      <div class="field" style="margin-top:16px;">
+        <label class="req">주소</label>
+        <div class="address-search">
+          <input id="companyPostcode" data-field="companyPostcode" type="text" placeholder="우편번호" readonly />
+          <button type="button" class="btn" onclick="openCompanyAddressSearch()">검색</button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:10px;">
+        <div class="field">
+          <label class="req">기본 주소</label>
+          <input id="companyAddress" data-field="companyAddress" type="text" placeholder="주소 검색 결과가 입력됩니다" readonly />
+        </div>
+        <div class="field">
+          <label class="req">상세 주소</label>
+          <input id="companyDetailAddress" data-field="companyDetailAddress" type="text" placeholder="건물명, 층, 호수 등" />
+        </div>
+      </div>
+
+      <div class="form-subsection">
+        <p class="form-subsection-title">담당자 정보</p>
+        <div class="grid-3">
+          <div class="field"><label class="req">담당자명</label><input type="text" data-field="contactName" /></div>
+          <div class="field"><label class="req">연락처</label><input type="text" data-field="contactPhone" /></div>
+          <div class="field"><label class="req">이메일</label><input type="email" data-field="contactEmail" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">03. AI 제품 분류</h2>
+          <p class="section-desc">AI 제품 분류 및 조달청 목록정보시스템(https://goods.g2b.go.kr)에 등록된 물품목록번호를 기재합니다.</p>
+        </div>
+        <span class="tag">분류</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="field"><label class="req">AI 제품 분류</label><select data-field="category" onchange="toggleOtherField(this, 'aiProductCategoryOther')"><option value="">선택</option><option>인공지능 소프트웨어</option><option>인공지능 서비스</option><option>인공지능 기기</option><option>혼합형/기타</option></select></div>
+        <div class="field"><label class="req">세부품명번호</label><input type="text" data-field="detailItemNumber" inputmode="numeric" maxlength="8" placeholder="00000000" oninput="limitEightDigitNumber(this)" /></div>
+        <div class="field"><label class="req">물품식별번호</label><input type="text" data-field="itemIdentifier" inputmode="numeric" maxlength="8" placeholder="00000000" oninput="limitEightDigitNumber(this)" /></div>
+      </div>
+
+      <div class="field" id="aiProductCategoryOther" style="display:none; margin-top:16px;">
+        <label class="req">혼합형/기타 분류 설명</label>
+        <input type="text" data-field="categoryOther" placeholder="혼합형 또는 기타 분류 내용을 작성" />
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">04. AI 기능 목록</h2>
+          <p class="section-desc">제품 내 AI 기능을 식별합니다. 기능별 기술 구현 상세는 다음 항목에서 작성합니다.</p>
+        </div>
+        <span class="tag">기능 식별</span>
+      </div>
+
+      <table id="moduleSummaryTable">
+        <thead>
+          <tr>
+            <th style="width:6%;">번호</th>
+            <th style="width:19%;">AI 기능명 <span class="required-mark">*</span></th>
+            <th style="width:21%;">AI 역할 <span class="required-mark">*</span></th>
+            <th style="width:17%;">입력 데이터 유형 <span class="required-mark">*</span></th>
+            <th style="width:17%;">출력 데이터 유형 <span class="required-mark">*</span></th>
+            <th style="width:14%;">매뉴얼 위치</th>
+            <th style="width:6%;">삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-number">1</td>
+            <td><input type="text" class="module-name-input" placeholder="예: 이상 탐지" oninput="syncTechModulesWithSummary()" /></td>
+            <td><textarea placeholder="분류/예측/생성/추천 등"></textarea></td>
+            <td><textarea placeholder="입력 데이터 유형"></textarea></td>
+            <td><textarea placeholder="출력 결과 유형"></textarea></td>
+            <td><textarea placeholder="p.24, 메뉴명, 화면명 등"></textarea></td>
+            <td style="text-align:center;"><button type="button" class="btn btn-danger" onclick="removeRow(this)">삭제</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-ghost" onclick="addModuleSummaryRow()">+ AI 기능 행 추가</button>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">05. 기능별 AI 구현 상세</h2>
+          <p class="section-desc">기능별 AI 구현 방식과 실제 동작 근거를 작성합니다. 한 제품에 여러 AI 방식이 혼합될 수 있습니다.</p>
+        </div>
+        <span class="tag">기술 실체 확인</span>
+      </div>
+
+      <div class="notice">작성 기준: 단순 API 호출 여부가 아니라, 제품 고유의 데이터 처리·모델 적용·추론 로직·결과 활용 구조가 확인되도록 작성합니다.</div>
+
+      <div id="techModuleList">
+        <div class="module-card" data-module>
+          <div class="module-top">
+            <div class="field"><label class="req">기능 번호 <span class="label-note">(04. 기능 목록 작성 시 자동으로 채워집니다.)</span></label><input type="text" class="tech-feature-number" value="1" disabled /></div>
+            <div class="field"><label class="req">기능명 <span class="label-note">(04. 기능 목록 작성 시 자동으로 채워집니다.)</span></label><input type="text" class="tech-feature-name" placeholder="04. 기능 목록 작성 시 자동으로 채워집니다." disabled /></div>
+            <div class="field"><label class="req">AI 구현 방식</label><select onchange="changeCase(this)"><option value="A">A. 자체 학습 모델</option><option value="B">B. Fine-tuning 모델</option><option value="C">C. 외부 AI API 연계</option><option value="D">D. 온디바이스 AI</option><option value="E">E. 혼합형 AI 구성</option></select></div>
+          </div>
+
+          <div class="grid-2 common-tech-fields" style="margin:16px 0;">
+            <div class="field"><label class="req">AI 연산 자원</label><input type="text" placeholder="예: NVIDIA A100, RTX 4090, T4, CPU only, NPU, 외부 API 제공" /></div>
+            <div class="field"><label>AI 실행 환경 세부정보</label><textarea placeholder="예:
+- OS: Ubuntu 22.04
+- CUDA/드라이버: CUDA 12.1, NVIDIA Driver 535
+- 컨테이너/런타임: Docker, TensorRT, PyTorch 2.6.0
+- API 버전 또는 배포 환경 정보"></textarea></div>
+          </div>
+
+          <div class="case-panel active" data-case="A">
+            <p class="sub-title">A. 자체 학습 모델</p>
+            <div class="grid-2">
+              <div class="field"><label class="req">학습 데이터 사양</label><textarea placeholder="예:
+- 데이터 출처: 자체수집, 공공, 구매 데이터 등
+- 데이터 유형: 비정형 이미지 데이터
+- 데이터 규모: 약 200,000건 (약 180GB)"></textarea></div>
+              <div class="field"><label class="req">개발환경·라이브러리·알고리즘</label><textarea placeholder="예:
+- 개발언어: Python 3.12
+- 라이브러리: PyTorch 2.6.0, TorchVision
+- 알고리즘: CNN 기반 멀티 레이블 객체 탐지 알고리즘"></textarea></div>
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
+- 환자 DICOM 영상 파일
+- 실시간 생체 신호 데이터 (체중: 72kg, 하트레이트: 115bpm)"></textarea></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
+- 병변 위치: Bounding Box [x: 142, y: 532, w: 85, h: 120]
+- 질환 진단: Pulmonary Edema (확률: 94.2%)
+- 기기 제어 신호 JSON 값"></textarea></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-panel" data-case="B">
+            <p class="sub-title">B. Fine-tuning 모델</p>
+            <div class="grid-3">
+              <div class="field"><label class="req">Base Model 명칭·버전</label><input type="text" placeholder="예: Llama-3-8B, ResNet-50 v2, BERT-base 등" /></div>
+              <div class="field"><label class="req">튜닝 방법</label><input type="text" placeholder="예: 전이학습, LoRA, QLoRA, Full Fine-tuning" /></div>
+              <div class="field"><label class="req">튜닝 데이터셋</label><textarea placeholder="예:
+- 해당 병원의 폐렴 확진 환자 데이터 12,000건 활용
+- 전문의 3인의 교차 검증 라벨링 데이터셋
+- Learning Rate=1e-4, Batch Size=32, Epochs=50"></textarea></div>
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
+- 환자 흉부 X-ray 영상 파일 (DICOM 형식)"></textarea></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
+- 의심 병변 분류 결과 및 위험도 등급
+- 폐렴 중증도: 3단계(Severe) / 분석 확신도: 89.7%"></textarea></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-panel" data-case="C">
+            <p class="sub-title">C. 외부 AI API 연계</p>
+            <div class="grid-3">
+              <div class="field"><label class="req">외부 API·모델</label><input type="text" placeholder="예: OpenAI gpt-4o-mini, Claude 3.5 Sonnet, Gemini 1.5 Pro" /></div>
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
+- 소비자가 작성한 가방 제품의 불만족 리뷰 원본 텍스트
+- API 요청에 포함되는 프롬프트 또는 JSON payload"></textarea></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
+- 쇼핑몰 관리자용 리뷰 요약
+- 고객 답변 초안 또는 분류 결과"></textarea></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-panel" data-case="D">
+            <p class="sub-title">D. 온디바이스 AI</p>
+            <div class="grid-3">
+              <div class="field"><label class="req">타겟 하드웨어·OS</label><textarea placeholder="예:
+- 하드웨어: NVIDIA Jetson Orin Nano (8GB)
+- OS: Linux for Tegra r36.3 / Ubuntu 22.04 LTS"></textarea></div>
+              <div class="field"><label class="req">추론 런타임</label><input type="text" placeholder="예: TensorRT, OpenVINO, TFLite" /></div>
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
+- 실시간 환자 생체 신호 데이터
+- 라이다 센서의 장애물 거리 측정값"></textarea></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
+- 하드웨어 모터 제어 신호
+- 밸브 차단, 긴급 정지 명령, 경고등 점등 등"></textarea></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-panel" data-case="E">
+            <p class="sub-title">E. 혼합형 AI 구성</p>
+            <div class="grid-2">
+              <div class="field"><label class="req">혼합 구성 설명</label><textarea placeholder="예:
+- 적용 모델명: ViT-L/14 (비전) + Llama-3-8B-Instruct (LLM)
+- 구조 설명: 비전 모델과 언어 모델이 결합된 멀티모달 VLM 파이프라인"></textarea></div>
+              <div class="field"><label class="req">모델별 역할 및 입출력 흐름</label><textarea placeholder="1. 비전 모델(ViT): [인풋] 흉부 CT 영상 -> 특징 벡터 데이터
+
+2. 언어 모델(Llama): [인풋] 특징 벡터 -> 최종 국문 판독 소견서 텍스트 생성"></textarea></div>
+            </div>
+            <div class="io-pair-grid">
+              <div class="io-pair">
+                <div class="field"><label class="req">입력 데이터 설명</label><textarea placeholder="예:
+- 최초 입력: 환자의 흉부 CT 디지털 영상 파일
+- 중간 데이터: 비전 모델이 추출한 결절 메타데이터 JSON"></textarea></div>
+              </div>
+              <div class="io-pair">
+                <div class="field"><label class="req">출력 데이터 설명</label><textarea placeholder="예:
+- 최종 출력: 의료진 화면에 표출되는 의학적 판독 소견서
+- 자동 생성 문구 또는 구조화된 결과 JSON"></textarea></div>
+              </div>
+            </div>
+          </div>
+<!--
+          <div class="field"><label class="req">기능 동작 설명</label><textarea placeholder="사용자가 어떤 입력을 하면 AI 모듈이 어떤 처리 과정을 거쳐 어떤 결과를 제공하는지 작성"></textarea></div>
+
+
+          <div style="margin-top:14px;">
+            <p class="sub-title">입출력 샘플 및 증빙</p>
+            <div class="io-grid">
+              <div class="field"><label>Input Sample</label><textarea placeholder="입력 예시: 텍스트, 이미지 메타정보, 센서값, 로그 등"></textarea></div>
+              <div class="field"><label>Processing / Log</label><textarea placeholder="전처리, 모델 호출, 추론 로그, 주요 파라미터"></textarea></div>
+              <div class="field"><label>Output Sample</label><textarea placeholder="출력 예시: JSON, 점수, 분류 결과, 생성 문장 등"></textarea></div>
+            </div>
+          </div>
+-->
+
+          <div class="grid-2" style="margin-top:14px;">
+            <div class="field"><label>기타 참고자료 첨부</label><input type="file" multiple /></div>
+            <div class="field"><label>아키텍처/데이터 흐름도 (선택사항)</label><input type="file" accept="image/*,.pdf" /></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="hint">04번 AI 기능 목록에 행을 추가하면 기능별 구현 명세가 자동으로 추가됩니다.</p>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">06. 기존 인증 및 시험 결과</h2>
+          <p class="section-desc">제품과 관련하여 이미 보유한 인증서, 시험성적서, 검증 결과서를 작성합니다.</p>
+        </div>
+        <span class="tag">인증·시험 결과</span>
+      </div>
+
+      <div class="checks">
+        <label class="check-card"><input type="checkbox" /> GS인증</label>
+        <label class="check-card"><input type="checkbox" /> AI 신뢰성(CAT) 인증</label>
+        <label class="check-card"><input type="checkbox" /> 기타</label>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="field"><label>인증서·시험성적서 첨부</label><input type="file" multiple /></div>
+        <div class="field"><label>비고</label><input type="text" placeholder="인증번호, 발급일, 적용 제품 버전 등" /></div>
+      </div>
+    </section>
+
+    <div class="flow-box">
+      <div class="flow-box-title">제출·검토 데이터 흐름</div>
+      <p class="flow-box-desc">신청기업 입력 데이터는 JSON 구조로 저장되고, TTA 검토 화면에서는 제출 내용 확인과 검토 의견 입력이 분리됩니다.</p>
+      <div class="flow-grid">
+        <div class="flow-step">
+          <div class="flow-no">1</div>
+          <div class="flow-title">신청기업 작성</div>
+          <p class="flow-desc">제품 정보, AI 기능, 구현 방식, 입출력 샘플, 증빙자료를 입력합니다.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-no">2</div>
+          <div class="flow-title">JSON 저장</div>
+          <p class="flow-desc">입력값을 제품·기업·기능·증빙 단위의 구조화 데이터로 저장합니다.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-no">3</div>
+          <div class="flow-title">TTA 검토</div>
+          <p class="flow-desc">제출 내용은 읽기 전용으로 확인하고, 판정·의견만 별도로 입력합니다.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-no">4</div>
+          <div class="flow-title">결과 활용</div>
+          <p class="flow-desc">검토 결과와 보완 이력을 통계·분석 및 사후 관리에 활용합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-actions">
+      <button type="button" class="btn btn-primary" onclick="submitApplication()">제출 및 명세서 보기</button>
+      <button type="button" class="btn" onclick="fillSampleData()">샘플 데이터 채우기</button>
+      <button type="button" class="btn" onclick="downloadJson()">JSON 내보내기</button>
+      <button type="button" class="btn" onclick="validateDraft()">작성 내용 점검</button>
+    </div>
+  </div>
+
+  <script src="https://t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script>
+    function openCompanyAddressSearch() {
+      if (!window.kakao || !kakao.Postcode) {
+        alert('주소 검색 서비스를 불러오지 못했습니다. 네트워크 연결을 확인한 뒤 다시 시도하세요.');
+        return;
+      }
+
+      new kakao.Postcode({
+        oncomplete: function(data) {
+          const selectedAddress = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+          const extraAddressParts = [];
+
+          if (data.userSelectedType === 'R') {
+            if (data.bname && /[동로가]$/.test(data.bname)) extraAddressParts.push(data.bname);
+            if (data.buildingName && data.apartment === 'Y') extraAddressParts.push(data.buildingName);
+          }
+
+          const extraAddress = extraAddressParts.length ? ' (' + extraAddressParts.join(', ') + ')' : '';
+          document.getElementById('companyPostcode').value = data.zonecode;
+          document.getElementById('companyAddress').value = selectedAddress + extraAddress;
+          document.getElementById('companyDetailAddress').focus();
+        }
+      }).open();
+    }
+
+    function formatBusinessRegistrationNumber(input) {
+      const digits = input.value.replace(/\D/g, '').slice(0, 10);
+      const parts = [];
+
+      if (digits.length > 0) parts.push(digits.slice(0, 3));
+      if (digits.length > 3) parts.push(digits.slice(3, 5));
+      if (digits.length > 5) parts.push(digits.slice(5, 10));
+
+      input.value = parts.join('-');
+    }
+
+    function limitEightDigitNumber(input) {
+      input.value = input.value.replace(/\D/g, '').slice(0, 8);
+    }
+
+    function toggleOtherField(select, targetId) {
+      const target = document.getElementById(targetId);
+      if (!target) return;
+
+      const shouldShow = select.value.includes('기타');
+      target.style.display = shouldShow ? '' : 'none';
+      if (!shouldShow) {
+        target.querySelectorAll('input, textarea').forEach(input => {
+          input.value = '';
+        });
+      }
+    }
+
+    const PRODUCT_ARCHITECTURE_MAX_SIZE = 5 * 1024 * 1024;
+    const PRODUCT_ARCHITECTURE_TYPES = ['image/jpeg', 'image/png'];
+
+    function validateProductArchitectureFile(input) {
+      const file = input.files?.[0];
+      if (!file) return true;
+
+      if (!PRODUCT_ARCHITECTURE_TYPES.includes(file.type)) {
+        alert('제품 구조도는 JPG 또는 PNG 파일만 첨부할 수 있습니다.');
+        input.value = '';
+        return false;
+      }
+
+      if (file.size > PRODUCT_ARCHITECTURE_MAX_SIZE) {
+        alert('제품 구조도 파일은 최대 5MB까지 첨부할 수 있습니다.');
+        input.value = '';
+        return false;
+      }
+
+      return true;
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function collectProductArchitecture() {
+      const input = document.getElementById('productArchitectureFile');
+      const file = input?.files?.[0];
+      if (!file) return null;
+      if (!validateProductArchitectureFile(input)) return null;
+
+      return {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        dataUrl: await readFileAsDataUrl(file)
+      };
+    }
+
+    function removeRow(btn) {
+      const tbody = btn.closest('tbody');
+      if (tbody.rows.length <= 1) {
+        alert('최소 1개 행은 유지해야 합니다.');
+        return;
+      }
+      const table = btn.closest('table');
+      btn.closest('tr').remove();
+      if (table && table.id === 'moduleSummaryTable') syncTechModulesWithSummary();
+    }
+
+    function addModuleSummaryRow() {
+      const tbody = document.querySelector('#moduleSummaryTable tbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="row-number"></td>
+        <td><input type="text" class="module-name-input" placeholder="예: 이상 탐지" oninput="syncTechModulesWithSummary()" /></td>
+        <td><textarea placeholder="분류/예측/생성/추천 등"></textarea></td>
+        <td><textarea placeholder="입력 데이터 유형"></textarea></td>
+        <td><textarea placeholder="출력 결과 유형"></textarea></td>
+        <td><textarea placeholder="p.24, 메뉴명, 화면명 등"></textarea></td>
+        <td style="text-align:center;"><button type="button" class="btn btn-danger" onclick="removeRow(this)">삭제</button></td>
+      `;
+      tbody.appendChild(tr);
+      syncTechModulesWithSummary();
+    }
+
+    let moduleFeatureIdSequence = 1;
+
+    function ensureModuleSummaryIds() {
+      document.querySelectorAll('#moduleSummaryTable tbody tr').forEach(row => {
+        if (!row.dataset.featureId) {
+          row.dataset.featureId = 'feature-' + moduleFeatureIdSequence;
+          moduleFeatureIdSequence++;
+        }
+      });
+    }
+
+    function resetTechModuleCard(card) {
+      card.querySelectorAll('input, textarea').forEach(el => {
+        if (el.classList.contains('tech-feature-number')) return;
+        if (el.classList.contains('tech-feature-name')) return;
+        if (el.type === 'file') el.value = '';
+        else el.value = '';
+      });
+      card.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+      card.querySelectorAll('.case-panel').forEach(panel => panel.classList.remove('active'));
+      card.querySelector('.case-panel[data-case="A"]').classList.add('active');
+    }
+
+    function syncTechModulesWithSummary() {
+      ensureModuleSummaryIds();
+
+      const rows = Array.from(document.querySelectorAll('#moduleSummaryTable tbody tr'));
+      const list = document.querySelector('#techModuleList');
+      const existingCards = Array.from(list.querySelectorAll('[data-module]'));
+      const template = existingCards[0];
+
+      if (!template) return;
+
+      const cardsByFeatureId = new Map(existingCards.map(card => [card.dataset.featureId, card]));
+      const activeFeatureIds = new Set(rows.map(row => row.dataset.featureId));
+
+      rows.forEach((row, index) => {
+        const featureId = row.dataset.featureId;
+        const featureNumber = String(index + 1);
+        const featureName = row.querySelector('.module-name-input')?.value.trim() || '';
+        let card = cardsByFeatureId.get(featureId);
+
+        const rowNumber = row.querySelector('.row-number');
+        if (rowNumber) rowNumber.textContent = featureNumber;
+
+        if (!card) {
+          card = template.cloneNode(true);
+          resetTechModuleCard(card);
+          list.appendChild(card);
+        }
+
+        card.dataset.featureId = featureId;
+        const featureNumberField = card.querySelector('.tech-feature-number');
+        if (featureNumberField) featureNumberField.value = featureNumber;
+
+        const featureNameField = card.querySelector('.tech-feature-name');
+        if (featureNameField) {
+          featureNameField.value = featureName;
+          featureNameField.placeholder = featureName ? '' : '04번 ' + (index + 1) + '번째 기능명을 입력하세요';
+        }
+      });
+
+      Array.from(list.querySelectorAll('[data-module]')).forEach(card => {
+        if (!activeFeatureIds.has(card.dataset.featureId)) card.remove();
+      });
+    }
+
+    function changeCase(select) {
+      const card = select.closest('[data-module]');
+      const selected = select.value;
+      card.querySelectorAll('.case-panel').forEach(panel => {
+        panel.classList.toggle('active', panel.dataset.case === selected);
+      });
+    }
+
+    function findFieldByKey(section, key) {
+      const byKey = Array.from(section.querySelectorAll('[data-field]')).find(el => el.dataset.field === key);
+      if (byKey) return byKey;
+
+      return Array.from(section.querySelectorAll('.field')).find(item => {
+        const label = item.querySelector('label');
+        return label && label.textContent.replace('*', '').trim() === key;
+      })?.querySelector('input, select, textarea');
+    }
+
+    function setFieldValue(section, labelText, value) {
+      const input = findFieldByKey(section, labelText) || findFieldByKey(section, labelText.replace('*', '').trim());
+      if (!input || input.type === 'file') return;
+
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function setTableRowValues(row, values) {
+      const cells = row.children;
+      if (!cells.length) return;
+      cells[1]?.querySelector('input') && (cells[1].querySelector('input').value = values.name || '');
+      cells[2]?.querySelector('textarea') && (cells[2].querySelector('textarea').value = values.role || '');
+      cells[3]?.querySelector('textarea') && (cells[3].querySelector('textarea').value = values.input || '');
+      cells[4]?.querySelector('textarea') && (cells[4].querySelector('textarea').value = values.output || '');
+      cells[5]?.querySelector('textarea, input') && (cells[5].querySelector('textarea, input').value = values.manual || '');
+      row.querySelector('.module-name-input')?.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function setPanelField(card, labelText, value) {
+      const activePanel = card.querySelector('.case-panel.active');
+      const fields = [
+        ...Array.from(card.querySelectorAll('.common-tech-fields .field')),
+        ...Array.from(activePanel?.querySelectorAll('.field') || [])
+      ];
+      const field = fields.find(item => {
+        const label = item.querySelector('label');
+        return label && label.textContent.replace('*', '').trim() === labelText;
+      });
+      const input = field?.querySelector('input, textarea, select');
+      if (!input || input.type === 'file') return;
+      input.value = value;
+    }
+
+    function ensureModuleRowCount(count) {
+      const tbody = document.querySelector('#moduleSummaryTable tbody');
+      while (tbody.rows.length < count) addModuleSummaryRow();
+      while (tbody.rows.length > count) tbody.rows[tbody.rows.length - 1].remove();
+      syncTechModulesWithSummary();
+    }
+
+    async function attachSampleArchitectureImage() {
+      const input = document.getElementById('productArchitectureFile');
+      if (!input) return;
+
+      const response = await fetch('assets/sample-product-architecture.png');
+      if (!response.ok) {
+        alert('샘플 제품 구조도 파일을 불러오지 못했습니다. 로컬 서버에서 다시 실행해 주세요.');
+        return;
+      }
+
+      const blob = await response.blob();
+      const file = new File([blob], 'sample-product-architecture.png', { type: 'image/png' });
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      input.files = dataTransfer.files;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    async function fillSampleData() {
+      const sections = Array.from(document.querySelectorAll('section.card'));
+      const productSection = sections[0];
+      const companySection = sections[1];
+      const categorySection = sections[2];
+      const certSection = sections[5];
+
+      setFieldValue(productSection, '제품 또는 서비스명', 'Mediview AI 판독 보조 서비스');
+      setFieldValue(productSection, '제품 버전', 'v1.8.2-pilot');
+      setFieldValue(productSection, '제품 또는 서비스 제공 형태', 'SaaS(클라우드 서비스형)');
+      setFieldValue(productSection, '제품 개요', '흉부 영상과 환자 생체 신호를 분석하여 이상 소견 후보를 표시하고, 의료진 검토용 요약 보고서를 생성하는 AI 기반 판독 보조 서비스입니다. 병원 PACS와 연동하여 검사 단위로 분석 결과를 제공합니다.');
+      setFieldValue(productSection, '제품 환경 정보', '- 운영 형태: SaaS\n- 서버/OS: AWS EC2 g5.xlarge, Ubuntu 22.04\n- 연산 자원: NVIDIA A10G GPU 1대, CPU 4 vCPU, Memory 16GB\n- 런타임: Docker, Python 3.12, PyTorch 2.6.0, CUDA 12.1\n- 외부 연계: PACS, 병원 EMR, OpenAI API');
+      await attachSampleArchitectureImage();
+      setFieldValue(productSection, 'AI 적용 목적', '의료진이 대량의 영상 검사를 우선순위화하고 의심 병변을 빠르게 검토할 수 있도록 보조합니다.');
+      setFieldValue(productSection, 'AI 적용 범위 요약', 'AI는 영상 내 이상 후보 탐지, 위험도 산정, 판독 초안 요약을 수행합니다. 최종 진단과 처방 결정은 의료진이 수행합니다.');
+
+      setFieldValue(companySection, '기업명', '주식회사 메디테크랩');
+      setFieldValue(companySection, '사업자등록번호', '1234567890');
+      const businessNo = document.getElementById('businessRegistrationNumber');
+      if (businessNo) formatBusinessRegistrationNumber(businessNo);
+      setFieldValue(companySection, '대표자명', '김대표');
+      document.getElementById('companyPostcode').value = '06236';
+      document.getElementById('companyAddress').value = '서울특별시 강남구 테헤란로 152';
+      document.getElementById('companyDetailAddress').value = '15층 AI검증팀';
+      setFieldValue(companySection, '담당자명', '이담당');
+      setFieldValue(companySection, '연락처', '02-1234-5678');
+      setFieldValue(companySection, '이메일', 'pilot@meditechlab.example');
+
+      setFieldValue(categorySection, 'AI 제품 분류', '인공지능 서비스');
+      setFieldValue(categorySection, '세부품명번호', '00000000');
+      setFieldValue(categorySection, '물품식별번호', '00000000');
+
+      ensureModuleRowCount(5);
+      const featureRows = Array.from(document.querySelectorAll('#moduleSummaryTable tbody tr'));
+      [
+        {
+          name: '흉부 영상 이상 탐지',
+          role: '흉부 X-ray 이미지에서 폐렴, 부종 등 이상 소견 후보 영역을 탐지하고 위험도를 산출',
+          input: 'DICOM 영상 파일, 검사 ID, 촬영 장비 메타데이터',
+          output: '병변 후보 Bounding Box, 위험도 점수, 소견 분류 라벨',
+          manual: '사용자 매뉴얼 p.24, 영상 분석 > AI 이상 탐지 화면'
+        },
+        {
+          name: '폐렴 위험도 분류',
+          role: '병원 도메인 데이터로 추가 튜닝한 모델을 사용해 폐렴 의심 정도와 중증도 등급을 분류',
+          input: '흉부 X-ray 영상, 환자 나이대, 촬영 조건 메타데이터',
+          output: '폐렴 의심 등급, 중증도 단계, 분석 확신도',
+          manual: '사용자 매뉴얼 p.28, 영상 분석 > 위험도 분류'
+        },
+        {
+          name: '판독 소견 요약 생성',
+          role: '탐지 결과와 임상 메모를 바탕으로 의료진 검토용 국문 판독 초안 생성',
+          input: '탐지 결과 JSON, 임상 메모 텍스트, 병원 템플릿',
+          output: '판독 초안 텍스트, 주요 근거 요약, 수정 필요 표시',
+          manual: '사용자 매뉴얼 p.31, 보고서 > AI 요약 탭'
+        },
+        {
+          name: '엣지 장비 실시간 알림',
+          role: '병동 모니터링 장비에서 생체 신호 이상 패턴을 감지하고 알림 이벤트 생성',
+          input: '심박수, 산소포화도, 호흡수 센서 스트림',
+          output: '위험 알림 이벤트, 알림 등급, 장비 제어 신호',
+          manual: '장비 화면 > 실시간 모니터링 > AI 알림'
+        },
+        {
+          name: '멀티모달 판독 리포트 생성',
+          role: '영상 특징, 위험도 분류 결과, 임상 메모를 결합해 의료진 검토용 통합 리포트 생성',
+          input: '영상 특징 벡터, 위험도 분류 결과 JSON, 임상 메모 텍스트',
+          output: '통합 판독 리포트, 핵심 근거 요약, 후속 검사 권고 문구',
+          manual: '사용자 매뉴얼 p.38, 보고서 > 통합 AI 리포트'
+        }
+      ].forEach((sample, index) => setTableRowValues(featureRows[index], sample));
+
+      syncTechModulesWithSummary();
+      const cards = Array.from(document.querySelectorAll('#techModuleList [data-module]'));
+      const methods = ['A', 'B', 'C', 'D', 'E'];
+      cards.forEach((card, index) => {
+        const methodSelect = card.querySelector('.module-top select');
+        methodSelect.value = methods[index] || 'A';
+        changeCase(methodSelect);
+      });
+
+      setPanelField(cards[0], 'AI 연산 자원', 'NVIDIA A100 40GB 1대, CPU 16 vCPU');
+      setPanelField(cards[0], 'AI 실행 환경 세부정보', 'Ubuntu 22.04, CUDA 12.1, NVIDIA Driver 535, Docker, PyTorch 2.6.0');
+      setPanelField(cards[0], '학습 데이터 사양', '- 데이터 출처: 제휴 병원 비식별 흉부 X-ray 데이터\n- 데이터 유형: DICOM 이미지\n- 데이터 규모: 약 200,000건');
+      setPanelField(cards[0], '개발환경·라이브러리·알고리즘', '- 개발언어: Python 3.12\n- 라이브러리: PyTorch 2.6.0, TorchVision\n- 알고리즘: CNN 기반 객체 탐지 모델');
+      setPanelField(cards[0], '입력 데이터 설명', '환자 DICOM 영상 파일과 검사 메타데이터를 입력으로 사용합니다.');
+      setPanelField(cards[0], '출력 데이터 설명', '병변 후보 좌표, 위험도 점수, 소견 분류 라벨을 JSON으로 출력합니다.');
+
+      setPanelField(cards[1], 'AI 연산 자원', 'NVIDIA T4 16GB 1대');
+      setPanelField(cards[1], 'AI 실행 환경 세부정보', 'Ubuntu 22.04, CUDA 11.8, Python 3.10, PyTorch 2.1.0, LoRA 튜닝 환경');
+      setPanelField(cards[1], 'Base Model 명칭·버전', 'ResNet-50 v2');
+      setPanelField(cards[1], '튜닝 방법', '전이학습 + LoRA');
+      setPanelField(cards[1], '튜닝 데이터셋', '- 데이터 목적: 폐렴 위험도 분류 성능 보정\n- 데이터 규모: 제휴 병원 비식별 X-ray 12,000건\n- 라벨링: 전문의 3인 교차 검증\n- 학습 파라미터: Learning Rate=1e-4, Batch Size=32, Epochs=50');
+      setPanelField(cards[1], '입력 데이터 설명', '흉부 X-ray 영상 파일과 촬영 조건 메타데이터를 입력으로 사용합니다.');
+      setPanelField(cards[1], '출력 데이터 설명', '폐렴 의심 등급, 중증도 단계, 분석 확신도를 출력합니다.');
+
+      setPanelField(cards[2], 'AI 연산 자원', '외부 API 제공 GPU 자원');
+      setPanelField(cards[2], 'AI 실행 환경 세부정보', 'OpenAI API, 모델 gpt-4o-mini, 사내 서버 Node.js API 어댑터 경유');
+      setPanelField(cards[2], '외부 API·모델', 'OpenAI gpt-4o-mini');
+      setPanelField(cards[2], '입력 데이터 설명', '탐지 결과 JSON과 의료진이 작성한 임상 메모를 프롬프트에 포함합니다.');
+      setPanelField(cards[2], '출력 데이터 설명', '의료진 검토용 판독 초안, 주요 근거 요약, 수정 필요 문구를 생성합니다.');
+
+      setPanelField(cards[3], 'AI 연산 자원', 'NVIDIA Jetson Orin Nano 8GB');
+      setPanelField(cards[3], 'AI 실행 환경 세부정보', 'Linux for Tegra r36.3, TensorRT, Python 3.10, 온디바이스 추론');
+      setPanelField(cards[3], '타겟 하드웨어·OS', '- 하드웨어: NVIDIA Jetson Orin Nano (8GB)\n- OS: Linux for Tegra r36.3 / Ubuntu 22.04 LTS');
+      setPanelField(cards[3], '추론 런타임', 'TensorRT');
+      setPanelField(cards[3], '입력 데이터 설명', '병동 모니터링 장비의 심박수, 산소포화도, 호흡수 센서 스트림을 입력합니다.');
+      setPanelField(cards[3], '출력 데이터 설명', '위험 알림 이벤트와 알림 등급, 장비 제어 신호를 생성합니다.');
+
+      setPanelField(cards[4], 'AI 연산 자원', 'NVIDIA A100 40GB 1대 + 외부 API 제공 자원');
+      setPanelField(cards[4], 'AI 실행 환경 세부정보', 'Ubuntu 22.04, CUDA 12.1, PyTorch 2.6.0, 사내 VLM 파이프라인, OpenAI API 연계');
+      setPanelField(cards[4], '혼합 구성 설명', '- 적용 모델명: ViT-L/14 (비전) + Llama-3-8B-Instruct (LLM) + gpt-4o-mini\n- 구조 설명: 영상 특징 추출, 위험도 분류, 자연어 리포트 생성이 결합된 멀티모달 파이프라인');
+      setPanelField(cards[4], '모델별 역할 및 입출력 흐름', '1. 비전 모델: 흉부 영상에서 특징 벡터 추출\n2. 분류 모델: 특징 벡터와 메타데이터를 이용해 위험도 산정\n3. 언어 모델/API: 위험도와 임상 메모를 결합해 최종 리포트 생성');
+      setPanelField(cards[4], '입력 데이터 설명', '영상 특징 벡터, 위험도 분류 결과 JSON, 임상 메모 텍스트를 입력으로 사용합니다.');
+      setPanelField(cards[4], '출력 데이터 설명', '통합 판독 리포트, 핵심 근거 요약, 후속 검사 권고 문구를 출력합니다.');
+
+      certSection.querySelectorAll('.check-card input[type="checkbox"]').forEach((checkbox, index) => {
+        checkbox.checked = index === 0;
+      });
+      setFieldValue(certSection, '비고', 'GS인증 예비 심사 자료 보유, 본 파일럿에서는 첨부파일 업로드 생략');
+
+      alert('시연용 샘플 데이터를 입력했습니다. 제품 구조도 샘플 PNG도 자동 첨부되었습니다.');
+    }
+
+    function getFieldLabel(field) {
+      const fieldBox = field.closest('.field');
+      if (fieldBox) {
+        const label = fieldBox.querySelector('label');
+        if (label) return label.textContent.replace('*', '').trim();
+      }
+      const cell = field.closest('td');
+      if (cell) {
+        const table = field.closest('table');
+        const row = field.closest('tr');
+        const index = Array.from(row.children).indexOf(cell);
+        const th = table && table.querySelectorAll('thead th')[index];
+        if (th) return th.textContent.trim();
+      }
+      return field.name || field.id || 'unnamed_field';
+    }
+
+    function collectSectionData(section) {
+      const title = section.querySelector('.section-title')?.textContent.trim() || 'untitled_section';
+      const fields = Array.from(section.querySelectorAll('input, select, textarea'))
+        .filter(el => el.type !== 'file' && el.type !== 'button');
+
+      const values = fields.map((el, idx) => ({
+        key: el.dataset.field || el.name || el.id || getFieldLabel(el) + '_' + (idx + 1),
+        label: getFieldLabel(el),
+        type: el.tagName.toLowerCase() === 'select' ? 'select' : el.type || el.tagName.toLowerCase(),
+        value: el.type === 'checkbox' ? el.checked : el.value
+      }));
+
+      const files = Array.from(section.querySelectorAll('input[type="file"]')).map((el, idx) => ({
+        label: getFieldLabel(el),
+        files: Array.from(el.files || []).map(file => ({ name: file.name, size: file.size, type: file.type }))
+      }));
+
+      return { title, values, files };
+    }
+
+    function getFieldValue(section, labelText) {
+      const input = findFieldByKey(section, labelText) || findFieldByKey(section, labelText.replace('*', '').trim());
+      return input ? input.value : '';
+    }
+
+    function getSelectedChecks(section) {
+      return Array.from(section.querySelectorAll('.check-card'))
+        .filter(card => card.querySelector('input[type="checkbox"]')?.checked)
+        .map(card => card.textContent.trim())
+        .join(', ');
+    }
+
+    function getFileSummary(container) {
+      const files = Array.from(container.querySelectorAll('input[type="file"]')).flatMap(input =>
+        Array.from(input.files || []).map(file => file.name)
+      );
+      return files.length ? files.join(', ') : '';
+    }
+
+    function collectFeatureRows() {
+      return Array.from(document.querySelectorAll('#moduleSummaryTable tbody tr')).map((row, index) => {
+        const cells = row.children;
+        return {
+          no: row.querySelector('.row-number')?.textContent.trim() || String(index + 1),
+          name: cells[1]?.querySelector('input')?.value || '',
+          role: cells[2]?.querySelector('textarea')?.value || '',
+          input: cells[3]?.querySelector('textarea')?.value || '',
+          output: cells[4]?.querySelector('textarea')?.value || '',
+          manual: cells[5]?.querySelector('textarea, input')?.value || ''
+        };
+      });
+    }
+
+    function collectTechDetailRows() {
+      return Array.from(document.querySelectorAll('#techModuleList [data-module]')).map(card => {
+        const activePanel = card.querySelector('.case-panel.active');
+        const commonFields = Array.from(card.querySelectorAll('.common-tech-fields .field'));
+        const panelFields = Array.from(activePanel?.querySelectorAll('.field') || []);
+        const details = [...commonFields, ...panelFields].map(field => {
+          const label = field.querySelector('label')?.textContent.trim() || '';
+          const value = field.querySelector('input, select, textarea')?.value || '';
+          return label ? `${label}: ${value || '미작성'}` : value;
+        });
+
+        return {
+          no: card.querySelector('.tech-feature-number')?.value || '',
+          name: card.querySelector('.tech-feature-name')?.value || '',
+          method: card.querySelector('.module-top select')?.selectedOptions[0]?.textContent || '',
+          details: details.join('\n'),
+          files: getFileSummary(card)
+        };
+      });
+    }
+
+    async function collectApplicationData() {
+      syncTechModulesWithSummary();
+
+      const sections = Array.from(document.querySelectorAll('section.card'));
+      const productSection = sections[0];
+      const companySection = sections[1];
+      const categorySection = sections[2];
+      const certSection = sections[5];
+      const productDeliveryOther = getFieldValue(productSection, '기타 제공 형태');
+      const aiProductCategoryOther = getFieldValue(categorySection, '혼합형/기타 분류 설명');
+      const productArchitecture = await collectProductArchitecture();
+
+      const productRows = [
+        { no: '1.1', item: '제품 또는 서비스명', value: getFieldValue(productSection, '제품 또는 서비스명') },
+        { no: '1.2', item: '제품 버전', value: getFieldValue(productSection, '제품 버전') },
+        { no: '1.3', item: '제품 또는 서비스 제공 형태', value: getFieldValue(productSection, '제품 또는 서비스 제공 형태') },
+        ...(productDeliveryOther ? [{ no: '1.3.1', item: '기타 제공 형태', value: productDeliveryOther }] : []),
+        { no: '1.4', item: '제품 개요', value: getFieldValue(productSection, '제품 개요') },
+        { no: '1.5', item: '제품 환경 정보', value: getFieldValue(productSection, '제품 환경 정보') },
+        { no: '1.6', item: '제품 구조도', value: productArchitecture ? `${productArchitecture.name} (${Math.round(productArchitecture.size / 1024)}KB)` : '' },
+        { no: '1.7', item: 'AI 적용 목적', value: getFieldValue(productSection, 'AI 적용 목적') },
+        { no: '1.8', item: 'AI 적용 범위 요약', value: getFieldValue(productSection, 'AI 적용 범위 요약') }
+      ];
+
+      const companyRows = [
+        { no: '2.1', item: '기업명', value: getFieldValue(companySection, '기업명') },
+        { no: '2.2', item: '사업자등록번호', value: getFieldValue(companySection, '사업자등록번호') },
+        { no: '2.3', item: '대표자명', value: getFieldValue(companySection, '대표자명') },
+        { no: '2.4', item: '주소', value: [document.getElementById('companyPostcode')?.value, document.getElementById('companyAddress')?.value, document.getElementById('companyDetailAddress')?.value].filter(Boolean).join(' ') },
+        { no: '2.5', item: '담당자명', value: getFieldValue(companySection, '담당자명') },
+        { no: '2.6', item: '연락처', value: getFieldValue(companySection, '연락처') },
+        { no: '2.7', item: '이메일', value: getFieldValue(companySection, '이메일') }
+      ];
+
+      const categoryRows = [
+        { no: '3.1', item: 'AI 제품 분류', value: getFieldValue(categorySection, 'AI 제품 분류') },
+        ...(aiProductCategoryOther ? [{ no: '3.1.1', item: '혼합형/기타 분류 설명', value: aiProductCategoryOther }] : []),
+        { no: '3.2', item: '세부품명번호', value: getFieldValue(categorySection, '세부품명번호') },
+        { no: '3.3', item: '물품식별번호', value: getFieldValue(categorySection, '물품식별번호') }
+      ];
+
+      const certRows = [
+        { no: '6.1', item: '보유 인증', value: getSelectedChecks(certSection) },
+        { no: '6.2', item: '인증서/시험성적서 첨부', value: getFileSummary(certSection) },
+        { no: '6.3', item: '비고', value: getFieldValue(certSection, '비고') }
+      ];
+
+      return {
+        schemaVersion: 'ai-product-technical-verification.v1',
+        submittedAt: new Date().toISOString(),
+        status: 'draft',
+        application: {
+          productRows,
+          productArchitecture,
+          companyRows,
+          categoryRows,
+          features: collectFeatureRows(),
+          techDetails: collectTechDetailRows(),
+          certRows
+        },
+        applicantData: sections.map(collectSectionData)
+      };
+    }
+
+    const SUBMIT_MODE = localStorage.getItem('aiFormSubmitMode') || 'static';
+    const API_BASE_URL = localStorage.getItem('aiFormApiBaseUrl') || 'http://127.0.0.1:8010';
+
+    async function submitApplication() {
+      if (!validateRequiredFields(false)) return;
+
+      const data = await collectApplicationData();
+
+      if (SUBMIT_MODE === 'api') {
+        try {
+          const response = await fetch(API_BASE_URL + '/api/applications', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          if (!response.ok) throw new Error('API 제출 실패');
+
+          const result = await response.json();
+          window.location.href = 'review.html?id=' + encodeURIComponent(result.id) + '&source=api';
+          return;
+        } catch (error) {
+          alert('API 제출에 실패했습니다. 시연 서버 실행 상태와 API 주소를 확인하세요.');
+          return;
+        }
+      }
+
+      try {
+        sessionStorage.setItem('aiApplicationDraft', JSON.stringify(data));
+      } catch (error) {
+        alert('브라우저 임시 저장 공간이 부족합니다. 제품 구조도 이미지 크기를 줄이거나 API 제출 모드로 시연하세요.');
+        return;
+      }
+      window.location.href = 'review.html';
+    }
+
+    async function downloadJson() {
+      const data = await collectApplicationData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ai-product-technical-verification.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function validateDraft() {
+      validateRequiredFields(true);
+    }
+
+    function validateRequiredFields(showSuccess) {
+      const required = document.querySelectorAll('.req');
+      let missing = 0;
+
+      function isVisible(el) {
+        return !!(el && el.getClientRects().length);
+      }
+
+      function markField(field, invalid) {
+        if (!field) return;
+        field.style.borderColor = invalid ? 'var(--red)' : 'var(--line)';
+      }
+
+      required.forEach(label => {
+        if (!isVisible(label)) return;
+        const field = label.parentElement.querySelector('input, select, textarea');
+        if (!field || field.disabled) return;
+        if (!field.value.trim()) {
+          missing++;
+          markField(field, true);
+        } else {
+          markField(field, false);
+        }
+      });
+
+      document.querySelectorAll('#moduleSummaryTable tbody tr').forEach(row => {
+        [1, 2, 3, 4].forEach(index => {
+          const field = row.children[index]?.querySelector('input, textarea');
+          if (!field) return;
+          if (!field.value.trim()) {
+            missing++;
+            markField(field, true);
+          } else {
+            markField(field, false);
+          }
+        });
+      });
+
+      if (missing > 0) {
+        alert('필수 입력 항목 ' + missing + '개가 비어 있습니다. 빨간 테두리 항목을 확인하세요.');
+        return false;
+      } else {
+        if (showSuccess) alert('필수 항목 기준으로는 누락이 없습니다. 증빙자료와 TTA 검토 항목은 별도로 확인하세요.');
+        return true;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', syncTechModulesWithSummary);
+  </script>
+</body>
+</html>

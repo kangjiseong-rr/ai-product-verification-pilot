@@ -263,6 +263,269 @@
       letter-spacing: 0;
     }
 
+    .page-title {
+      margin: 0 0 18px;
+      font-size: 22px;
+      font-weight: 900;
+      color: #0047d6;
+    }
+
+    .intro {
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      border: 1px solid #b7d7ec;
+      border-top: 3px solid #5fa9d8;
+      background: #f8fcff;
+      line-height: 1.7;
+      color: #222;
+      font-size: 13px;
+    }
+
+    .intro strong {
+      color: #d70000;
+    }
+
+    .review-section-title {
+      margin: 24px 0 6px;
+      font-size: 15px;
+      font-weight: 900;
+      color: #111;
+    }
+
+    .review-section-title:before { content: "[ "; }
+    .review-section-title:after { content: " ]"; }
+
+    .section-desc {
+      color: #666;
+      margin: 4px 0 8px;
+      font-size: 13px;
+    }
+
+    .form-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-top: 2px solid #5fa9d8;
+      border-bottom: 2px solid #5fa9d8;
+      margin-bottom: 8px;
+    }
+
+    .form-table th,
+    .form-table td {
+      border: 1px solid #9bc7e2;
+      padding: 7px 8px;
+      vertical-align: middle;
+      font-size: 13px;
+    }
+
+    .form-table th {
+      width: 150px;
+      background: #cfe0f6;
+      text-align: left;
+      font-weight: 900;
+      color: #111;
+    }
+
+    .form-table td {
+      background: #fff;
+    }
+
+    .form-table input[type="text"],
+    .form-table input[type="email"],
+    .form-table input[type="tel"],
+    .form-table input[type="date"],
+    .form-table textarea,
+    .form-table select {
+      width: 100%;
+      border: 1px solid #777;
+      padding: 5px 6px;
+      font-family: inherit;
+      font-size: 13px;
+      min-height: 32px;
+    }
+
+    .form-table textarea {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    .form-table .readonly {
+      background: #f2f2f2;
+      color: #555;
+    }
+
+    .required {
+      color: #e00000;
+      font-weight: 900;
+    }
+
+    .help {
+      margin-top: 5px;
+      color: #777;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .help strong {
+      color: #1d5f9f;
+    }
+
+    .inline-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .application-grid th {
+      text-align: center;
+      width: auto;
+    }
+
+    .application-grid td {
+      text-align: center;
+    }
+
+    .application-grid input {
+      text-align: left;
+    }
+
+    .function-table th {
+      text-align: center;
+      width: auto;
+    }
+
+    .function-table td {
+      text-align: center;
+    }
+
+    .function-table textarea {
+      min-height: 56px;
+    }
+
+    .ai-detail-card {
+      border: 1px solid #9bc7e2;
+      border-top: 2px solid #5fa9d8;
+      background: #fbfdff;
+      padding: 12px;
+      margin: 8px 0 12px;
+    }
+
+    .ai-detail-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #dceafa;
+      border: 1px solid #9bc7e2;
+      padding: 7px 9px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .ai-detail-head .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid #8ebedd;
+      border-radius: 12px;
+      background: #fff;
+      color: #1d5f9f;
+      font-size: 12px;
+    }
+
+    .ai-module-top {
+      display: grid;
+      grid-template-columns: 90px 1fr 210px;
+      gap: 8px;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+
+    .ai-case-panel {
+      display: none;
+      border: 1px dashed #8ebedd;
+      background: #fff;
+      padding: 10px;
+      margin-top: 8px;
+    }
+
+    .ai-case-panel.active {
+      display: block;
+    }
+
+    .ai-case-title {
+      color: #0047d6;
+      font-weight: 900;
+      margin: 0 0 8px;
+    }
+
+    .admin-review-title {
+      margin: 24px 0 6px;
+      font-size: 15px;
+      font-weight: 900;
+      color: #111;
+    }
+
+    .admin-review-title:before { content: "[ "; }
+    .admin-review-title:after { content: " ]"; }
+
+    .review-summary {
+      background: #edf5fb;
+      border: 1px solid #c1dcec;
+      padding: 9px 10px;
+      color: #1d5f9f;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .admin-box {
+      border: 1px solid #9bc7e2;
+      border-top: 2px solid #5fa9d8;
+      background: #fbfdff;
+      padding: 12px;
+      margin-top: 8px;
+    }
+
+    .review-checks {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-weight: 900;
+    }
+
+    .review-checks label {
+      white-space: nowrap;
+    }
+
+    .locked-section input,
+    .locked-section textarea,
+    .locked-section select {
+      background: #f2f2f2 !important;
+      color: #555 !important;
+      cursor: not-allowed;
+    }
+
+    .locked-section .review-checks {
+      color: #555;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 3px 9px;
+      border: 1px solid #8ebedd;
+      background: #edf5fb;
+      color: #1d5f9f;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    @media screen and (max-width: 960px) {
+      .ai-module-top { grid-template-columns: 1fr; }
+      .meta { grid-template-columns: 1fr; }
+      table { table-layout: auto; }
+      .actions { justify-content: stretch; flex-direction: column; }
+    }
+
     .final-output > .lead {
       margin-bottom: 24px;
       text-align: center;
@@ -747,17 +1010,321 @@
       `;
     }
 
+    function getValueByItem(rows, item, fallback = '') {
+      const found = (rows || []).find(row => row.item === item);
+      return found?.value || fallback;
+    }
+
+    function renderReadOnlyField(label, value) {
+      return `
+        <tr>
+          <th>${escapeHtml(label)}</th>
+          <td><input type="text" class="readonly" value="${escapeHtml(value)}" readonly /></td>
+        </tr>
+      `;
+    }
+
+    function renderApplicantSubmission(app) {
+      const company = app.companyRows || [];
+      const product = app.productRows || [];
+      const category = app.categoryRows || [];
+      const features = app.features || [];
+      const techDetails = app.techDetails || [];
+      const certRows = app.certRows || [];
+
+      const productName = getValueByItem(product, '제품 또는 서비스명');
+      const productVersion = getValueByItem(product, '제품 버전');
+      const productOverview = getValueByItem(product, '제품 개요');
+      const aiPurpose = getValueByItem(product, 'AI 적용 목적');
+      const aiScope = getValueByItem(product, 'AI 적용 범위 요약');
+      const deliveryType = getValueByItem(product, '제품 또는 서비스 제공 형태');
+      const categoryValue = getValueByItem(category, 'AI 제품 분류');
+      const detailCategory = getValueByItem(category, '혼합형/기타 분류 설명');
+      const certValue = getValueByItem(certRows, '보유 인증');
+      const certNote = getValueByItem(certRows, '비고');
+
+      const featureRows = (features || []).map(feature => `
+        <tr>
+          <td>${escapeHtml(feature.no || '')}</td>
+          <td>${escapeHtml(feature.name || '')}</td>
+          <td>${escapeHtml(feature.role || '')}</td>
+          <td>${escapeHtml(feature.input || '')}</td>
+          <td>${escapeHtml(feature.output || '')}</td>
+          <td>${escapeHtml(feature.manual || '')}</td>
+        </tr>
+      `).join('');
+
+      const aiCardMarkup = (techDetails || []).map((detail, index) => `
+        <div class="ai-detail-card">
+          <div class="ai-detail-head">
+            <span>AI 기능 구현 명세 #${index + 1}</span>
+            <span class="badge">기술 실체 확인</span>
+          </div>
+          <div class="ai-module-top">
+            <table class="form-table" style="margin:0;">
+              <tr><th style="width:90px;">기능 번호</th></tr>
+              <tr><td><input type="text" class="readonly" value="${escapeHtml(detail.no || '')}" readonly /></td></tr>
+            </table>
+            <table class="form-table" style="margin:0;">
+              <tr><th>기능명</th></tr>
+              <tr><td><input type="text" value="${escapeHtml(detail.name || '')}" /></td></tr>
+            </table>
+            <table class="form-table" style="margin:0;">
+              <tr><th>AI 구현 방식 <span class="required">*</span></th></tr>
+              <tr><td><input type="text" value="${escapeHtml(detail.method || '')}" /></td></tr>
+            </table>
+          </div>
+          <table class="form-table">
+            <tr>
+              <th>AI 연산 자원 <span class="required">*</span></th>
+              <td><input type="text" value="${escapeHtml(detail.resources || 'NVIDIA T4 16GB 1대, CPU 8 vCPU')}" /></td>
+              <th>AI 실행 환경 세부정보</th>
+              <td><textarea>${escapeHtml(detail.environment || '')}</textarea></td>
+            </tr>
+          </table>
+          <div class="ai-case-panel active">
+            <p class="ai-case-title">AI 구현 근거</p>
+            <table class="form-table">
+              <tr>
+                <th>구현 근거</th>
+                <td colspan="3"><textarea>${escapeHtml(detail.details || '')}</textarea></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      `).join('');
+
+      return `
+        <section class="card">
+          <div class="page-title">다. “심사기관 관리자 검토”</div>
+          <div class="intro">
+            <strong>※ 심사기관 관리자 검토 페이지 예시입니다.</strong><br />
+            신청업체 제출내용과 확인기관 검토사항은 예시값으로 표시되며, 심사기관 담당자가 하단의 심사기관 검토사항을 작성하는 구조입니다.
+          </div>
+
+          <div class="review-section-title">신청업체 제출내용</div>
+          <div class="review-section-title">1. 기업 정보</div>
+          <p class="section-desc">기업 정보는 신청페이지 인적사항에 등록된 정보를 자동으로 불러옵니다. 변경이 필요한 경우 회원정보 또는 기업정보를 먼저 수정해 주시기 바랍니다.</p>
+          <table class="form-table">
+            ${renderReadOnlyField('상호(사업자명)', getValueByItem(company, '기업명'))}
+            ${renderReadOnlyField('법인등록번호\n(또는 사업자등록번호)', getValueByItem(company, '사업자등록번호'))}
+            ${renderReadOnlyField('대표자 성명', getValueByItem(company, '대표자명'))}
+            ${renderReadOnlyField('소재지', getValueByItem(company, '주소'))}
+            ${renderReadOnlyField('업무담당자\n(또는 국내대리인)', getValueByItem(company, '담당자명'))}
+            ${renderReadOnlyField('전화번호', getValueByItem(company, '연락처'))}
+            ${renderReadOnlyField('전자우편주소', getValueByItem(company, '이메일'))}
+          </table>
+
+          <div class="review-section-title">2. 인공지능 제품·서비스 확인 신청서</div>
+          <p class="section-desc">아래 항목은 신청서 내용을 온라인 폼으로 입력할 수 있도록 구성한 예시입니다.</p>
+          <table class="form-table application-grid">
+            <tr>
+              <th style="width:60px;">연번 <span class="required">*</span></th>
+              <th>제품·서비스 명칭 <span class="required">*</span></th>
+              <th>세부품명번호</th>
+              <th>물품식별번호</th>
+            </tr>
+            <tr>
+              <td><input type="text" value="1" /></td>
+              <td><input type="text" value="${escapeHtml(productName)}" /></td>
+              <td><input type="text" value="${escapeHtml(getValueByItem(category, '세부품명번호'))}" /></td>
+              <td><input type="text" value="${escapeHtml(getValueByItem(category, '물품식별번호'))}" /></td>
+            </tr>
+          </table>
+          <table class="form-table">
+            <tr>
+              <th>개요 <span class="required">*</span></th>
+              <td><textarea>${escapeHtml(productOverview)}</textarea></td>
+            </tr>
+            <tr>
+              <th>인공지능 적용 목적 <span class="required">*</span></th>
+              <td><textarea>${escapeHtml(aiPurpose)}</textarea></td>
+            </tr>
+            <tr>
+              <th>제공 형태 <span class="required">*</span></th>
+              <td>
+                <div class="inline-group">
+                  <label><input type="checkbox" ${deliveryType.includes('사용자 설치') ? 'checked' : ''} /> 사용자 설치</label>
+                  <label><input type="checkbox" ${deliveryType.includes('사내 구축형') ? 'checked' : ''} /> 사내 구축형</label>
+                  <label><input type="checkbox" ${deliveryType.includes('SaaS') || deliveryType.includes('서비스') ? 'checked' : ''} /> SaaS</label>
+                  <label><input type="checkbox" ${deliveryType.includes('기기') ? 'checked' : ''} /> 기기</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>인공지능 적용 범위 <span class="required">*</span></th>
+              <td><textarea>${escapeHtml(aiScope)}</textarea></td>
+            </tr>
+            <tr>
+              <th>제품 분류 <span class="required">*</span></th>
+              <td>
+                <div class="inline-group">
+                  <label><input type="checkbox" ${categoryValue.includes('소프트웨어') ? 'checked' : ''} /> 소프트웨어</label>
+                  <label><input type="checkbox" ${categoryValue.includes('서비스') ? 'checked' : ''} /> 서비스</label>
+                  <label><input type="checkbox" ${categoryValue.includes('기기') ? 'checked' : ''} /> 기기</label>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="review-section-title">3. 핵심 인공지능 기능 명세</div>
+          <p class="section-desc">기능별 인공지능 구현에 대한 상세 정보는 첨부문서에 기재하고, 아래에는 핵심 내용을 요약합니다.</p>
+          <table class="form-table function-table">
+            <tr>
+              <th>기능명 <span class="required">*</span></th>
+              <th>인공지능 역할 <span class="required">*</span></th>
+              <th>입력 <span class="required">*</span></th>
+              <th>출력 <span class="required">*</span></th>
+              <th>설명서 참조 위치</th>
+            </tr>
+            ${featureRows || '<tr><td colspan="5"><span class="empty">미작성</span></td></tr>'}
+          </table>
+
+          <div class="review-section-title">4. 기능별 AI 구현 상세</div>
+          <p class="section-desc">기능별 AI 구현 방식과 실제 동작 근거를 작성합니다.</p>
+          ${aiCardMarkup || '<div class="help">등록된 기능별 구현 상세가 없습니다.</div>'}
+
+          <div class="review-section-title">5. 기존 인증 및 시험 결과</div>
+          <p class="section-desc">제품과 관련하여 이미 보유한 인증서, 시험성적서, 검증 결과서를 작성합니다.</p>
+          <table class="form-table">
+            <tr>
+              <th>보유 인증</th>
+              <td colspan="3"><input type="text" value="${escapeHtml(certValue)}" /></td>
+            </tr>
+            <tr>
+              <th>비고</th>
+              <td colspan="3"><input type="text" value="${escapeHtml(certNote)}" /></td>
+            </tr>
+          </table>
+        </section>
+      `;
+    }
+
+    function renderLockedReviewSection(app) {
+      const company = app.companyRows || [];
+      const status = getValueByItem(app.companyRows || [], '처리상태') || '요건심사 중';
+      return `
+        <section class="card">
+          <div class="admin-review-title">10. 확인기관 검토사항</div>
+          <p class="section-desc">확인기관은 신청 접수 후 처리상태를 관리하고, 보완요청 여부 및 기술심사 의뢰 여부를 판단합니다. <span class="lock-note">※ 심사기관 화면에서는 수정할 수 없습니다.</span></p>
+          <div class="admin-box locked-section">
+            <div class="review-summary">
+              접수번호 <strong>AI-2026-00001</strong> / 접수일시 <strong>2026-06-09 10:30</strong> / 현재 처리상태 <strong>${escapeHtml(status)}</strong>
+            </div>
+            <table class="form-table">
+              <tr>
+                <th>접수번호</th>
+                <td><input type="text" class="readonly" value="AI-2026-00001" readonly disabled /></td>
+                <th>접수일시</th>
+                <td><input type="text" class="readonly" value="2026-06-09 10:30" readonly disabled /></td>
+              </tr>
+              <tr>
+                <th>처리상태</th>
+                <td><select disabled><option>접수</option><option selected>요건심사 중</option><option>보완요청</option><option>기술심사 요청</option><option>결과안내</option><option>확인서 발급</option><option>반려</option></select></td>
+                <th>검토담당자</th>
+                <td><input disabled type="text" value="이검토" /></td>
+              </tr>
+              <tr>
+                <th>보완요청 여부</th>
+                <td colspan="3">
+                  <div class="review-checks">
+                    <label><input disabled type="radio" name="supplementRequest" checked /> 보완요청</label>
+                    <label><input disabled type="radio" name="supplementRequest" /> 보완 불필요</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>보완요청 내용</th>
+                <td colspan="3"><textarea readonly>1. 신청 제품·서비스의 AI 적용 범위가 구조도와 기능 명세서에서 일치하도록 보완해 주시기 바랍니다.
+2. 기능별 AI 구현 상세에서 적용 모델, 데이터 특성, 입력·출력 흐름을 구체화해 주시기 바랍니다.
+3. 제출서류 중 인공지능처리 연산체계 및 기능 명세서의 알고리즘 설명을 보완해 주시기 바랍니다.</textarea></td>
+              </tr>
+              <tr>
+                <th>기술심사 요청 여부</th>
+                <td><select disabled><option>요청</option><option selected>보완 후 요청</option><option>요청 보류</option></select></td>
+                <th>심사기관 전달사항</th>
+                <td><textarea readonly>보완자료 접수 후 기술심사 요청 예정입니다. 심사기관에서는 AI 기능별 구현 방식, 데이터 흐름, 모델 적용 범위, 출력 결과의 AI 연계성을 중심으로 확인해 주시기 바랍니다.</textarea></td>
+              </tr>
+            </table>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderAgencyReviewSection() {
+      return `
+        <section class="card">
+          <div class="admin-review-title">11. 심사기관 검토사항</div>
+          <p class="section-desc">심사기관은 확인기관이 전달한 신청 건에 대해 기술적 검토를 수행하고, AI 적용 여부·기술자료 보완 필요 여부·심사결과를 작성합니다.</p>
+          <div class="admin-box">
+            <div class="review-summary">
+              기술심사 접수번호 <strong>TR-2026-00001</strong> / 기술심사 요청일시 <strong>2026-06-10 14:20</strong> / 현재 처리상태 <strong>기술심사 중</strong>
+            </div>
+            <table class="form-table">
+              <tr>
+                <th>기술심사 접수번호</th>
+                <td><input type="text" class="readonly" value="TR-2026-00001" readonly /></td>
+                <th>확인신청 접수번호</th>
+                <td><input type="text" class="readonly" value="AI-2026-00001" readonly /></td>
+              </tr>
+              <tr>
+                <th>기술심사 요청일시</th>
+                <td colspan="3"><input type="text" class="readonly" value="2026-06-10 14:20" readonly /></td>
+              </tr>
+              <tr>
+                <th>기술심사 상태</th>
+                <td><select><option>기술심사 접수</option><option selected>기술심사 중</option><option>보완검토 요청</option><option>심사완료</option><option>부적합 의견</option></select></td>
+                <th>기술심사 담당자</th>
+                <td><input type="text" value="박기술" /></td>
+              </tr>
+              <tr>
+                <th>AI 적용 여부</th>
+                <td colspan="3">
+                  <div class="review-checks">
+                    <label><input type="radio" name="techAiUse" checked /> 적용 확인</label>
+                    <label><input type="radio" name="techAiUse" /> 추가자료 필요</label>
+                    <label><input type="radio" name="techAiUse" /> 적용 확인 곤란</label>
+                    <label><input type="radio" name="techAiUse" /> 미적용</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>기술자료 보완요청 내용</th>
+                <td colspan="3"><textarea>1. 적용 모델명, 모델 버전, 주요 알고리즘 구조를 추가 기재해 주시기 바랍니다.
+2. 학습 데이터 및 추론 데이터의 출처, 유형, 전처리 방식을 보완해 주시기 바랍니다.
+3. 신뢰도 점수 산출 방식과 임계값 설정 기준을 설명해 주시기 바랍니다.</textarea></td>
+              </tr>
+              <tr>
+                <th>기술심사 종합의견</th>
+                <td colspan="3"><textarea>신청 제품·서비스는 문서 자동분류 기능에 인공지능 모델을 활용하고 있는 것으로 판단됩니다. 다만 모델 세부정보, 데이터 특성, 신뢰도 점수 산출 방식에 대한 추가 설명이 필요합니다.</textarea></td>
+              </tr>
+              <tr>
+                <th>기술심사 결과</th>
+                <td colspan="3">
+                  <div class="review-checks">
+                    <label><input type="radio" name="techResult" /> 적합</label>
+                    <label><input type="radio" name="techResult" checked /> 보완 후 재검토</label>
+                    <label><input type="radio" name="techResult" /> 부적합</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>확인기관 전달사항</th>
+                <td colspan="3"><textarea>AI 적용 가능성은 확인되나 모델 및 데이터 세부자료 보완이 필요합니다. 보완자료 접수 후 최종 적합 여부를 재검토하는 것이 적절합니다.</textarea></td>
+              </tr>
+            </table>
+          </div>
+        </section>
+      `;
+    }
+
     function renderReview(data) {
       const app = data.application || {};
       renderMeta(data);
       document.getElementById('reviewContent').innerHTML = [
-        renderProductInfoSection(app),
-        renderSectionReviewTable('02. 신청기업 정보 확인', app.companyRows),
-        renderSectionReviewTable('03. AI 제품 분류 확인', app.categoryRows),
-        renderFeatureTable(app.features),
-        renderTechDetailTable(app.techDetails),
-        renderFieldTable('06. 기존 인증 및 시험 결과 확인', app.certRows),
-        renderInternalReviewChecklist()
+        renderApplicantSubmission(app),
+        renderLockedReviewSection(app),
+        renderAgencyReviewSection()
       ].join('');
     }
 

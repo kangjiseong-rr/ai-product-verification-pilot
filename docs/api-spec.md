@@ -20,8 +20,11 @@
 | 파일 저장소 | 별도 파일 저장소 없음 | 제품 구조도는 JSON 내부 data URL로 포함 |
 | 인증/권한 | 미구현 | 파일럿 시연용 |
 | 개인정보 보호 정책 | 미구현 | 운영 전환 시 별도 설계 필요 |
+| 화면 문구 최신화 | 반영 | 최종 외부 양식의 문구·항목 표시 변경은 API 계약과 분리하여 관리 |
 
 본 API는 운영용 API가 아니라 파일럿 시연용 API이다. 현재는 PostgreSQL, MongoDB, SQLite 등 DB를 사용하지 않으며, 신청 데이터는 접수 ID별 JSON 파일로 저장한다.
+
+> 최종 화면이 외부 양식으로 변경되더라도, API는 신청서 JSON 구조와 검토 화면 흐름을 유지한다. 즉, 문구 변경·삭제된 항목·필수/선택 표시 변경은 화면 명세에 반영하되, 서버가 받는 핵심 payload는 동일하게 유지한다.
 
 ## 3. 실행 방법
 
@@ -216,6 +219,8 @@ localStorage.setItem('aiFormApiBaseUrl', 'http://127.0.0.1:8010');
 | `application.techDetails` | array | 05번 기능별 AI 구현 상세 데이터 |
 | `application.certRows` | array | 기존 인증 및 시험 결과 데이터 |
 | `applicantData` | array | 원본 입력 영역별 수집 데이터 |
+
+> 화면 문구 변경, 필드 순서 변경, 삭제된 항목 반영은 UI 명세에만 반영한다. 서버는 `application`/`applicantData` 스키마를 유지하며, 화면에서 실제로 비활성화되거나 제거된 항목은 payload에서 별도 강제 보존하지 않는다.
 
 제품 구조도 데이터:
 
