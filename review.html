@@ -166,6 +166,20 @@
       line-height: 1.55;
     }
 
+    .tech-env-label {
+      width: 12%;
+      background: #eef2f7;
+      color: var(--title);
+      text-align: center;
+      font-weight: 900;
+      vertical-align: top;
+    }
+
+    .tech-env-value {
+      background: #fff;
+      line-height: 1.55;
+    }
+
     .architecture-box {
       margin-top: 14px;
       padding: 14px;
@@ -592,6 +606,15 @@
       background: #fff;
     }
 
+    #finalSpecContent .tech-env-label {
+      background: #eef2f7;
+      color: #172033;
+    }
+
+    #finalSpecContent .tech-env-value {
+      background: #fff;
+    }
+
     #finalSpecContent .architecture-box {
       border-radius: 0;
       background: #fff;
@@ -742,6 +765,28 @@
     function findSubmittedValue(rows, item) {
       const row = (rows || []).find(entry => entry.item === item);
       return row?.value || '';
+    }
+
+    function extractTechDetailField(details, label) {
+      const line = String(details || '').split('\n').find(item => item.trim().startsWith(label + ':'));
+      return line ? line.slice(line.indexOf(':') + 1).trim() : '';
+    }
+
+    function getTechResources(row) {
+      return row.resources || extractTechDetailField(row.details, 'AI 연산 자원');
+    }
+
+    function getTechEnvironment(row) {
+      return row.environment || extractTechDetailField(row.details, 'AI 실행 환경 세부정보');
+    }
+
+    function getTechEvidenceDetails(row) {
+      const commonLabels = ['AI 연산 자원', 'AI 실행 환경 세부정보'];
+      return String(row.details || '')
+        .split('\n')
+        .filter(line => !commonLabels.some(label => line.trim().startsWith(label + ':')))
+        .join('\n')
+        .trim();
     }
 
     function renderFieldTable(title, rows) {
@@ -926,17 +971,22 @@
           <td style="text-align:center; font-weight:800;">${displayValue(row.no)}</td>
           <td>${displayValue(row.name)}</td>
           <td>${displayValue(row.method)}</td>
+          <td>${displayValue(getTechResources(row))}</td>
           <td>${displayValue(row.files)}</td>
           <td class="check-cell"><input type="checkbox" /></td>
         </tr>
+        <tr>
+          <td class="tech-env-label">AI 실행 환경 세부정보</td>
+          <td class="tech-env-value" colspan="5">${displayValue(getTechEnvironment(row))}</td>
+        </tr>
         <tr class="tech-evidence-row">
-          <td class="tech-evidence-label">구현 근거</td>
-          <td class="tech-evidence-value" colspan="4">${displayValue(row.details)}</td>
+          <td class="tech-evidence-label">세부 구현 내용</td>
+          <td class="tech-evidence-value" colspan="5">${displayValue(getTechEvidenceDetails(row))}</td>
         </tr>
         <tr>
           <td></td>
           <td style="text-align:center; font-weight:900;">검토 의견</td>
-          <td colspan="3"><textarea placeholder="검토 의견"></textarea></td>
+          <td colspan="4"><textarea placeholder="검토 의견"></textarea></td>
         </tr>
       `).join('');
 
@@ -949,6 +999,7 @@
                 <th style="width:7%;">기능 번호</th>
                 <th>기능명</th>
                 <th style="width:24%;">AI 구현 방식</th>
+                <th style="width:18%;">AI 연산 자원</th>
                 <th style="width:18%;">첨부자료</th>
                 <th style="width:7%;">확인</th>
               </tr>
@@ -1077,17 +1128,23 @@
           <table class="form-table">
             <tr>
               <th>AI 연산 자원 <span class="required">*</span></th>
-              <td><input type="text" value="${escapeHtml(detail.resources || 'NVIDIA T4 16GB 1대, CPU 8 vCPU')}" /></td>
+              <td colspan="3"><input type="text" value="${escapeHtml(getTechResources(detail) || 'NVIDIA T4 16GB 1대, CPU 8 vCPU')}" /></td>
+            </tr>
+            <tr>
               <th>AI 실행 환경 세부정보</th>
-              <td><textarea>${escapeHtml(detail.environment || '')}</textarea></td>
+              <td colspan="3"><textarea>${escapeHtml(getTechEnvironment(detail))}</textarea></td>
             </tr>
           </table>
           <div class="ai-case-panel active">
-            <p class="ai-case-title">AI 구현 근거</p>
+            <p class="ai-case-title">세부 구현 내용</p>
             <table class="form-table">
               <tr>
-                <th>구현 근거</th>
-                <td colspan="3"><textarea>${escapeHtml(detail.details || '')}</textarea></td>
+                <th>세부 구현 내용</th>
+                <td colspan="3"><textarea>${escapeHtml(getTechEvidenceDetails(detail))}</textarea></td>
+              </tr>
+              <tr>
+                <th>검토 의견</th>
+                <td colspan="3"><textarea placeholder="검토 의견"></textarea></td>
               </tr>
             </table>
           </div>
@@ -1166,18 +1223,20 @@
               </td>
             </tr>
           </table>
+          ${renderProductArchitecture(app.productArchitecture)}
 
           <div class="review-section-title">3. 핵심 인공지능 기능 명세</div>
           <p class="section-desc">기능별 인공지능 구현에 대한 상세 정보는 첨부문서에 기재하고, 아래에는 핵심 내용을 요약합니다.</p>
           <table class="form-table function-table">
             <tr>
+              <th style="width:70px;">기능 번호</th>
               <th>기능명 <span class="required">*</span></th>
               <th>인공지능 역할 <span class="required">*</span></th>
               <th>입력 <span class="required">*</span></th>
               <th>출력 <span class="required">*</span></th>
               <th>설명서 참조 위치</th>
             </tr>
-            ${featureRows || '<tr><td colspan="5"><span class="empty">미작성</span></td></tr>'}
+            ${featureRows || '<tr><td colspan="6"><span class="empty">미작성</span></td></tr>'}
           </table>
 
           <div class="review-section-title">4. 기능별 AI 구현 상세</div>
